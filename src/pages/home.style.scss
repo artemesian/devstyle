@@ -1,0 +1,89 @@
+#home-container {
+  height: auto;
+  width: 100%;
+  > div {
+    min-height: calc(100vh - 120px);
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    .hero-section {
+      width: 100%;
+      .text-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: calc(100vh - 120px);
+        height: auto;
+        .green-text {
+          background: #e3fff1;
+          border-radius: 32px;
+          padding: 8px 22px;
+          color: #06c270;
+          font-size: 14px;
+          width: auto;
+        }
+        .hero-title {
+          font-weight: 700;
+          font-size: 50px;
+          line-height: 68px;
+          display: flex;
+          align-items: center;
+          font-family: "Roboto Slab";
+          margin: 10px 0 0 0;
+        }
+        .hero-text {
+          margin: 15px 0 65px 0;
+        }
+        .hero-button {
+          font-family: Roboto Slab;
+          font-size: 16px;
+          color: #ffffff;
+          background: #220f00;
+          border-radius: 32px;
+          text-transform: initial;
+          height: 50px;
+          padding: 0 36px;
+        }
+        .social-container {
+          display: flex;
+          justify-items: flex-start;
+          padding-top: 36px;
+          position: relative;
+          top: 40px;
+          img {
+            margin-right: 10px;
+          }
+        }
+      }
+      .image-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        > div {
+          width: 75%;
+          flex-direction: column;
+          display: flex;
+          align-self: flex-end;
+          img {
+            width: 100%;
+          }
+          .icons-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            img {
+              width: 30px;
+              height: 30px;
+              cursor: pointer;
+            }
+            .forward-icon {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
+  }
+}
