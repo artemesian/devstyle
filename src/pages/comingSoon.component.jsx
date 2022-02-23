@@ -19,10 +19,10 @@ function ComingSoon() {
         position: "relative",
       }}
     >
-      <video autoPlay={true} playsInline={true} loop width={"100%"}>
+      <video autoPlay controls loop width={"90%"}>
         <source src={ComingSoonVideo} type="video/mp4" />
       </video>
-      <div style={{ position: "absolute", bottom: 50 }}>
+      <div style={{ position: "absolute", bottom: 100 }}>
         <a
           target="_blank"
           rel="noopener noreferrer"
