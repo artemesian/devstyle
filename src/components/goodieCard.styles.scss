@@ -1,0 +1,83 @@
+.goodie-card-wrapper {
+  height: 385px;
+  width: 285px;
+  background: #ffffff;
+  border: 1px solid rgba(34, 15, 0, 0.11);
+  box-shadow: 0px 0px 20px -8px rgba(34, 15, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+
+    .image {
+      transform: scale(1.1);
+      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
+  }
+
+  .goodie-card-container {
+    height: 385px;
+    width: 285px;
+    .top {
+      height: 285px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .image {
+        height: 100%;
+      }
+      .promo {
+        background-color: #ff3b3b;
+        color: #ffffff;
+        border-radius: 8px 0px 0px 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 1px 10px;
+        font-size: 12px;
+      }
+    }
+    .bottom {
+      color: #220f00;
+      .name {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        @supports (-webkit-line-clamp: 2) {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: initial;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+      .price-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 5px;
+        .current-price {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 20px;
+        }
+        .real-price {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          color: #220f00;
+        }
+      }
+    }
+  }
+}

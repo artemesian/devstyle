@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 //Pages
 import Home from "./pages/home.component.jsx";
+import ComingSoon from "./pages/comingSoon.component.jsx";
 //Components
 import Nav from "./components/nav.component.jsx";
 
@@ -12,9 +13,9 @@ import "./app.styles.scss";
 const App = () => {
   return (
     <Box>
-      <Nav />
+      {/* <Nav /> */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ComingSoon />} />
       </Routes>
     </Box>
   );

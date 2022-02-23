@@ -1,10 +1,9 @@
 #home-container {
   height: auto;
   width: 100%;
-  > div {
+  .hero-section-wrapper {
     min-height: calc(100vh - 120px);
     width: 100%;
-    display: flex;
     overflow: hidden;
     .hero-section {
       width: 100%;
@@ -52,7 +51,7 @@
           position: relative;
           top: 40px;
           img {
-            margin-right: 10px;
+            margin-right: 15px;
           }
         }
       }
@@ -85,5 +84,246 @@
         }
       }
     }
+  }
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .title {
+      font-family: "Roboto Slab";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+    }
+    img {
+      height: 56px;
+    }
+  }
+  .our-collections-section {
+    background-color: #f7f7fa;
+    overflow-x: hidden;
+    .collections-wrapper {
+      margin-top: 85px;
+      .collection-item {
+        height: 600px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        &:hover {
+          cursor: pointer;
+
+          > .collection-image-container {
+            transform: scale(1.1);
+            transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+          }
+        }
+        .collection-image-container {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end /*   za    */;
+          .collection-image {
+            height: 100%;
+          }
+        }
+
+        .collection-item-title {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 60px;
+          color: #ffffff;
+          line-height: 1.1;
+          text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+          margin-bottom: 20px;
+          &.large {
+            color: #220f00 !important;
+            font-size: 96px;
+          }
+        }
+        .button {
+          margin-top: 20px;
+          background: #ffffff;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+          border-radius: 60px;
+          height: 50px;
+          padding: 10px 36px;
+          text-transform: initial;
+          font-family: Roboto Slab;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 20px;
+          color: #220f00;
+          &.large {
+            background-color: #220f00;
+            color: #ffffff;
+            height: 72px;
+            font-size: 24px;
+            padding: 0px 120px;
+          }
+        }
+      }
+    }
+  }
+  .goodies-listing-section {
+    .goodies-container {
+    }
+  }
+  .custom-section {
+    color: #220f00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: auto;
+    background-color: #8fc8ff;
+    overflow-x: hidden;
+    .saly {
+      position: absolute;
+      height: 95%;
+      display: flex;
+      align-self: flex-end;
+    }
+    .info-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 600px;
+      height: 100%;
+      .title {
+        font-family: Roboto Slab;
+        z-index: 2;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 50px;
+        line-height: 1.15;
+      }
+      .text {
+        z-index: 2;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        padding: 45px 0;
+        width: 80%;
+      }
+      .button {
+        z-index: 2;
+        color: #220f00;
+        background-color: #ffffff;
+        margin: 0px;
+      }
+    }
+  }
+  .newsletter-wrapper {
+    background-color: #f7f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .newsletter-container {
+      text-align: center;
+      .text {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        margin: 30px 0;
+      }
+      .email-wrapper {
+        width: 100%;
+        max-width: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .email-input {
+          background: #ffffff;
+          border: 1px solid #220f00;
+          border-radius: 10px 0px 0px 10px;
+          height: 56px;
+          width: 70%;
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 18px;
+          padding: 20px;
+        }
+        .button {
+          height: 56px;
+          width: 30%;
+          background-color: #220f00;
+          border-radius: 0px 10px 10px 0px;
+          color: #ffffff;
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .footer-wrapper {
+    background-color: #220f00;
+    .footer-container {
+      padding-bottom: 150px;
+      color: white;
+      .footer-title {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 22px;
+        color: white;
+        width: 100%;
+        border-bottom: 2px solid white;
+        padding-bottom: 12px;
+      }
+      .footer-links-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 25px 0px;
+        > a {
+          color: white;
+          text-decoration: none;
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 32px;
+        }
+      }
+    }
+    .footer-copyright-text {
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 22px;
+      color: white;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+      position: relative;
+    }
+    .footer-image {
+      position: absolute;
+    }
+  }
+  .button {
+    font-family: Roboto Slab;
+    font-size: 16px;
+    color: #ffffff;
+    background: #220f00;
+    border-radius: 32px;
+    text-transform: initial;
+    height: 50px;
+    padding: 0 46px;
+    margin: auto;
   }
 }
