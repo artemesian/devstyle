@@ -9,7 +9,7 @@ import Ambassador from "./pages/ambassador.component.jsx";
 import About from "./pages/about.component.jsx";
 import Goodie from "./pages/goodie.component.jsx";
 import Checkout from "./pages/checkout.component.jsx";
-// import ComingSoon from "./pages/comingSoon.component.jsx";
+import ComingSoon from "./pages/comingSoon.component.jsx";
 
 //Components
 import Nav from "./components/nav.component.jsx";
