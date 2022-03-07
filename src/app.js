@@ -12,29 +12,29 @@ import Checkout from "./pages/checkout.component.jsx";
 import ComingSoon from "./pages/comingSoon.component.jsx";
 
 //Components
-import Nav from "./components/nav.component.jsx";
-import Customize from "./components/customize.component";
-import Newsletter from "./components/newsletter.component";
-import Footer from "./components/footer.component";
+// import Nav from "./components/nav.component.jsx";
+// import Customize from "./components/customize.component";
+// import Newsletter from "./components/newsletter.component";
+// import Footer from "./components/footer.component";
 
 import "./app.styles.scss";
 
 const App = () => {
   return (
     <Box>
-      <Nav />
+      {/* <Nav /> */}
       <Routes>
         <Route path="/" element={<ComingSoon />} />
-        {/*   <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} />
         <Route path="/collection/:id" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/goodie/:id" element={<Goodie />} />
         <Route path="/checkout" element={<Checkout />} /> */}
       </Routes>
-      <Customize />
+      {/* <Customize />
       <Newsletter />
-      <Footer />
+      <Footer /> */}
     </Box>
   );
 };
