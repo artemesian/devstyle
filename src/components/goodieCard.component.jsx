@@ -16,7 +16,10 @@ const GoodieCard = ({
   link,
 }) => {
   return (
-    <Box className="goodie-card-wrapper" key={id}>
+    <Box
+      className="goodie-card-wrapper animate__animated animate__fadeIn"
+      key={id}
+    >
       <Link to={`/goodie/${link}`} style={{ textDecoration: "none" }}>
         <Box className="goodie-card-container">
           <Box className="top" padding={1.25} bgcolor={color}>

@@ -1,0 +1,41 @@
+.about-wrapper {
+  .about-hero-section-wrapper {
+    min-height: calc(100vh - 200px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-items: center;
+    position: relative;
+    .about-hero-section-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding-bottom: 200px;
+      .text {
+        position: relative;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 64px;
+        line-height: 100px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+
+        color: #ffffff;
+
+        text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
+
+      img {
+        position: absolute;
+        bottom: 0;
+        height: 70%;
+        z-index: 1;
+      }
+    }
+  }
+}

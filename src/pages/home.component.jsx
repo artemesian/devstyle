@@ -11,23 +11,10 @@ import TwitterIcon from "../assets/icons/twitter.png";
 import FacebookIcon from "../assets/icons/facebook.png";
 import InstaIcon from "../assets/icons/insta.png";
 import WhatsappIcon from "../assets/icons/whatsapp.png";
-import WhatsappWhiteIcon from "../assets/icons/whatsapp-white.png";
-import FacebookWhiteIcon from "../assets/icons/facebook-white.png";
-import TwitterWhiteIcon from "../assets/icons/twitter-white.png";
-import InstaWhiteIcon from "../assets/icons/insta-white.png";
 import ShopBagIcon from "../assets/icons/shopping-bag.png";
 import HotIcon from "../assets/icons/hot.png";
-import PhoneIcon from "../assets/icons/phone-white.png";
-import EmailIcon from "../assets/icons/email.png";
 import RocketIcon from "../assets/icons/rocket.png";
 import Tshirt from "../assets/img/tshirt.png";
-import VSCodeIcon from "../assets/icons/vscode.png";
-import GithubIcon from "../assets/icons/github.png";
-import EmailEmojiIcon from "../assets/icons/email-emoji.png";
-import Saly from "../assets/img/saly.png";
-import DevStyleNetcode from "../assets/img/devstyle-netcode-logo.png";
-import SalyFooter from "../assets/img/saly-footer.png";
-import Glom from "../assets/icons/glom.png";
 
 import "./home.style.scss";
 
@@ -376,7 +363,7 @@ const Home = () => {
                 key={i + "" + collection.id}
               >
                 <Link
-                  to={`/collections/${collection.link}`}
+                  to={`/collection/1${collection.link}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Grid
@@ -541,172 +528,6 @@ const Home = () => {
             </Button>
           </Link>
         </Box>
-      </Box>
-      <Grid container className="custom-section">
-        <Grid
-          item
-          xs={12}
-          md={6}
-          padding={8}
-          className="info-box"
-          bgcolor={"#FFC1BD"}
-          alignItems={"flex-start"}
-        >
-          <Typography className="title">
-            Obtenez des goodies sur mesure specialement fait pour vous !
-          </Typography>
-          <Typography className="text">
-            Souhaitez-vous avoir un T-shirt super cool personnalisé avec un
-            QR-code unique qui redirigera vers votre compte github 😏?
-            <img src={GithubIcon} alt="github icon" /> avoir sur un T-shirt ou
-            Mug vos meilleures lignes de code 😎?
-            <img src={VSCodeIcon} alt="visual code icon" /> où toutes autres
-            idées que vous avez en tête, une seul chose à faire...
-          </Typography>
-          <Button className="button">Contactez-Nous </Button>
-        </Grid>
-        <img src={Saly} alt="saly illustration" className="saly" />
-        <Grid
-          item
-          xs={12}
-          md={6}
-          padding={8}
-          className="info-box"
-          bgcolor={"#8FC8FF"}
-          alignItems={"flex-end"}
-        >
-          <Typography
-            className="title"
-            style={{ textAlign: "right", width: "80%" }}
-          >
-            Pour tout autre chose
-          </Typography>
-          <Typography className="text" style={{ textAlign: "right" }}>
-            Discuter, partenariat, couverture d’evenements etc. N’hesitez pas..
-          </Typography>
-          <Button className="button">Contactez-Nous Ici</Button>
-        </Grid>
-      </Grid>
-      <Box className="newsletter-wrapper" padding={5}>
-        <Box className="newsletter-container">
-          <Box className="title-container">
-            <Typography className="title" component={"span"}>
-              NE
-            </Typography>
-            <Box position={"relative"}>
-              <Typography className="title" component={"span"}>
-                WSLETTER
-              </Typography>
-              <hr
-                style={{
-                  height: "6px",
-                  width: "100%",
-                  borderWidth: "0",
-                  color: "#FDAC42",
-                  backgroundColor: "#FDAC42",
-                  borderRadius: "20px",
-                  position: "absolute",
-                }}
-              />
-            </Box>
-            &nbsp; &nbsp;
-            <img src={EmailEmojiIcon} alt="email icon" />
-          </Box>
-          <Typography className="text">
-            Restez informer de nos nouvelles sorties, evenements et bien plus
-            encore.
-          </Typography>
-          <Box className="email-wrapper">
-            <input
-              type="email"
-              className="email-input"
-              placeholder="Entrer votre [email]"
-            />
-            <Button className="button">S’Abonner</Button>
-          </Box>
-        </Box>
-      </Box>
-      <Box className="footer-wrapper" position={"relative"}>
-        <Box paddingX={10} paddingY={5}>
-          <Grid container className="footer-container" spacing={5}>
-            <Grid item xs={12} lg={4}>
-              <img
-                src={DevStyleNetcode}
-                alt="devstyle netcode logo"
-                className="devstyle-netcode-logo"
-              />
-            </Grid>
-            <Grid container item xs={12} lg={8} spacing={15}>
-              <Grid item xs={12} lg={4}>
-                <Typography className="footer-title">Nos pages</Typography>
-                <Box className="footer-links-wrapper">
-                  <Link to="">Accueil</Link>
-                  <Link to="">Shop</Link>
-                  <Link to="">Contactez-Nous</Link>
-                  <Link to="">Qui sommes-Nous ?</Link>
-                  <Link to="">Nos Ambassadeurs</Link>
-                </Box>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <Typography className="footer-title">
-                  Nos partenaires
-                </Typography>
-                <Box className="footer-links-wrapper">
-                  <Link to="">
-                    <img src={Glom} alt="glom icon" />
-                  </Link>
-                </Box>
-              </Grid>
-              <Grid item xs={12} lg={4}>
-                <Typography className="footer-title">Suivez nous</Typography>
-                <Box className="footer-links-wrapper">
-                  <Box marginBottom={5}>
-                    <Link to="">
-                      <img src={TwitterWhiteIcon} alt="twitter icon" />
-                    </Link>
-                    &nbsp; &nbsp;
-                    <Link to="">
-                      <img src={WhatsappWhiteIcon} alt="whatsapp icon" />
-                    </Link>
-                    &nbsp; &nbsp;
-                    <Link to="">
-                      <img src={InstaWhiteIcon} alt="instagram icon" />
-                    </Link>
-                    &nbsp; &nbsp;
-                    <Link to="">
-                      <img src={FacebookWhiteIcon} alt="facebook icon" />
-                    </Link>
-                  </Box>
-                  <Box
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    alignItems={"center"}
-                    marginTop={1}
-                  >
-                    <img src={PhoneIcon} alt="phone icon" /> &nbsp; (+237) 695
-                    151 114
-                  </Box>
-                  <Box
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    alignItems={"center"}
-                    marginTop={1}
-                  >
-                    <img src={EmailIcon} alt="email icon" /> &nbsp;
-                    devstyle@gmail.com
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box className="footer-copyright-text">Tous droits réservés © 2022</Box>
-        <img
-          src={SalyFooter}
-          alt="saly footer image"
-          className="footer-image"
-          style={{ position: "absolute", bottom: 0, left: 0 }}
-        />
       </Box>
     </Box>
   );

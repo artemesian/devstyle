@@ -1,0 +1,63 @@
+.newsletter-wrapper {
+  background-color: #f7f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .newsletter-container {
+    text-align: center;
+    .text {
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 22px;
+      margin: 30px 0;
+    }
+    .email-wrapper {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .email-input {
+        background: #ffffff;
+        border: 1px solid #220f00;
+        border-radius: 10px 0px 0px 10px;
+        height: 56px;
+        width: 70%;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        padding: 20px;
+      }
+    }
+    .button {
+      height: 56px;
+      width: 30%;
+      background-color: #220f00;
+      border-radius: 0px 10px 10px 0px;
+      color: #ffffff;
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .title {
+      font-family: "Roboto Slab";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+    }
+    img {
+      height: 56px;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+.ambassador-wrapper {
+  .ambassador-hero-section-wrapper {
+    min-height: calc(100vh - 200px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-items: center;
+    position: relative;
+    .ambassador-hero-section-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding-bottom: 100px;
+      .text {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 84px;
+        line-height: 125px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+
+        color: #ffffff;
+
+        text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
+      .subtext {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 30px;
+
+        text-align: center;
+        letter-spacing: 0.02em;
+        color: #e4e4eb;
+        z-index: 5;
+      }
+      img {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 80%;
+      }
+    }
+  }
+  .ambassadors-listing {
+    .ambassador-card {
+      height: auto;
+      width: auto;
+      .ambassador-card-top {
+        height: 450px;
+        width: 350px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        img {
+          height: 95%;
+        }
+      }
+      .name {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 60px;
+        /* identical to box height, or 278% */
+
+        display: flex;
+        align-items: center;
+        text-align: center;
+
+        color: #220f00;
+      }
+    }
+  }
+  .button {
+    margin: 10px 0 50px 0;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 60px;
+    height: 50px;
+    padding: 10px 36px;
+    text-transform: initial;
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: #220f00;
+    color: #ffffff;
+  }
+}
