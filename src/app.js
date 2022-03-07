@@ -9,7 +9,7 @@ import Ambassador from "./pages/ambassador.component.jsx";
 import About from "./pages/about.component.jsx";
 import Goodie from "./pages/goodie.component.jsx";
 import Checkout from "./pages/checkout.component.jsx";
-// import ComingSoon from "./pages/comingSoon.component.jsx";
+import ComingSoon from "./pages/comingSoon.component.jsx";
 
 //Components
 import Nav from "./components/nav.component.jsx";
@@ -24,13 +24,13 @@ const App = () => {
     <Box>
       <Nav />
       <Routes>
-        {/* <Route path="/" element={<ComingSoon />} /> */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ComingSoon />} />
+        {/*   <Route path="/" element={<Home />} />
         <Route path="/collection/:id" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/goodie/:id" element={<Goodie />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout" element={<Checkout />} /> */}
       </Routes>
       <Customize />
       <Newsletter />
