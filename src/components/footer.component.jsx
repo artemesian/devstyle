@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 import WhatsappWhiteIcon from "../assets/icons/whatsapp-white.png";
 import FacebookWhiteIcon from "../assets/icons/facebook-white.png";
@@ -30,40 +29,55 @@ const Footer = () => {
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Nos pages</Typography>
               <Box className="footer-links-wrapper">
-                <Link to="">Accueil</Link>
-                <Link to="">Shop</Link>
-                <Link to="">Contactez-Nous</Link>
-                <Link to="">Qui sommes-Nous ?</Link>
-                <Link to="">Nos Ambassadeurs</Link>
+                <a href="/">Accueil</a>
+                <a href="/#our-collections-section">Shop</a>
+                <a href="/about-us">Qui sommes-Nous ?</a>
+                <a href="/our-ambassadors">Nos Ambassadeurs</a>
               </Box>
             </Grid>
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Nos partenaires</Typography>
               <Box className="footer-links-wrapper">
-                <Link to="">
+                <a href="">
                   <img src={Glom} alt="glom icon" />
-                </Link>
+                </a>
               </Box>
             </Grid>
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Suivez nous</Typography>
               <Box className="footer-links-wrapper">
                 <Box marginBottom={5}>
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://twitter.com/_devstyle"
+                  >
                     <img src={TwitterWhiteIcon} alt="twitter icon" />
-                  </Link>
+                  </a>
                   &nbsp; &nbsp;
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://api.whatsapp.com/send/?phone=695151114&text=Hello _DevStyle"
+                  >
                     <img src={WhatsappWhiteIcon} alt="whatsapp icon" />
-                  </Link>
+                  </a>
                   &nbsp; &nbsp;
-                  <Link to="">
-                    <img src={InstaWhiteIcon} alt="instagram icon" />
-                  </Link>
-                  &nbsp; &nbsp;
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/devstyl"
+                  >
                     <img src={FacebookWhiteIcon} alt="facebook icon" />
-                  </Link>
+                  </a>
+                  &nbsp; &nbsp;
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.instagram.com/_devstyle/"
+                  >
+                    <img src={InstaWhiteIcon} alt="insta icon" />
+                  </a>
                 </Box>
                 <Box
                   display={"flex"}

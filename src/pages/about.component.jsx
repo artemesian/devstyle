@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import AboutHeroImage from "../assets/img/about-hero.png";
 import TeamImage from "../assets/img/team.jpg";
@@ -7,9 +7,11 @@ import TeamImage from "../assets/img/team.jpg";
 import "./about.styles.scss";
 
 const About = () => {
+  const match1000 = useMediaQuery("(max-width:1000px)");
+
   return (
     <Box>
-      <Box paddingX={12} className="about-wrapper">
+      <Box paddingX={match1000 ? 0 : 12} className="about-wrapper">
         <Box
           className="about-hero-section-wrapper"
           style={{
@@ -20,7 +22,13 @@ const About = () => {
         >
           <Box className="about-hero-section-container">
             <Box>
-              <Typography className="text animate__animated animate__flipInX ">
+              <Typography
+                className="text animate__animated animate__flipInX "
+                style={{
+                  fontSize: match1000 ? "48px" : "64px",
+                  lineHeight: match1000 ? "72px" : "100px",
+                }}
+              >
                 {
                   "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech"
                 }
@@ -43,6 +51,7 @@ const About = () => {
             xs={12}
             lg={6}
             style={{ display: "flex", alignItems: "center" }}
+            item
           >
             <img
               src={TeamImage}
@@ -50,7 +59,7 @@ const About = () => {
               style={{ width: "100%" }}
             />
           </Grid>
-          <Grid xs={12} lg={6}>
+          <Grid xs={12} lg={6} item>
             <Box
               padding={10}
               style={{

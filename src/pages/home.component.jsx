@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { importAll } from "../utils/utils.script";
 
@@ -20,6 +27,10 @@ import "./home.style.scss";
 
 const Home = () => {
   const [heroImageIndex, setHeroImageIndex] = useState(1);
+
+  const match1000 = useMediaQuery("(max-width:1000px)");
+  const match900 = useMediaQuery("(max-width:900px)");
+
   let collections = [
     {
       id: 1,
@@ -263,9 +274,20 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    let hash = window.location.hash;
+    try {
+      if (document.querySelector(hash)) {
+        document.querySelector(hash).scrollIntoView(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
     <Box id="home-container">
-      <Box paddingX={12} className="hero-section-wrapper">
+      <Box paddingX={match1000 ? "10%" : 12} className="hero-section-wrapper">
         <Grid container className="hero-section">
           <Grid
             item
@@ -291,16 +313,52 @@ const Home = () => {
               By the same illusion which lifts the horizon of the sea to the
               level illusion which lifts the horizon of the sea to the level
             </Typography>
-            <Button className="hero-button">npm start shopping</Button>
+            <Button className="hero-button">
+              <a
+                href="#our-collections-section"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                npm start shopping
+              </a>
+            </Button>
             <Box className="social-container">
-              <img src={TwitterIcon} alt="twitter icon" />
-              <img src={WhatsappIcon} alt="whatsapp icon" />
-              <img src={FacebookIcon} alt="facebook icon" />
-              <img src={InstaIcon} alt="insta icon" />
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://twitter.com/_devstyle"
+              >
+                <img src={TwitterIcon} alt="twitter icon" />
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://api.whatsapp.com/send/?phone=695151114&text=Hello _DevStyle"
+              >
+                <img src={WhatsappIcon} alt="whatsapp icon" />
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.facebook.com/devstyl"
+              >
+                <img src={FacebookIcon} alt="facebook icon" />
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.instagram.com/_devstyle/"
+              >
+                <img src={InstaIcon} alt="insta icon" />
+              </a>
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className="image-side">
-            <Box className="animate__animated animate__jackInTheBox  animate__delay-1s">
+            <Box
+              className="animate__animated animate__jackInTheBox  animate__delay-1s"
+              style={{
+                alignSelf: match900 ? "center" : "flex-end",
+              }}
+            >
               <img
                 src={HeroImages[`hero_image_${heroImageIndex}.png`]}
                 alt="devstyle hero image"
@@ -329,14 +387,27 @@ const Home = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box className="our-collections-section" paddingX={12} paddingY={12}>
+      <Box
+        id="our-collections-section"
+        className="our-collections-section"
+        paddingX={match1000 ? 0 : 12}
+        paddingY={12}
+      >
         <Box className="title-container">
-          <Typography className="title" component={"span"}>
+          <Typography
+            className="title"
+            style={{ fontSize: "36px" }}
+            component={"span"}
+          >
             Nos
           </Typography>
           &nbsp; &nbsp;
           <Box position={"relative"}>
-            <Typography className="title" component={"span"}>
+            <Typography
+              className="title"
+              style={{ fontSize: "36px" }}
+              component={"span"}
+            >
               Collections
             </Typography>
             <hr
@@ -354,7 +425,11 @@ const Home = () => {
           <img src={ShopBagIcon} alt="shopping bag icon" />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1} className="collections-wrapper">
+          <Grid
+            container
+            spacing={match1000 ? 0 : 1}
+            className="collections-wrapper"
+          >
             {collections.map((collection, i) => (
               <Grid
                 item
@@ -362,8 +437,8 @@ const Home = () => {
                 lg={i === collections.length - 1 ? 12 : 6}
                 key={i + "" + collection.id}
               >
-                <Link
-                  to={`/collection/1${collection.link}`}
+                <a
+                  href={`/collection/1${collection.link}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Grid
@@ -380,14 +455,18 @@ const Home = () => {
                     <Grid
                       item
                       xs={10}
-                      paddingX={i === collections.length - 1 ? 10 : 4}
+                      paddingX={
+                        i === collections.length - 1 && !match1000 ? 10 : 4
+                      }
                       justifyItems={"center"}
                       alignContent={"center"}
                       zIndex={3}
                     >
                       <Typography
                         className={`collection-item-title  ${
-                          i === collections.length - 1 ? "large" : ""
+                          i === collections.length - 1 && !match1000
+                            ? "large"
+                            : ""
                         }`}
                         component={"h2"}
                       >
@@ -402,7 +481,9 @@ const Home = () => {
                       </Typography>
                       <Button
                         className={`button ${
-                          i === collections.length - 1 ? "large" : ""
+                          i === collections.length - 1 && !match1000
+                            ? "large"
+                            : ""
                         }`}
                       >
                         this.shop.now()
@@ -416,16 +497,24 @@ const Home = () => {
                       />
                     </Grid>
                   </Grid>
-                </Link>
+                </a>
               </Grid>
             ))}
           </Grid>
         </Box>
       </Box>
-      <Box className="goodies-listing-section" paddingX={12} paddingY={12}>
-        <Box className="title-container">
+      <Box
+        className="goodies-listing-section"
+        paddingX={match1000 ? "10%" : 12}
+        paddingY={12}
+      >
+        <Box className="title-container" style={{ fontSize: "16px" }}>
           <Box position={"relative"}>
-            <Typography className="title" component={"span"}>
+            <Typography
+              className="title"
+              style={{ fontSize: "36px" }}
+              component={"span"}
+            >
               Nouveaux
             </Typography>
             <hr
@@ -441,7 +530,11 @@ const Home = () => {
             />
           </Box>
           &nbsp; &nbsp;
-          <Typography className="title" component={"span"}>
+          <Typography
+            className="title"
+            style={{ fontSize: "36px" }}
+            component={"span"}
+          >
             et Chauds
           </Typography>
           <img src={HotIcon} alt="hot icon" />
@@ -471,13 +564,21 @@ const Home = () => {
         <br />
         <br />
         <br />
-        <Box className="title-container">
-          <Typography className="title" component={"span"}>
+        <Box className="title-container" style={{ fontSize: "16px" }}>
+          <Typography
+            className="title"
+            style={{ fontSize: "36px" }}
+            component={"span"}
+          >
             En
           </Typography>
           &nbsp; &nbsp;
           <Box position={"relative"}>
-            <Typography className="title" component={"span"}>
+            <Typography
+              className="title"
+              style={{ fontSize: "36px" }}
+              component={"span"}
+            >
               Tendances
             </Typography>
             <hr

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, useMediaQuery } from "@mui/material";
 
 import VSCodeIcon from "../assets/icons/vscode.png";
 import GithubIcon from "../assets/icons/github.png";
@@ -8,8 +8,10 @@ import Saly from "../assets/img/saly.png";
 import "./customize.styles.scss";
 
 const Customize = () => {
+  const match = useMediaQuery("(max-width:900px)");
+
   return (
-    <Grid container className="custom-section">
+    <Grid container className="custom-section" id="custom-section">
       <Grid
         item
         xs={12}
@@ -32,7 +34,7 @@ const Customize = () => {
         </Typography>
         <Button className="button">Contactez-Nous </Button>
       </Grid>
-      <img src={Saly} alt="saly illustration" className="saly" />
+      {!match && <img src={Saly} alt="saly illustration" className="saly" />}
       <Grid
         item
         xs={12}
@@ -41,7 +43,23 @@ const Customize = () => {
         className="info-box"
         bgcolor={"#8FC8FF"}
         alignItems={"flex-end"}
+        overflow={"hidden"}
+        height={"500px"}
       >
+        {match && (
+          <img
+            src={Saly}
+            alt="saly illustration"
+            style={{
+              height: "600px",
+              position: "absolute",
+              left: -285,
+              bottom: 0,
+              transform: "rotateY(180deg)",
+            }}
+          />
+        )}
+
         <Typography
           className="title"
           style={{ textAlign: "right", width: "80%" }}

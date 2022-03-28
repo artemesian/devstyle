@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Button,
-  Container,
   Typography,
   useTheme,
   IconButton,
@@ -26,6 +25,8 @@ import "./nav.styles.scss";
 const Nav = () => {
   const theme = useTheme();
   const matches = useMediaQuery("(max-width:1365px)");
+  const match = useMediaQuery("(max-width:1000px)");
+
   const handleSideNav = () => {
     const element = document.querySelector("#side-nav");
 
@@ -40,7 +41,7 @@ const Nav = () => {
     element.classList.toggle("animate__slideInDown");
   };
   return (
-    <Box id="nav-wrapper" paddingX={12} paddingY={4}>
+    <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       <Box
         className="nav-container"
         style={
@@ -48,51 +49,68 @@ const Nav = () => {
         }
       >
         <Box className="nav-logo">
-          <img src={DevstyleLogo} alt="Devstyle logo" />
+          <Link to={"/"}>
+            <img src={DevstyleLogo} alt="Devstyle logo" />
+          </Link>
         </Box>
         {!matches ? (
           <Box className="middle-links">
-            <Link
-              to={"/"}
+            <a
+              href={"/"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Accueil
-            </Link>
-            <Link
-              to={"/shop"}
+            </a>
+            <a
+              href="/#our-collections-section"
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Shop
-            </Link>
-            <Link
-              to={"/our-ambassadors"}
+            </a>
+            <a
+              href={"/our-ambassadors"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Nos Ambassadeurs
-            </Link>
-            <Link
-              to={"/about-us"}
+            </a>
+            <a
+              href={"/about-us"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Qui sommes-nous ?
-            </Link>
+            </a>
           </Box>
         ) : null}
         <Box className="right-actions">
           {!matches ? (
-            <Button className="custom-goodies-buttom">Goodies customisé</Button>
+            <Button
+              className="custom-goodies-buttom"
+              onClick={() => {
+                try {
+                  if (document.querySelector("#custom-section")) {
+                    document
+                      .querySelector("#custom-section")
+                      .scrollIntoView(true);
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Goodies customisé
+            </Button>
           ) : (
             <IconButton onClick={() => handleDownNav()}>
               <HorizontalSplitOutlined fontSize="large" />
@@ -125,7 +143,8 @@ const Nav = () => {
           </IconButton>
         </Box>
         <Box className="links">
-          <Link
+          <a
+            onClick={() => handleDownNav()}
             to={"/"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
@@ -133,36 +152,53 @@ const Nav = () => {
             }}
           >
             Accueil
-          </Link>
-          <Link
-            to={"/shop"}
+          </a>
+          <a
+            onClick={() => handleDownNav()}
+            href={"/#our-collections-section"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Shop
-          </Link>
-          <Link
-            to={"/our-ambassadors"}
+          </a>
+          <a
+            onClick={() => handleDownNav()}
+            href={"/our-ambassadors"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Nos Ambassadeurs
-          </Link>
-          <Link
-            to={"/about-us"}
+          </a>
+          <a
+            onClick={() => handleDownNav()}
+            href={"/about-us"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Qui sommes-nous ?
-          </Link>
+          </a>
         </Box>
-        <Button className="custom-goodies-buttom">Goodies customisé</Button>
+        <Button
+          className="custom-goodies-buttom"
+          onClick={() => {
+            try {
+              if (document.querySelector("#custom-section")) {
+                handleDownNav();
+                document.querySelector("#custom-section").scrollIntoView(true);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Goodies customisé
+        </Button>
       </Box>
       <Box
         id="side-nav"
@@ -182,82 +218,84 @@ const Nav = () => {
             Mon Panier
           </Typography>
         </Box>
-        <Box
-          display="flex"
-          width={"100%"}
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          paddingBottom={2}
-        >
+        <a href="/" style={{ textDecoration: "none" }}>
           <Box
-            bgcolor={"#C7C9D9"}
-            height="64px"
-            width="64px"
             display="flex"
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <img src={Tshirt} alt="goodie image" style={{ height: "75%" }} />
-          </Box>
-          <Box
-            display={"flex"}
-            justifyContent={"flex-start"}
-            flexDirection={"column"}
-            paddingX={1}
-            width={"calc(100% - 64px)"}
+            width={"100%"}
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            paddingBottom={2}
           >
             <Box
-              display={"flex"}
-              justifyContent={"space-between"}
+              bgcolor={"#C7C9D9"}
+              height="64px"
+              width="64px"
+              display="flex"
+              justifyContent={"center"}
               alignItems={"center"}
             >
-              <Typography>Linux House</Typography>
-              <Box>2 × 1000 FCFA</Box>
+              <img src={Tshirt} alt="goodie image" style={{ height: "75%" }} />
             </Box>
             <Box
               display={"flex"}
               justifyContent={"flex-start"}
-              alignItems={"center"}
-              paddingY={0.5}
-              width={"100%"}
+              flexDirection={"column"}
+              paddingX={1}
+              width={"calc(100% - 64px)"}
             >
-              <Typography>color</Typography>
               <Box
-                style={{
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                  background: "#00B7C4",
-                  height: "24px",
-                  width: "24px",
-                  borderRadius: "50%",
-                  margin: " 0 5px",
-                }}
-              ></Box>{" "}
-              &nbsp;
-              <Typography>size</Typography>
-              <Box
-                style={{
-                  height: "24px",
-                  width: "24px",
-                  margin: "0 5px",
-                  border: "1px solid #000000",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
-                M
+                <Typography>Linux House</Typography>
+                <Box>2 × 1000 FCFA</Box>
               </Box>
               <Box
-                style={{
-                  marginLeft: "auto",
-                }}
+                display={"flex"}
+                justifyContent={"flex-start"}
+                alignItems={"center"}
+                paddingY={0.5}
+                width={"100%"}
               >
-                <IconButton size="small">
-                  <DeleteOutlineRounded />
-                </IconButton>
+                <Typography>color</Typography>
+                <Box
+                  style={{
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                    background: "#00B7C4",
+                    height: "24px",
+                    width: "24px",
+                    borderRadius: "50%",
+                    margin: " 0 5px",
+                  }}
+                ></Box>{" "}
+                &nbsp;
+                <Typography>size</Typography>
+                <Box
+                  style={{
+                    height: "24px",
+                    width: "24px",
+                    margin: "0 5px",
+                    border: "1px solid #000000",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  M
+                </Box>
+                <Box
+                  style={{
+                    marginLeft: "auto",
+                  }}
+                >
+                  <IconButton size="small">
+                    <DeleteOutlineRounded />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
+        </a>
 
         <Box marginTop="auto" paddingY={1} bgcolor="white">
           <Box
@@ -271,16 +309,19 @@ const Nav = () => {
               3000 FCFA
             </Typography>
           </Box>
-          <Button
-            style={{
-              width: "100%",
-              backgroundColor: "#220f00",
-              color: "white",
-              height: "56px",
-            }}
-          >
-            Finaliser ma commande
-          </Button>
+          <a href="/checkout">
+            '
+            <Button
+              style={{
+                width: "100%",
+                backgroundColor: "#220f00",
+                color: "white",
+                height: "56px",
+              }}
+            >
+              Finaliser ma commande
+            </Button>
+          </a>
         </Box>
       </Box>
     </Box>

@@ -27,6 +27,7 @@
 
         text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
         z-index: 5;
+        position: relative;
       }
       .subtext {
         font-family: Poppins;
@@ -39,6 +40,7 @@
         letter-spacing: 0.02em;
         color: #e4e4eb;
         z-index: 5;
+        position: relative;
       }
       img {
         position: absolute;

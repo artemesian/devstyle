@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+import { Box, Typography, Grid, Button, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import Image from "../assets/img/ambassador.png";
@@ -9,6 +9,8 @@ import TwitterGradientIcon from "../assets/icons/twitter-gradient.png";
 import "./ambassador.styles.scss";
 
 const Ambassador = () => {
+  const match1000 = useMediaQuery("(max-width:1000px)");
+
   let ambassadors = [
     {
       id: 1,
@@ -93,7 +95,7 @@ const Ambassador = () => {
   ];
 
   return (
-    <Box paddingX={12} className="ambassador-wrapper">
+    <Box paddingX={match1000 ? 0 : 12} className="ambassador-wrapper">
       <Box
         className="ambassador-hero-section-wrapper"
         style={{
@@ -105,7 +107,13 @@ const Ambassador = () => {
       >
         <Box className="ambassador-hero-section-container">
           <Box>
-            <Typography className="text animate__animated animate__flipInX animate__delay__1s">
+            <Typography
+              className="text animate__animated animate__flipInX animate__delay__1s"
+              style={{
+                fontSize: match1000 ? "56px" : "96px",
+                lineHeight: match1000 ? "80px" : "100px",
+              }}
+            >
               NOS AMBASSADEURS
             </Typography>
             <Typography className="subtext animate__animated animate__fadeInUp animate_delay-5s animate__slower">

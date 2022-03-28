@@ -50,6 +50,8 @@
       font-weight: 500;
       font-size: 16px;
       color: #220f00;
+      position: relative;
+      z-index: 2;
       &.large {
         background-color: #220f00;
         color: #ffffff;

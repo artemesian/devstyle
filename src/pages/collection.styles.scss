@@ -24,11 +24,14 @@
       color: #ffffff;
 
       text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 5;
     }
     img {
       position: absolute;
       right: 0;
       bottom: 0;
+      max-height: 95%;
     }
   }
 }

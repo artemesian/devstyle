@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import GoodieCard from "../components/goodieCard.component";
 
@@ -9,6 +9,8 @@ import Tshirt from "../assets/img/tshirt.png";
 import "./collection.styles.scss";
 
 const Collection = () => {
+  const match1000 = useMediaQuery("(max-width:1000px)");
+
   let collection = [
     {
       id: 1,
@@ -93,7 +95,7 @@ const Collection = () => {
   ];
 
   return (
-    <Box paddingX={12}>
+    <Box paddingX={match1000 ? 0 : 12}>
       <Box
         className="collection-hero-section-wrapper"
         style={{
@@ -102,7 +104,12 @@ const Collection = () => {
         padding={10}
       >
         <Box className="collection-hero-section-container">
-          <Typography className="text">Nos T-SHIRTS</Typography>
+          <Typography
+            className="text"
+            style={{ fontSize: match1000 ? "72px" : "96px" }}
+          >
+            Nos T-SHIRTS
+          </Typography>
           <img src={Image} alt="collection hero image" />
         </Box>
       </Box>

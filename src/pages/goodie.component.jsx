@@ -84,14 +84,14 @@ const Goodie = () => {
               </Box>
               <Box className="price">
                 <Typography className="price">5000 FCFA</Typography>
-                <Typography
+                <div
                   style={{
                     color: "#ff3b3b",
                     textDecoration: "line-through",
                   }}
                 >
                   <Typography className="promotion">6500 FCFA</Typography>
-                </Typography>
+                </div>
               </Box>
               <Box className="quantity">
                 <Typography className="label">Quantité</Typography>
