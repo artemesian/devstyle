@@ -8,6 +8,7 @@ import "animate.css";
 
 ReactDOM.render(
   <BrowserRouter>
+    {console.log("Index")}
     <React.StrictMode>
       <App />
     </React.StrictMode>

@@ -67,7 +67,7 @@ const Customize = () => {
           Pour tout autre chose
         </Typography>
         <Typography className="text" style={{ textAlign: "right" }}>
-          Discuter, partenariat, couverture d’evenements etc. N’hesitez pas..
+          Discuter, partenariat, couverture d’événements etc. N’hesitez pas..
         </Typography>
         <Button className="button">Contactez-Nous Ici</Button>
       </Grid>

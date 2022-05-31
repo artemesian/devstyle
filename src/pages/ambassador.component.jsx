@@ -1,98 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Button, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import AmbassadorCardSkeleton from "../components/ambassadorCardSkeleton.component";
+
 import Image from "../assets/img/ambassador.png";
-import AmbassadorMan from "../assets/img/ambassador-man.png";
-import TwitterGradientIcon from "../assets/icons/twitter-gradient.png";
 
 import "./ambassador.styles.scss";
+import { AMBASSADORS_SEEDER } from "../utils/seeders.data";
+import { scrollToTop } from "../utils/utils.script";
 
 const Ambassador = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
+  const [isLoadingAmbassadors, setIsLoadingAmbassadors] = useState(true);
+  const [ambassadors, setAmbassadors] = useState([]);
 
-  let ambassadors = [
-    {
-      id: 1,
-      color: "#CCDDFF",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 2,
-      color: "#C7C9D9",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 3,
-      color: "#CCDDFF",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 4,
-      color: "#e3fff1",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 5,
-      color: "#CCDDFF",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 6,
-      color: "#C7C9D9",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 7,
-      color: "#CCDDFF",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 8,
-      color: "#e3fff1",
-      // image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-  ];
+  useEffect(() => {
+    setTimeout(() => {
+      //TODO: LOAD AMBASSADORS
+      setAmbassadors(AMBASSADORS_SEEDER);
+      setIsLoadingAmbassadors(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <Box paddingX={match1000 ? 0 : 12} className="ambassador-wrapper">
@@ -123,49 +56,78 @@ const Ambassador = () => {
           </Box>
           <img
             src={Image}
-            alt="ambassador hero image"
+            alt="ambassador hero"
             className="animate__animated animate__fadeInBottomRight animate__delay-1s"
           />
         </Box>
       </Box>
       <Box className="ambassadors-listing" marginTop={15} marginBottom={8}>
         <Grid container spacing={5}>
-          {ambassadors.map((goodie, i) => (
-            <Grid
-              key={i + " " + goodie.id}
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              xl={3}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box className="ambassador-card">
-                <Box
-                  className="ambassador-card-top  animate__animated animate__fadeIn"
-                  style={{
-                    background:
-                      "linear-gradient(147.14deg, #3E7BFA 6.95%, #6600CC 93.05%)",
-                  }}
-                >
-                  <img src={AmbassadorMan} alt="ambassador image" />
+          {isLoadingAmbassadors ? (
+            <>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <AmbassadorCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <AmbassadorCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <AmbassadorCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <AmbassadorCardSkeleton />
+              </Grid>
+            </>
+          ) : (
+            ambassadors.list.map((ambassador, i) => (
+              <Grid
+                key={i + " " + ambassador.id}
+                item
+                xs={12}
+                md={6}
+                lg={4}
+                xl={3}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box className="ambassador-card">
+                  <Box
+                    className="ambassador-card-top  animate__animated animate__fadeIn"
+                    style={{
+                      background: `linear-gradient(147.14deg, ${ambassadors.colors[0]} 6.95%, ${ambassadors.colors[1]} 93.05%)`,
+                    }}
+                  >
+                    <img src={ambassador.image} alt={ambassador.name} />
+                  </Box>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"center"}
+                    flexDirection={"column"}
+                    alignItems={"center"}
+                  >
+                    <Typography className="name">{ambassador.name}</Typography>
+                    {ambassador.social.map((social, i) => (
+                      <>
+                        <a
+                          href={social.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={`/social/${social.name}.png`}
+                            alt={social.name}
+                          />
+                        </a>
+                      </>
+                    ))}
+                  </Box>
                 </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  flexDirection={"column"}
-                  alignItems={"center"}
-                >
-                  <Typography className="name">Rayan</Typography>
-                  <img src={TwitterGradientIcon} alt="twitter icon" />
-                </Box>
-              </Box>
-            </Grid>
-          ))}
+              </Grid>
+            ))
+          )}
         </Grid>
       </Box>
       <Box

@@ -6,3 +6,13 @@ export const importAll = (r) => {
 
 export const calculatePromoPrice = (price, promoPercentage) =>
   (price - (price * promoPercentage) / 100).toFixed(0);
+
+export const scrollToTop = () => {
+  try {
+    if (document.querySelector("body")) {
+      document.querySelector("body").scrollIntoView(true);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

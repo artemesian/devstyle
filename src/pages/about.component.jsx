@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import AboutHeroImage from "../assets/img/about-hero.png";
 import TeamImage from "../assets/img/team.jpg";
 
 import "./about.styles.scss";
+import { scrollToTop } from "../utils/utils.script";
 
 const About = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <Box>
@@ -36,7 +40,7 @@ const About = () => {
             </Box>
             <img
               src={AboutHeroImage}
-              alt="about hero image"
+              alt="about hero"
               className="animate__animated animate__fadeInUp animate__delay-1s animate__fast"
             />
           </Box>
@@ -55,7 +59,7 @@ const About = () => {
           >
             <img
               src={TeamImage}
-              alt="devstyle team image"
+              alt="devstyle team"
               style={{ width: "100%" }}
             />
           </Grid>

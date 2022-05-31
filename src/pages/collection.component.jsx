@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import GoodieCard from "../components/goodieCard.component";
@@ -7,6 +7,8 @@ import Image from "../assets/img/collection-preview/tshirt.png";
 import Tshirt from "../assets/img/tshirt.png";
 
 import "./collection.styles.scss";
+import { Outlet } from "react-router-dom";
+import { scrollToTop } from "../utils/utils.script";
 
 const Collection = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
@@ -94,8 +96,13 @@ const Collection = () => {
     },
   ];
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <Box paddingX={match1000 ? 0 : 12}>
+      <Outlet />
       <Box
         className="collection-hero-section-wrapper"
         style={{
@@ -110,7 +117,7 @@ const Collection = () => {
           >
             Nos T-SHIRTS
           </Typography>
-          <img src={Image} alt="collection hero image" />
+          <img src={Image} alt="collection hero" />
         </Box>
       </Box>
       <Box className="goodies-container" marginY={20}>

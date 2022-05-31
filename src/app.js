@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 
@@ -19,18 +19,83 @@ import Footer from "./components/footer.component";
 
 import "./app.styles.scss";
 
+import { calculatePromoPrice } from "./utils/utils.script.js";
+
 const App = () => {
+  const [cart, setCart] = useState({});
+  //TODO: TOAST GOODIE ADDITION
+  const addToCart = (goodie) => {
+    let copyCart = { ...cart };
+    if (copyCart[goodie.cartID]) {
+      copyCart[goodie.cartID].quantity += goodie.quantity;
+    } else {
+      copyCart[goodie.cartID] = goodie;
+    }
+    setCart(copyCart);
+  };
+
+  const updateCart = (goodie, value) => {
+    let copyCart = { ...cart };
+    if (copyCart[goodie.cartID]) {
+      copyCart[goodie.cartID].quantity += value;
+      if (copyCart[goodie.cartID].quantity === 0) {
+        return deleteFromCart(goodie.cartID);
+      }
+    }
+    setCart(copyCart);
+  };
+
+  const deleteFromCart = (id) => {
+    let copyCart = { ...cart };
+    delete copyCart[id];
+    setCart(copyCart);
+  };
+
+  const getTotalPrice = () => {
+    let total = Object.values(cart).reduce(
+      (acc, goodie, i) =>
+        (acc +=
+          goodie.quantity *
+          (goodie.inPromo
+            ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+            : goodie.price)),
+      0
+    );
+
+    return total;
+  };
+  const getCartCount = () => {
+    let count = Object.entries(cart).length;
+    return count;
+  };
+
   return (
     <Box>
-      <Nav />
+      <Nav
+        cart={cart}
+        deleteFromCart={deleteFromCart}
+        getTotalPrice={getTotalPrice}
+        getCartCount={getCartCount}
+      />
       <Routes>
         {/* <Route path="/" element={<ComingSoon />} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/collection/:id" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
-        <Route path="/goodie/:id" element={<Goodie />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/goodie/:id" element={<Goodie addToCart={addToCart} />} />
+        <Route
+          path="/checkout"
+          element={
+            <Checkout
+              cart={cart}
+              deleteFromCart={deleteFromCart}
+              getTotalPrice={getTotalPrice}
+              getCartCount={getCartCount}
+              updateCart={updateCart}
+            />
+          }
+        />
       </Routes>
       <Customize />
       <Newsletter />

@@ -20,6 +20,7 @@
       display: flex;
       flex-direction: column;
       padding: 25px 0px;
+      flex-wrap: wrap;
       a {
         color: white;
         text-decoration: none;
@@ -46,15 +47,15 @@
   .footer-image {
     position: absolute;
   }
-}
-.button {
-  font-family: Roboto Slab;
-  font-size: 16px;
-  color: #ffffff;
-  background: #220f00;
-  border-radius: 32px;
-  text-transform: initial;
-  height: 50px;
-  padding: 0 46px;
-  margin: auto;
+  .button {
+    font-family: Roboto Slab;
+    font-size: 16px;
+    color: #ffffff;
+    background: #220f00;
+    border-radius: 32px;
+    text-transform: initial;
+    height: 50px;
+    padding: 0 46px;
+    margin: auto;
+  }
 }

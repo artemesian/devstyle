@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -6,6 +6,7 @@ import {
   useTheme,
   IconButton,
   useMediaQuery,
+  Icon,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
@@ -18,14 +19,17 @@ import DevstyleLogo from "../assets/img/devstyle-logo.png";
 import DevStyleWhiteLogo from "../assets/img/devstyle-white-logo.png";
 import Cart from "../assets/icons/cart.png";
 import CloseWhite from "../assets/icons/close.png";
-import Tshirt from "../assets/img/tshirt.png";
 
 import "./nav.styles.scss";
+import { calculatePromoPrice } from "../utils/utils.script";
 
-const Nav = () => {
+const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   const theme = useTheme();
   const matches = useMediaQuery("(max-width:1365px)");
   const match = useMediaQuery("(max-width:1000px)");
+  const match560 = useMediaQuery("(min-width:560px)");
+
+  const [announce, setAnnounce] = useState({});
 
   const handleSideNav = () => {
     const element = document.querySelector("#side-nav");
@@ -40,6 +44,18 @@ const Nav = () => {
     element.classList.toggle("hide");
     element.classList.toggle("animate__slideInDown");
   };
+
+  useEffect(() => {
+    // TODO: LOAD ANNOUNCEMENT
+    let announcement = {
+      title: "Announcement",
+      text: " La Collection 'Blockchain Era' est maintenant disponible🎉",
+      link: "https",
+      exist: true,
+    };
+    setAnnounce(announcement);
+  }, []);
+
   return (
     <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       <Box
@@ -55,42 +71,53 @@ const Nav = () => {
         </Box>
         {!matches ? (
           <Box className="middle-links">
-            <a
-              href={"/"}
+            <Link
+              to={"/"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Accueil
-            </a>
-            <a
-              href="/#our-collections-section"
+            </Link>
+            <Link
+              to="/#our-collections-section"
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
+              onClick={() => {
+                try {
+                  if (document.querySelector("#our-collections-section")) {
+                    document
+                      .querySelector("#our-collections-section")
+                      .scrollIntoView(true);
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
             >
               Shop
-            </a>
-            <a
-              href={"/our-ambassadors"}
+            </Link>
+            <Link
+              to={"/our-ambassadors"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Nos Ambassadeurs
-            </a>
-            <a
-              href={"/about-us"}
+            </Link>
+            <Link
+              to={"/about-us"}
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
               }}
             >
               Qui sommes-nous ?
-            </a>
+            </Link>
           </Box>
         ) : null}
         <Box className="right-actions">
@@ -118,10 +145,25 @@ const Nav = () => {
           )}
           <Box className="cart-button" onClick={() => handleSideNav()}>
             <img src={Cart} alt="cart icon" />
-            <span>6</span>
+            <span>{getCartCount() ?? 0}</span>
           </Box>
         </Box>
       </Box>
+      {announce.exist && (
+        <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
+          <Link to={announce.link} style={{ width: "auto" }}>
+            <Typography className="notif" component={"span"}>
+              {match560 && <Box className="title">{announce.title}</Box>}
+              <Typography className="text">{announce.text}</Typography>
+              <Box className="icon">
+                <Icon baseClassName="material-icons-round" color="warning">
+                  chevron_right
+                </Icon>
+              </Box>
+            </Typography>
+          </Link>
+        </Box>
+      )}
       <Box
         id="down-nav"
         className="hide animate__animated animate__faster"
@@ -143,46 +185,57 @@ const Nav = () => {
           </IconButton>
         </Box>
         <Box className="links">
-          <a
-            onClick={() => handleDownNav()}
+          <Link
             to={"/"}
+            onClick={() => handleDownNav()}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Accueil
-          </a>
-          <a
-            onClick={() => handleDownNav()}
-            href={"/#our-collections-section"}
+          </Link>
+          <Link
+            to={"/#our-collections-section"}
+            onClick={() => {
+              try {
+                if (document.querySelector("#our-collections-section")) {
+                  handleDownNav();
+                  document
+                    .querySelector("#our-collections-section")
+                    .scrollIntoView(true);
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Shop
-          </a>
-          <a
+          </Link>
+          <Link
+            to={"/our-ambassadors"}
             onClick={() => handleDownNav()}
-            href={"/our-ambassadors"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Nos Ambassadeurs
-          </a>
-          <a
+          </Link>
+          <Link
+            to={"/about-us"}
             onClick={() => handleDownNav()}
-            href={"/about-us"}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
             }}
           >
             Qui sommes-nous ?
-          </a>
+          </Link>
         </Box>
         <Button
           className="custom-goodies-buttom"
@@ -218,8 +271,9 @@ const Nav = () => {
             Mon Panier
           </Typography>
         </Box>
-        <a href="/" style={{ textDecoration: "none" }}>
+        {Object.values(cart).map((goodie, i) => (
           <Box
+            key={"cart-" + goodie.cartID + "-" + i}
             display="flex"
             width={"100%"}
             justifyContent="flex-start"
@@ -227,14 +281,26 @@ const Nav = () => {
             paddingBottom={2}
           >
             <Box
-              bgcolor={"#C7C9D9"}
+              bgcolor={
+                goodie.images.find(
+                  (image) => image.id === goodie.selectedColor.id
+                ).color ?? goodie.mainImage.color
+              }
               height="64px"
               width="64px"
               display="flex"
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <img src={Tshirt} alt="goodie image" style={{ height: "75%" }} />
+              <img
+                src={
+                  goodie.images.find(
+                    (image) => image.id === goodie.selectedColor.id
+                  ).image ?? goodie.mainImage.image
+                }
+                alt="goodie"
+                style={{ height: "75%" }}
+              />
             </Box>
             <Box
               display={"flex"}
@@ -246,10 +312,26 @@ const Nav = () => {
               <Box
                 display={"flex"}
                 justifyContent={"space-between"}
-                alignItems={"center"}
+                // alignItems={"center"}
               >
-                <Typography>Linux House</Typography>
-                <Box>2 × 1000 FCFA</Box>
+                {" "}
+                <Link
+                  to={"/goodie/" + goodie.slug}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "13px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {goodie.name}
+                </Link>
+                <Box style={{ fontSize: "10px" }}>
+                  {goodie.quantity} ×{" "}
+                  {goodie.inPromo
+                    ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+                    : goodie.price}{" "}
+                  FCFA
+                </Box>
               </Box>
               <Box
                 display={"flex"}
@@ -258,11 +340,11 @@ const Nav = () => {
                 paddingY={0.5}
                 width={"100%"}
               >
-                <Typography>color</Typography>
+                <Typography style={{ fontSize: "12px" }}>color</Typography>
                 <Box
                   style={{
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    background: "#00B7C4",
+                    background: goodie.selectedColor.color,
                     height: "24px",
                     width: "24px",
                     borderRadius: "50%",
@@ -270,7 +352,7 @@ const Nav = () => {
                   }}
                 ></Box>{" "}
                 &nbsp;
-                <Typography>size</Typography>
+                <Typography style={{ fontSize: "12px" }}>size</Typography>
                 <Box
                   style={{
                     height: "24px",
@@ -279,23 +361,28 @@ const Nav = () => {
                     border: "1px solid #000000",
                     display: "flex",
                     justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "14px",
                   }}
                 >
-                  M
+                  <span>{goodie.selectedSize.size}</span>
                 </Box>
                 <Box
                   style={{
                     marginLeft: "auto",
                   }}
                 >
-                  <IconButton size="small">
+                  <IconButton
+                    size="small"
+                    onClick={() => deleteFromCart(goodie.cartID)}
+                  >
                     <DeleteOutlineRounded />
                   </IconButton>
                 </Box>
               </Box>
             </Box>
           </Box>
-        </a>
+        ))}
 
         <Box marginTop="auto" paddingY={1} bgcolor="white">
           <Box
@@ -306,11 +393,10 @@ const Nav = () => {
           >
             <Typography>Total</Typography>{" "}
             <Typography style={{ fontSize: "20px", fontWeight: "bold" }}>
-              3000 FCFA
+              {getTotalPrice() ?? 0} FCFA
             </Typography>
           </Box>
-          <a href="/checkout">
-            '
+          <Link to="/checkout" style={{ textDecoration: "none" }}>
             <Button
               style={{
                 width: "100%",
@@ -321,7 +407,7 @@ const Nav = () => {
             >
               Finaliser ma commande
             </Button>
-          </a>
+          </Link>
         </Box>
       </Box>
     </Box>
