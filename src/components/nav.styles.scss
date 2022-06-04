@@ -3,8 +3,11 @@
   width: 100%;
   height: 120px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 90px;
+  padding-top: 65px;
   > .nav-container {
     display: flex;
     justify-content: center;
@@ -73,6 +76,45 @@
           font-weight: 600;
           color: #220f00;
         }
+      }
+    }
+  }
+  > .notif-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    .notif {
+      background: #220f00;
+      border-radius: 32px;
+      font-size: 14px;
+      width: auto;
+      display: flex;
+      align-items: center;
+      padding: 5px 5px;
+
+      .title {
+        text-transform: uppercase;
+        background-color: #ed6c0255;
+        height: 100%;
+        color: #ed6c02;
+        border-radius: 32px;
+        font-size: 13px;
+        padding: 3px 10px;
+      }
+      .text {
+        color: #c7c9d9;
+        padding: 0 10px 0 20px;
+        font-size: 13px;
+        font-family: "Roboto Slab";
+        font-weight: 350;
+      }
+      .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

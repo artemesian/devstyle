@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+import ReactGA from "react-ga";
+import { toast } from "react-toastify";
 
 //Pages
 import Home from "./pages/home.component.jsx";
@@ -19,18 +21,118 @@ import ComingSoon from "./pages/comingSoon.component.jsx";
 
 import "./app.styles.scss";
 
+import { calculatePromoPrice } from "./utils/utils.script.js";
+// import myAxios from "./utils/axios.config.js";
+
+export const analyticsEventTracker = (category = "Unknown") => {
+  const eventTracker = (action = "Unknown", label = "Unknown") => {
+    ReactGA.event({ category, action, label });
+  };
+  return eventTracker;
+};
+
 const App = () => {
+  let m_ID = "G-LWCBK761GY";
+  ReactGA.initialize(m_ID);
+  const [cart, setCart] = useState({});
+
+  const handleCart = (newCart) => {
+    localStorage.setItem("devStyle_cart", JSON.stringify(newCart));
+    setCart(newCart);
+  };
+
+  const addToCart = (goodie) => {
+    let copyCart = { ...cart };
+    if (copyCart[goodie.cartID]) {
+      copyCart[goodie.cartID].quantity += goodie.quantity;
+    } else {
+      copyCart[goodie.cartID] = goodie;
+    }
+    toast.info(<div style={{ color: "#fff" }}> Dans le panier</div>, {
+      icon: "🗑️",
+      style: { textAlign: "center" },
+    });
+    handleCart(copyCart);
+  };
+
+  const updateCart = (goodie, value) => {
+    let copyCart = { ...cart };
+    if (copyCart[goodie.cartID]) {
+      copyCart[goodie.cartID].quantity += value;
+      if (copyCart[goodie.cartID].quantity === 0) {
+        return deleteFromCart(goodie.cartID);
+      }
+    }
+    handleCart(copyCart);
+  };
+
+  const deleteFromCart = (id) => {
+    let copyCart = { ...cart };
+    delete copyCart[id];
+    handleCart(copyCart);
+  };
+
+  const getTotalPrice = () => {
+    let total = Object.values(cart).reduce(
+      (acc, goodie, i) =>
+        (acc +=
+          goodie.quantity *
+          (goodie.inPromo
+            ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+            : goodie.price)),
+      0
+    );
+
+    return total;
+  };
+  const getCartCount = () => {
+    let count = Object.entries(cart).length;
+    return count;
+  };
+
+  useEffect(() => {
+    let cartFromLocalStorage = JSON.parse(
+      localStorage.getItem("devStyle_cart")
+    );
+    if (cartFromLocalStorage) {
+      setCart(cartFromLocalStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   return (
     <Box>
-      {/* <Nav /> */}
+      <Nav
+        cart={cart}
+        deleteFromCart={deleteFromCart}
+        getTotalPrice={getTotalPrice}
+        getCartCount={getCartCount}
+      />
       <Routes>
-        <Route path="/" element={<ComingSoon />} />
-        {/* <Route path="/" element={<Home />} />
-        <Route path="/collection/:id" element={<Collection />} />
+        {/* <Route path="/" element={<ComingSoon />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/collection/:slug" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
-        <Route path="/goodie/:id" element={<Goodie />} />
-        <Route path="/checkout" element={<Checkout />} /> */}
+        <Route
+          path="/goodie/:slug"
+          element={<Goodie addToCart={addToCart} />}
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Checkout
+              cart={cart}
+              deleteFromCart={deleteFromCart}
+              getTotalPrice={getTotalPrice}
+              getCartCount={getCartCount}
+              updateCart={updateCart}
+            />
+          }
+        />
       </Routes>
       {/* <Customize />
       <Newsletter />

@@ -5,6 +5,8 @@
     min-height: calc(100vh - 120px);
     width: 100%;
     overflow: hidden;
+    position: relative;
+    top: -20px;
     .hero-section {
       width: 100%;
       .text-side {
@@ -52,6 +54,7 @@
           top: 40px;
           img {
             margin-right: 15px;
+            height: 28px;
           }
         }
       }

@@ -1,20 +1,44 @@
-import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Grid, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import Spinner from "./spinner.component";
 
 import WhatsappWhiteIcon from "../assets/icons/whatsapp-white.png";
 import FacebookWhiteIcon from "../assets/icons/facebook-white.png";
 import TwitterWhiteIcon from "../assets/icons/twitter-white.png";
 import InstaWhiteIcon from "../assets/icons/insta-white.png";
+import TiktokWhiteIcon from "../assets/icons/tiktok-white.png";
 import PhoneIcon from "../assets/icons/phone-white.png";
 import EmailIcon from "../assets/icons/email.png";
 import DevStyleWhite from "../assets/img/devstyle-white-logo.png";
 import SalyFooter from "../assets/img/saly-footer.png";
-import Glom from "../assets/icons/glom.png";
 
 import "./footer.styles.scss";
+// import { PARTNERS_SEEDER } from "../utils/seeders.data";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Footer = () => {
+  const [isLoadingPartners, setIsLoadingPartners] = useState(true);
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    myAxios
+      .get("/partner/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setPartners(response.data.message);
+          setIsLoadingPartners(false);
+        } else {
+          console.log(response.data.message);
+          setPartners([]);
+          setIsLoadingPartners(false);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <Box className="footer-wrapper" position={"relative"}>
       <Box paddingX={10} paddingY={5}>
@@ -22,6 +46,7 @@ const Footer = () => {
           <Grid item xs={12} lg={4}>
             <img
               src={DevStyleWhite}
+              style={{ marginBottom: 20 }}
               alt="devstyle netcode logo"
               className="devstyle-netcode-logo"
             />
@@ -30,40 +55,116 @@ const Footer = () => {
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Nos pages</Typography>
               <Box className="footer-links-wrapper">
-                <Link to="">Accueil</Link>
-                <Link to="">Shop</Link>
-                <Link to="">Contactez-Nous</Link>
-                <Link to="">Qui sommes-Nous ?</Link>
-                <Link to="">Nos Ambassadeurs</Link>
+                <Link to="/">Accueil</Link>
+                <Link
+                  to="/#our-collections-section"
+                  onClick={() => {
+                    try {
+                      if (document.querySelector("#our-collections-section")) {
+                        document
+                          .querySelector("#our-collections-section")
+                          .scrollIntoView(true);
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                >
+                  Shop
+                </Link>
+                <Link to="/about-us">Qui sommes-Nous ?</Link>
+                <Link to="/our-ambassadors">Nos Ambassadeurs</Link>
               </Box>
             </Grid>
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Nos partenaires</Typography>
-              <Box className="footer-links-wrapper">
-                <Link to="">
-                  <img src={Glom} alt="glom icon" />
-                </Link>
-              </Box>
+              {isLoadingPartners ? (
+                <Box className="footer-links-wrapper">
+                  <Spinner size={25} thickness={3} color={"white"} />
+                </Box>
+              ) : (
+                <Box
+                  className="footer-links-wrapper"
+                  style={{ flexDirection: "row" }}
+                >
+                  {partners.map((partner, index) => (
+                    <a
+                      key={index + "-" + partner._id}
+                      href={partner.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ margin: "0 15px 15px 0" }}
+                    >
+                      <Tooltip title={partner.name}>
+                        <img
+                          src={partner.logoWhite.url}
+                          alt={partner.name}
+                          style={{ height: "48px" }}
+                        />
+                      </Tooltip>
+                    </a>
+                  ))}
+                </Box>
+              )}
             </Grid>
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Suivez nous</Typography>
               <Box className="footer-links-wrapper">
                 <Box marginBottom={5}>
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("twitter");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://twitter.com/_devstyle"
+                  >
                     <img src={TwitterWhiteIcon} alt="twitter icon" />
-                  </Link>
+                  </a>
                   &nbsp; &nbsp;
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("whatsapp");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://api.whatsapp.com/send/?phone=237692650993&text=Hello _DevStyle"
+                  >
                     <img src={WhatsappWhiteIcon} alt="whatsapp icon" />
-                  </Link>
+                  </a>
                   &nbsp; &nbsp;
-                  <Link to="">
-                    <img src={InstaWhiteIcon} alt="instagram icon" />
-                  </Link>
-                  &nbsp; &nbsp;
-                  <Link to="">
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("facebook");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/devstyl"
+                  >
                     <img src={FacebookWhiteIcon} alt="facebook icon" />
-                  </Link>
+                  </a>
+                  &nbsp; &nbsp;
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("instagram");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://www.instagram.com/_devstyle/"
+                  >
+                    <img src={InstaWhiteIcon} alt="insta icon" />
+                  </a>
+                  &nbsp; &nbsp;
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("tiktok");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://www.tiktok.com/@_devstyle"
+                  >
+                    <img src={TiktokWhiteIcon} alt="tiktok icon" />
+                  </a>
                 </Box>
                 <Box
                   display={"flex"}
@@ -72,7 +173,10 @@ const Footer = () => {
                   marginTop={1}
                 >
                   <img src={PhoneIcon} alt="phone icon" /> &nbsp;&nbsp;
-                  <a href="tel:+237695151114">(+237) 695 151 114</a>
+                  <Box>
+                    <a href="tel:+237692650993">(+237) 692 650 993</a>
+                    <a href="tel:+237654456264"> / 654 456 264</a>
+                  </Box>
                 </Box>
                 <Box
                   display={"flex"}
@@ -93,7 +197,7 @@ const Footer = () => {
       <Box className="footer-copyright-text">Tous droits réservés © 2022</Box>
       <img
         src={SalyFooter}
-        alt="saly footer image"
+        alt="saly footer"
         className="footer-image"
         style={{ position: "absolute", bottom: 0, left: 0 }}
       />

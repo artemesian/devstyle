@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
-  Container,
   Typography,
   useTheme,
   IconButton,
   useMediaQuery,
+  Icon,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
@@ -19,13 +19,20 @@ import DevstyleLogo from "../assets/img/devstyle-logo.png";
 import DevStyleWhiteLogo from "../assets/img/devstyle-white-logo.png";
 import Cart from "../assets/icons/cart.png";
 import CloseWhite from "../assets/icons/close.png";
-import Tshirt from "../assets/img/tshirt.png";
 
 import "./nav.styles.scss";
+import { calculatePromoPrice } from "../utils/utils.script";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
-const Nav = () => {
+const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   const theme = useTheme();
   const matches = useMediaQuery("(max-width:1365px)");
+  const match = useMediaQuery("(max-width:1000px)");
+  const match560 = useMediaQuery("(min-width:560px)");
+
+  const [announce, setAnnounce] = useState({});
+
   const handleSideNav = () => {
     const element = document.querySelector("#side-nav");
 
@@ -39,8 +46,23 @@ const Nav = () => {
     element.classList.toggle("hide");
     element.classList.toggle("animate__slideInDown");
   };
+
+  useEffect(() => {
+    myAxios
+      .get("/announcement")
+      .then((response) => {
+        if (response.status === 200) {
+          setAnnounce(response.data.message);
+        } else {
+          console.log(response.data.message);
+          setAnnounce({});
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <Box id="nav-wrapper" paddingX={12} paddingY={4}>
+    <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       <Box
         className="nav-container"
         style={
@@ -48,7 +70,9 @@ const Nav = () => {
         }
       >
         <Box className="nav-logo">
-          <img src={DevstyleLogo} alt="Devstyle logo" />
+          <Link to={"/"}>
+            <img src={DevstyleLogo} alt="Devstyle logo" />
+          </Link>
         </Box>
         {!matches ? (
           <Box className="middle-links">
@@ -62,10 +86,21 @@ const Nav = () => {
               Accueil
             </Link>
             <Link
-              to={"/shop"}
+              to="/#our-collections-section"
               style={{
                 padding: `0px ${theme.spacing(2)}`,
                 color: theme.palette.common.black,
+              }}
+              onClick={() => {
+                try {
+                  if (document.querySelector("#our-collections-section")) {
+                    document
+                      .querySelector("#our-collections-section")
+                      .scrollIntoView(true);
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
               }}
             >
               Shop
@@ -92,7 +127,25 @@ const Nav = () => {
         ) : null}
         <Box className="right-actions">
           {!matches ? (
-            <Button className="custom-goodies-buttom">Goodies customisé</Button>
+            <Button
+              className="custom-goodies-buttom"
+              onClick={() => {
+                try {
+                  analyticsEventTracker("CUSTOM GOODIE")(
+                    "go to custom goodie section"
+                  );
+                  if (document.querySelector("#custom-section")) {
+                    document
+                      .querySelector("#custom-section")
+                      .scrollIntoView(true);
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Goodies customisé
+            </Button>
           ) : (
             <IconButton onClick={() => handleDownNav()}>
               <HorizontalSplitOutlined fontSize="large" />
@@ -100,10 +153,33 @@ const Nav = () => {
           )}
           <Box className="cart-button" onClick={() => handleSideNav()}>
             <img src={Cart} alt="cart icon" />
-            <span>6</span>
+            <span>{getCartCount() ?? 0}</span>
           </Box>
         </Box>
       </Box>
+      {announce._id && (
+        <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
+          <a
+            href={announce.link}
+            style={{ width: "auto" }}
+            onClick={() => {
+              analyticsEventTracker("ANNOUNCEMENT")("click announcement");
+            }}
+          >
+            <Typography className="notif" component={"span"}>
+              {match560 && <Box className="title">Announcement</Box>}
+              <Typography className="text">{announce.text}</Typography>
+              {announce.link && (
+                <Box className="icon">
+                  <Icon baseClassName="material-icons-round" color="warning">
+                    chevron_right
+                  </Icon>
+                </Box>
+              )}
+            </Typography>
+          </a>
+        </Box>
+      )}
       <Box
         id="down-nav"
         className="hide animate__animated animate__faster"
@@ -127,6 +203,7 @@ const Nav = () => {
         <Box className="links">
           <Link
             to={"/"}
+            onClick={() => handleDownNav()}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
@@ -135,7 +212,19 @@ const Nav = () => {
             Accueil
           </Link>
           <Link
-            to={"/shop"}
+            to={"/#our-collections-section"}
+            onClick={() => {
+              try {
+                if (document.querySelector("#our-collections-section")) {
+                  handleDownNav();
+                  document
+                    .querySelector("#our-collections-section")
+                    .scrollIntoView(true);
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
@@ -145,6 +234,7 @@ const Nav = () => {
           </Link>
           <Link
             to={"/our-ambassadors"}
+            onClick={() => handleDownNav()}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
@@ -154,6 +244,7 @@ const Nav = () => {
           </Link>
           <Link
             to={"/about-us"}
+            onClick={() => handleDownNav()}
             style={{
               padding: `0px ${theme.spacing(2)}`,
               color: theme.palette.common.black,
@@ -162,7 +253,24 @@ const Nav = () => {
             Qui sommes-nous ?
           </Link>
         </Box>
-        <Button className="custom-goodies-buttom">Goodies customisé</Button>
+        <Button
+          className="custom-goodies-buttom"
+          onClick={() => {
+            analyticsEventTracker("CUSTOM GOODIE")(
+              "go to custom goodie section"
+            );
+            try {
+              if (document.querySelector("#custom-section")) {
+                handleDownNav();
+                document.querySelector("#custom-section").scrollIntoView(true);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Goodies customisé
+        </Button>
       </Box>
       <Box
         id="side-nav"
@@ -182,82 +290,121 @@ const Nav = () => {
             Mon Panier
           </Typography>
         </Box>
-        <Box
-          display="flex"
-          width={"100%"}
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          paddingBottom={2}
-        >
+        {Object.values(cart).map((goodie, i) => (
           <Box
-            bgcolor={"#C7C9D9"}
-            height="64px"
-            width="64px"
+            key={"cart-" + goodie.cartID + "-" + i}
             display="flex"
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <img src={Tshirt} alt="goodie image" style={{ height: "75%" }} />
-          </Box>
-          <Box
-            display={"flex"}
-            justifyContent={"flex-start"}
-            flexDirection={"column"}
-            paddingX={1}
-            width={"calc(100% - 64px)"}
+            width={"100%"}
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            paddingBottom={2}
           >
             <Box
-              display={"flex"}
-              justifyContent={"space-between"}
+              bgcolor={
+                goodie.backgroundColors[
+                  goodie.images.findIndex(
+                    (image) => image.url === goodie.mainImage.url
+                  )
+                ] ?? goodie.backgroundColors[0]
+              }
+              height="64px"
+              width="64px"
+              display="flex"
+              justifyContent={"center"}
               alignItems={"center"}
             >
-              <Typography>Linux House</Typography>
-              <Box>2 × 1000 FCFA</Box>
+              <img
+                src={
+                  // goodie.images.find(
+                  //   (image) => image.id === goodie.selectedColor.id
+                  // ).image ?? goodie.mainImage.image
+                  goodie.mainImage.url
+                }
+                alt="goodie"
+                style={{ height: "75%" }}
+              />
             </Box>
             <Box
               display={"flex"}
               justifyContent={"flex-start"}
-              alignItems={"center"}
-              paddingY={0.5}
-              width={"100%"}
+              flexDirection={"column"}
+              paddingX={1}
+              width={"calc(100% - 64px)"}
             >
-              <Typography>color</Typography>
               <Box
-                style={{
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                  background: "#00B7C4",
-                  height: "24px",
-                  width: "24px",
-                  borderRadius: "50%",
-                  margin: " 0 5px",
-                }}
-              ></Box>{" "}
-              &nbsp;
-              <Typography>size</Typography>
-              <Box
-                style={{
-                  height: "24px",
-                  width: "24px",
-                  margin: "0 5px",
-                  border: "1px solid #000000",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
+                display={"flex"}
+                justifyContent={"space-between"}
+                // alignItems={"center"}
               >
-                M
+                {" "}
+                <Link
+                  to={"/goodie/" + goodie.slug}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "13px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {goodie.name}
+                </Link>
+                <Box style={{ fontSize: "10px" }}>
+                  {goodie.quantity} ×{" "}
+                  {goodie.inPromo
+                    ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+                    : goodie.price}{" "}
+                  FCFA
+                </Box>
               </Box>
               <Box
-                style={{
-                  marginLeft: "auto",
-                }}
+                display={"flex"}
+                justifyContent={"flex-start"}
+                alignItems={"center"}
+                paddingY={0.5}
+                width={"100%"}
               >
-                <IconButton size="small">
-                  <DeleteOutlineRounded />
-                </IconButton>
+                <Typography style={{ fontSize: "12px" }}>color</Typography>
+                <Box
+                  style={{
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                    background: goodie.selectedColor,
+                    height: "24px",
+                    width: "24px",
+                    borderRadius: "50%",
+                    margin: " 0 5px",
+                  }}
+                ></Box>{" "}
+                &nbsp;
+                <Typography style={{ fontSize: "12px" }}>size</Typography>
+                <Box
+                  style={{
+                    height: "24px",
+                    width: "24px",
+                    margin: "0 5px",
+                    border: "1px solid #000000",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span>{goodie.selectedSize}</span>
+                </Box>
+                <Box
+                  style={{
+                    marginLeft: "auto",
+                  }}
+                >
+                  <IconButton
+                    size="small"
+                    onClick={() => deleteFromCart(goodie.cartID)}
+                  >
+                    <DeleteOutlineRounded />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
+        ))}
 
         <Box marginTop="auto" paddingY={1} bgcolor="white">
           <Box
@@ -268,19 +415,21 @@ const Nav = () => {
           >
             <Typography>Total</Typography>{" "}
             <Typography style={{ fontSize: "20px", fontWeight: "bold" }}>
-              3000 FCFA
+              {getTotalPrice() ?? 0} FCFA
             </Typography>
           </Box>
-          <Button
-            style={{
-              width: "100%",
-              backgroundColor: "#220f00",
-              color: "white",
-              height: "56px",
-            }}
-          >
-            Finaliser ma commande
-          </Button>
+          <Link to="/checkout" style={{ textDecoration: "none" }}>
+            <Button
+              style={{
+                width: "100%",
+                backgroundColor: "#220f00",
+                color: "white",
+                height: "56px",
+              }}
+            >
+              Finaliser ma commande
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>

@@ -1,15 +1,28 @@
 import React from "react";
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, useMediaQuery } from "@mui/material";
 
 import VSCodeIcon from "../assets/icons/vscode.png";
 import GithubIcon from "../assets/icons/github.png";
 import Saly from "../assets/img/saly.png";
 
 import "./customize.styles.scss";
+import { analyticsEventTracker } from "../app";
 
 const Customize = () => {
+  const match = useMediaQuery("(max-width:900px)");
+
+  const contactForCustomGoodie = () => {
+    analyticsEventTracker("CONTACT")("contact for custom goodie");
+    //TODO: Contact on whatsapp for custom goodies
+  };
+
+  const contactForPartnership = () => {
+    analyticsEventTracker("CONTACT")("contact for partnership");
+    //TODO: Contact on whatsapp for partnership
+  };
+
   return (
-    <Grid container className="custom-section">
+    <Grid container className="custom-section" id="custom-section">
       <Grid
         item
         xs={12}
@@ -30,9 +43,11 @@ const Customize = () => {
           <img src={VSCodeIcon} alt="visual code icon" /> où toutes autres idées
           que vous avez en tête, une seul chose à faire...
         </Typography>
-        <Button className="button">Contactez-Nous </Button>
+        <Button className="button" onClick={() => contactForCustomGoodie()}>
+          Contactez-Nous{" "}
+        </Button>
       </Grid>
-      <img src={Saly} alt="saly illustration" className="saly" />
+      {!match && <img src={Saly} alt="saly illustration" className="saly" />}
       <Grid
         item
         xs={12}
@@ -41,7 +56,23 @@ const Customize = () => {
         className="info-box"
         bgcolor={"#8FC8FF"}
         alignItems={"flex-end"}
+        overflow={"hidden"}
+        height={"500px"}
       >
+        {match && (
+          <img
+            src={Saly}
+            alt="saly illustration"
+            style={{
+              height: "600px",
+              position: "absolute",
+              left: -285,
+              bottom: 0,
+              transform: "rotateY(180deg)",
+            }}
+          />
+        )}
+
         <Typography
           className="title"
           style={{ textAlign: "right", width: "80%" }}
@@ -49,9 +80,11 @@ const Customize = () => {
           Pour tout autre chose
         </Typography>
         <Typography className="text" style={{ textAlign: "right" }}>
-          Discuter, partenariat, couverture d’evenements etc. N’hesitez pas..
+          Discuter, partenariat, couverture d’événements etc. N’hesitez pas..
         </Typography>
-        <Button className="button">Contactez-Nous Ici</Button>
+        <Button className="button" onClick={() => contactForPartnership()}>
+          Contactez-Nous Ici
+        </Button>
       </Grid>
     </Grid>
   );
