@@ -53,8 +53,11 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
     createData(
       <Box
         bgcolor={
-          goodie.images.find((image) => image.id === goodie.selectedColor.id)
-            .color ?? goodie.mainImage.color
+          goodie.backgroundColors[
+            goodie.images.findIndex(
+              (image) => image.url === goodie.mainImage.url
+            )
+          ] ?? goodie.backgroundColors[0]
         }
         height="144px"
         width="144px"
@@ -71,9 +74,10 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
         >
           <img
             src={
-              goodie.images.find(
-                (image) => image.id === goodie.selectedColor.id
-              ).image ?? goodie.mainImage.image
+              // goodie.images.find(
+              //   (image) => image.id === goodie.selectedColor.id
+              // ).image ?? goodie.mainImage.image
+              goodie.mainImage.url
             }
             alt="goodie"
             style={{ height: "100%" }}
@@ -81,24 +85,24 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
         </Link>
       </Box>,
       <Box style={{ fontWeight: "normal", fontFamily: "Poppins" }}>
-        <a
-          href={"/goodie/" + goodie.slug}
+        <Link
+          to={"/goodie/" + goodie.slug}
           style={{
             textDecoration: "none",
             fontWeight: "500",
           }}
         >
           {goodie.name}
-        </a>
+        </Link>
       </Box>,
       <Box style={{ fontWeight: "normal", fontFamily: "Poppins" }}>
-        {goodie.collection.name}
+        {goodie.fromCollection.title}
       </Box>,
       <Box display={"flex"} justifyContent={"center"}>
         <Box
           style={{
             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-            background: goodie.selectedColor.color,
+            background: goodie.selectedColor,
             height: "24px",
             width: "24px",
             borderRadius: "50%",
@@ -106,7 +110,7 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
         ></Box>
       </Box>,
       <Box style={{ fontWeight: "normal", fontFamily: "Poppins" }}>
-        {goodie.selectedSize.size}
+        {goodie.selectedSize}
       </Box>,
       <Typography style={{ fontWeight: "600", fontFamily: "Poppins" }}>
         {goodie.inPromo

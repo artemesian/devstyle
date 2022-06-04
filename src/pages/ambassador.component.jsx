@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Button, useMediaQuery } from "@mui/material";
-import { Link } from "react-router-dom";
 
 import AmbassadorCardSkeleton from "../components/ambassadorCardSkeleton.component";
 
 import Image from "../assets/img/ambassador.png";
 
 import "./ambassador.styles.scss";
-import { AMBASSADORS_SEEDER } from "../utils/seeders.data";
 import { scrollToTop } from "../utils/utils.script";
+// import { AMBASSADORS_SEEDER } from "../utils/seeders.data";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Ambassador = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
@@ -16,11 +17,19 @@ const Ambassador = () => {
   const [ambassadors, setAmbassadors] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD AMBASSADORS
-      setAmbassadors(AMBASSADORS_SEEDER);
-      setIsLoadingAmbassadors(false);
-    }, 3000);
+    myAxios
+      .get("/ambassador/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setAmbassadors(response.data.message);
+          setIsLoadingAmbassadors(false);
+        } else {
+          console.log(response.data.message);
+          setAmbassadors([]);
+          setIsLoadingAmbassadors(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
@@ -79,9 +88,9 @@ const Ambassador = () => {
               </Grid>
             </>
           ) : (
-            ambassadors.list.map((ambassador, i) => (
+            ambassadors.map((ambassador, i) => (
               <Grid
-                key={i + " " + ambassador.id}
+                key={i + " " + ambassador._id}
                 item
                 xs={12}
                 md={6}
@@ -97,10 +106,12 @@ const Ambassador = () => {
                   <Box
                     className="ambassador-card-top  animate__animated animate__fadeIn"
                     style={{
-                      background: `linear-gradient(147.14deg, ${ambassadors.colors[0]} 6.95%, ${ambassadors.colors[1]} 93.05%)`,
+                      background: `linear-gradient(147.14deg, ${
+                        ambassador.colors.split("-")[0]
+                      } 6.95%, ${ambassador.colors.split("-")[1]} 93.05%)`,
                     }}
                   >
-                    <img src={ambassador.image} alt={ambassador.name} />
+                    <img src={ambassador.image.url} alt={ambassador.name} />
                   </Box>
                   <Box
                     display={"flex"}
@@ -117,7 +128,7 @@ const Ambassador = () => {
                           rel="noopener noreferrer"
                         >
                           <img
-                            src={`/social/${social.name}.png`}
+                            src={`/social/${social.id}.png`}
                             alt={social.name}
                           />
                         </a>
@@ -139,9 +150,17 @@ const Ambassador = () => {
         <Typography>
           Rejoins le programme <b>DSA</b>
         </Typography>
-        <Link to={"/collections"} style={{ textDecoration: "none" }}>
+        <a
+          href="https://bit.ly/devstyle_ambassador"
+          target={"_blank"}
+          style={{ textDecoration: "none" }}
+          rel="noreferrer"
+          onClick={() => {
+            analyticsEventTracker("AMBASSADOR")("become an ambassador");
+          }}
+        >
           <Button className="button">Deviens un _DevStyle Ambassador</Button>
-        </Link>
+        </a>
       </Box>
     </Box>
   );

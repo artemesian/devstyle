@@ -9,41 +9,47 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { importAll } from "../utils/utils.script";
 
 import GoodieCard from "../components/goodieCard.component";
 import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
+import Spinner from "../components/spinner.component";
 
 import ArrowIcon from "../assets/icons/arrow.png";
 import ArrowWhiteIcon from "../assets/icons/arrow-white.png";
 import TwitterIcon from "../assets/icons/twitter.png";
 import FacebookIcon from "../assets/icons/facebook.png";
 import InstaIcon from "../assets/icons/insta.png";
+import TiktokIcon from "../assets/icons/tiktok.png";
 import WhatsappIcon from "../assets/icons/whatsapp.png";
 import ShopBagIcon from "../assets/icons/shopping-bag.png";
 import HotIcon from "../assets/icons/hot.png";
 import RocketIcon from "../assets/icons/rocket.png";
 
 import "./home.style.scss";
-import { COLLECTIONS_SEEDER, GOODIES_SEEDER } from "../utils/seeders.data";
+// import { COLLECTIONS_SEEDER, GOODIES_SEEDER } from "../utils/seeders.data";
+// import { importAll } from "../utils/utils.script";
 import { scrollToTop } from "../utils/utils.script";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Home = () => {
-  const [heroImageIndex, setHeroImageIndex] = useState(1);
+  const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [collections, setCollections] = useState([]);
   const [trendingGoodies, setTrendingGoodies] = useState([]);
   const [newGoodies, setNewGoodies] = useState([]);
+  const [heroSection, setHeroSection] = useState([]);
   const [isLoadingCollections, setIsLoadingCollections] = useState(true);
   const [isLoadingTrendingGoodies, setIsLoadingTrendingGoodies] =
     useState(true);
   const [isLoadingNewGoodies, setIsLoadingNewGoodies] = useState(true);
+  const [isLoadingHeroSection, setIsLoadingHeroSection] = useState(true);
 
   const match1000 = useMediaQuery("(max-width:1000px)");
   const match900 = useMediaQuery("(max-width:900px)");
 
-  const HeroImages = importAll(
-    require.context("../assets/img/hero/", false, /\.(png|jpe?g)$/)
-  );
+  // const HeroImages = importAll(
+  //   require.context("../assets/img/hero/", false, /\.(png|jpe?g)$/)
+  // );
 
   const handleHeroImageChange = (step) => {
     const element = document.querySelector("#hero-image");
@@ -52,8 +58,8 @@ const Home = () => {
       element.classList.add("animate__animated", "animate__fadeOutRight");
       element.addEventListener("animationend", () => {
         next =
-          heroImageIndex === 1
-            ? Object.keys(HeroImages).length
+          heroImageIndex === 0
+            ? Object.keys(heroSection).length - 1
             : heroImageIndex - 1;
         setHeroImageIndex(next);
         element.classList.remove(
@@ -67,8 +73,8 @@ const Home = () => {
       element.classList.add("animate__animated", "animate__fadeOutLeft");
       element.addEventListener("animationend", () => {
         next =
-          heroImageIndex === Object.keys(HeroImages).length
-            ? 1
+          heroImageIndex === Object.keys(heroSection).length - 1
+            ? 0
             : heroImageIndex + 1;
         setHeroImageIndex(next);
         element.classList.remove(
@@ -93,42 +99,83 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD COLLECTIONS
-      setCollections(COLLECTIONS_SEEDER);
-      setIsLoadingCollections(false);
-    }, 3000);
+    myAxios
+      .get("/collection/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setCollections(response.data.message);
+          setIsLoadingCollections(false);
+        } else {
+          console.log(response.data.message);
+          setCollections([]);
+          setIsLoadingCollections(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD TRENDING GOODIES
-      setTrendingGoodies(GOODIES_SEEDER);
-      setIsLoadingTrendingGoodies(false);
-    }, 3000);
+    myAxios
+      .get("/goodies/hot-goodies")
+      .then((response) => {
+        if (response.status === 200) {
+          setTrendingGoodies(response.data.message);
+          setIsLoadingTrendingGoodies(false);
+        } else {
+          console.log(response.data.message);
+          setTrendingGoodies([]);
+          setIsLoadingTrendingGoodies(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD NEW & HOT GOODIES
-      setNewGoodies(GOODIES_SEEDER.slice(0, 4));
-      setIsLoadingNewGoodies(false);
-    }, 3000);
+    myAxios
+      .get("/goodies/new-goodies")
+      .then((response) => {
+        if (response.status === 200) {
+          setNewGoodies(response.data.message);
+          setIsLoadingNewGoodies(false);
+        } else {
+          console.log(response.data.message);
+          setNewGoodies([]);
+          setIsLoadingNewGoodies(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    let id = setInterval(() => {
-      let nextButton = document.querySelector("#next-hero-image");
-
-      if (nextButton) {
-        nextButton.click();
-      }
-    }, 6500);
-
-    return () => {
-      clearInterval(id);
-    };
+    myAxios
+      .get("/hero/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setHeroSection(response.data.message);
+          setIsLoadingHeroSection(false);
+        } else {
+          console.log(response.data.message);
+          setHeroSection([]);
+          setIsLoadingHeroSection(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    if (heroSection > 1) {
+      let id = setInterval(() => {
+        let nextButton = document.querySelector("#next-hero-image");
+
+        if (nextButton) {
+          nextButton.click();
+        }
+      }, 6500);
+      return () => {
+        clearInterval(id);
+      };
+    }
+  }, [heroSection]);
 
   useEffect(() => {
     try {
@@ -180,6 +227,9 @@ const Home = () => {
             <Box className="social-container">
               <a
                 target="_blank"
+                onClick={() => {
+                  analyticsEventTracker("SOCIAL")("twitter");
+                }}
                 rel="noopener noreferrer"
                 href="https://twitter.com/_devstyle"
               >
@@ -187,6 +237,9 @@ const Home = () => {
               </a>
               <a
                 target="_blank"
+                onClick={() => {
+                  analyticsEventTracker("SOCIAL")("whatsapp");
+                }}
                 rel="noopener noreferrer"
                 href="https://api.whatsapp.com/send/?phone=237692650993&text=Hello _DevStyle"
               >
@@ -194,6 +247,9 @@ const Home = () => {
               </a>
               <a
                 target="_blank"
+                onClick={() => {
+                  analyticsEventTracker("SOCIAL")("facebook");
+                }}
                 rel="noopener noreferrer"
                 href="https://www.facebook.com/devstyl"
               >
@@ -201,6 +257,19 @@ const Home = () => {
               </a>
               <a
                 target="_blank"
+                onClick={() => {
+                  analyticsEventTracker("SOCIAL")("tiktok");
+                }}
+                rel="noopener noreferrer"
+                href="https://www.tiktok.com/@_devstyle"
+              >
+                <img src={TiktokIcon} alt="tiktok icon" />
+              </a>
+              <a
+                target="_blank"
+                onClick={() => {
+                  analyticsEventTracker("SOCIAL")("instagram");
+                }}
                 rel="noopener noreferrer"
                 href="https://www.instagram.com/_devstyle/"
               >
@@ -209,39 +278,53 @@ const Home = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className="image-side">
-            <Box
-              className="animate__animated animate__jackInTheBox  animate__delay-1s"
-              style={{
-                alignSelf: match900 ? "center" : "flex-end",
-              }}
-            >
-              <img
-                src={HeroImages[`hero_image_${heroImageIndex}.png`]}
-                alt="devstyle hero"
-                id="hero-image"
-                className="animate__faster"
-              />
-              <Box className="icons-container">
-                <IconButton>
-                  <img
-                    id="back-hero-image"
-                    src={ArrowIcon}
-                    alt="backward icon"
-                    className="backward-icon"
-                    onClick={() => handleHeroImageChange("back")}
-                  />
-                </IconButton>
-                <IconButton>
-                  <img
-                    id="next-hero-image"
-                    src={ArrowIcon}
-                    alt="forward icon"
-                    className="forward-icon"
-                    onClick={() => handleHeroImageChange("next")}
-                  />
-                </IconButton>
+            {isLoadingHeroSection ? (
+              <Box
+                height={"100%"}
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Spinner size={100} thickness={10} color={"#220f0055"} />
               </Box>
-            </Box>
+            ) : (
+              <Box
+                className="animate__animated animate__jackInTheBox  animate__delay-1s"
+                style={{
+                  alignSelf: match900 ? "center" : "flex-end",
+                }}
+              >
+                <img
+                  src={heroSection[heroImageIndex].image.url}
+                  alt="devstyle hero"
+                  id="hero-image"
+                  className="animate__faster"
+                />
+                {heroSection.length > 1 && (
+                  <Box className="icons-container">
+                    <IconButton>
+                      <img
+                        id="back-hero-image"
+                        src={ArrowIcon}
+                        alt="backward icon"
+                        className="backward-icon"
+                        onClick={() => handleHeroImageChange("back")}
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <img
+                        id="next-hero-image"
+                        src={ArrowIcon}
+                        alt="forward icon"
+                        className="forward-icon"
+                        onClick={() => handleHeroImageChange("next")}
+                      />
+                    </IconButton>
+                  </Box>
+                )}
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Box>
@@ -313,7 +396,7 @@ const Home = () => {
                   item
                   xs={12}
                   lg={i === collections.length - 1 ? 12 : 6}
-                  key={i + "" + collection.id}
+                  key={i + "" + collection._id}
                 >
                   <Link
                     to={`/collection/${collection.slug}`}
@@ -322,7 +405,9 @@ const Home = () => {
                     <Grid
                       container
                       style={{
-                        background: `linear-gradient(90deg, ${collection.colors[0]} 0%, ${collection.colors[1]} 100%)`,
+                        background: `linear-gradient(90deg, ${
+                          collection.colors.split("-")[0]
+                        } 0%, ${collection.colors.split("-")[1]} 100%)`,
                       }}
                       className={`collection-item animate__animated ${
                         i % 2 === 0
@@ -370,7 +455,7 @@ const Home = () => {
                       <Grid item xs={2} className="collection-image-container">
                         <img
                           className="collection-image"
-                          src={collection.image}
+                          src={collection.image.url}
                           alt={collection.title + " image"}
                         />
                       </Grid>
@@ -439,7 +524,7 @@ const Home = () => {
             ) : (
               newGoodies.map((goodie, i) => (
                 <Grid
-                  key={i + " " + goodie.id}
+                  key={i + " " + goodie._id}
                   item
                   xs={12}
                   md={6}
@@ -531,7 +616,10 @@ const Home = () => {
         </Box>
         <br />
         <Box display={"flex"} justifyContent={"center"}>
-          <Link to={"/collections"} style={{ textDecoration: "none" }}>
+          <Link
+            to={"/collection/all-goodies"}
+            style={{ textDecoration: "none" }}
+          >
             <Button className="button">
               Voir tous nos goodies{" "}
               <img

@@ -6,9 +6,20 @@ import GithubIcon from "../assets/icons/github.png";
 import Saly from "../assets/img/saly.png";
 
 import "./customize.styles.scss";
+import { analyticsEventTracker } from "../app";
 
 const Customize = () => {
   const match = useMediaQuery("(max-width:900px)");
+
+  const contactForCustomGoodie = () => {
+    analyticsEventTracker("CONTACT")("contact for custom goodie");
+    //TODO: Contact on whatsapp for custom goodies
+  };
+
+  const contactForPartnership = () => {
+    analyticsEventTracker("CONTACT")("contact for partnership");
+    //TODO: Contact on whatsapp for partnership
+  };
 
   return (
     <Grid container className="custom-section" id="custom-section">
@@ -32,7 +43,9 @@ const Customize = () => {
           <img src={VSCodeIcon} alt="visual code icon" /> où toutes autres idées
           que vous avez en tête, une seul chose à faire...
         </Typography>
-        <Button className="button">Contactez-Nous </Button>
+        <Button className="button" onClick={() => contactForCustomGoodie()}>
+          Contactez-Nous{" "}
+        </Button>
       </Grid>
       {!match && <img src={Saly} alt="saly illustration" className="saly" />}
       <Grid
@@ -69,7 +82,9 @@ const Customize = () => {
         <Typography className="text" style={{ textAlign: "right" }}>
           Discuter, partenariat, couverture d’événements etc. N’hesitez pas..
         </Typography>
-        <Button className="button">Contactez-Nous Ici</Button>
+        <Button className="button" onClick={() => contactForPartnership()}>
+          Contactez-Nous Ici
+        </Button>
       </Grid>
     </Grid>
   );

@@ -191,4 +191,22 @@
       }
     }
   }
+  .title-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 70px;
+    .title {
+      font-family: "Roboto Slab";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+    }
+    img {
+      height: 56px;
+    }
+  }
 }

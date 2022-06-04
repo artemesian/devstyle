@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+import ReactGA from "react-ga";
+import { toast } from "react-toastify";
 
 //Pages
 import Home from "./pages/home.component.jsx";
@@ -20,10 +22,25 @@ import Footer from "./components/footer.component";
 import "./app.styles.scss";
 
 import { calculatePromoPrice } from "./utils/utils.script.js";
+// import myAxios from "./utils/axios.config.js";
+
+export const analyticsEventTracker = (category = "Unknown") => {
+  const eventTracker = (action = "Unknown", label = "Unknown") => {
+    ReactGA.event({ category, action, label });
+  };
+  return eventTracker;
+};
 
 const App = () => {
+  let m_ID = "G-LWCBK761GY";
+  ReactGA.initialize(m_ID);
   const [cart, setCart] = useState({});
-  //TODO: TOAST GOODIE ADDITION
+
+  const handleCart = (newCart) => {
+    localStorage.setItem("devStyle_cart", JSON.stringify(newCart));
+    setCart(newCart);
+  };
+
   const addToCart = (goodie) => {
     let copyCart = { ...cart };
     if (copyCart[goodie.cartID]) {
@@ -31,7 +48,11 @@ const App = () => {
     } else {
       copyCart[goodie.cartID] = goodie;
     }
-    setCart(copyCart);
+    toast.info(<div style={{ color: "#fff" }}> Dans le panier</div>, {
+      icon: "🗑️",
+      style: { textAlign: "center" },
+    });
+    handleCart(copyCart);
   };
 
   const updateCart = (goodie, value) => {
@@ -42,13 +63,13 @@ const App = () => {
         return deleteFromCart(goodie.cartID);
       }
     }
-    setCart(copyCart);
+    handleCart(copyCart);
   };
 
   const deleteFromCart = (id) => {
     let copyCart = { ...cart };
     delete copyCart[id];
-    setCart(copyCart);
+    handleCart(copyCart);
   };
 
   const getTotalPrice = () => {
@@ -69,6 +90,19 @@ const App = () => {
     return count;
   };
 
+  useEffect(() => {
+    let cartFromLocalStorage = JSON.parse(
+      localStorage.getItem("devStyle_cart")
+    );
+    if (cartFromLocalStorage) {
+      setCart(cartFromLocalStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   return (
     <Box>
       <Nav
@@ -80,10 +114,13 @@ const App = () => {
       <Routes>
         {/* <Route path="/" element={<ComingSoon />} /> */}
         <Route path="/" element={<Home />} />
-        <Route path="/collection/:id" element={<Collection />} />
+        <Route path="/collection/:slug" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
-        <Route path="/goodie/:id" element={<Goodie addToCart={addToCart} />} />
+        <Route
+          path="/goodie/:slug"
+          element={<Goodie addToCart={addToCart} />}
+        />
         <Route
           path="/checkout"
           element={

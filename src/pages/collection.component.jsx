@@ -1,104 +1,83 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import GoodieCard from "../components/goodieCard.component";
+import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
+import Spinner from "../components/spinner.component";
 
-import Image from "../assets/img/collection-preview/tshirt.png";
-import Tshirt from "../assets/img/tshirt.png";
+// import Image from "../assets/img/collection-preview/tshirt.png";
+// import Tshirt from "../assets/img/tshirt.png";
 
 import "./collection.styles.scss";
-import { Outlet } from "react-router-dom";
 import { scrollToTop } from "../utils/utils.script";
+import myAxios from "../utils/axios.config";
 
 const Collection = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
+  const params = useParams();
+  const [isLoadingCollection, setIsLoadingCollection] = useState(true);
+  const [collection, setCollection] = useState({
+    collection: { colors: "#FFFFFF-#FFFFFF" },
+  });
+  let onAllGoodies = params.slug === "all-goodies";
 
-  let collection = [
-    {
-      id: 1,
-      color: "#CCDDFF",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 2,
-      color: "#C7C9D9",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 3,
-      color: "#CCDDFF",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 4,
-      color: "#e3fff1",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 5,
-      color: "#CCDDFF",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 6,
-      color: "#C7C9D9",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-    {
-      id: 7,
-      color: "#CCDDFF",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: true,
-    },
-    {
-      id: 8,
-      color: "#e3fff1",
-      image: Tshirt,
-      name: "Linux is the whole house",
-      promoPercentage: 23,
-      price: 6500,
-      link: "",
-      inPromo: false,
-    },
-  ];
+  useEffect(() => {
+    if (!onAllGoodies) {
+      myAxios
+        .get("/collection/goodies/" + params.slug)
+        .then((response) => {
+          if (response.status === 200) {
+            setCollection(response.data.message);
+            setIsLoadingCollection(false);
+          } else {
+            console.log(response.data.message);
+            setCollection({});
+            setIsLoadingCollection(false);
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      myAxios
+        .get("/goodie/all")
+        .then((response) => {
+          if (response.status === 200) {
+            setCollection({
+              collection: {
+                colors: "#220f00-#220f00",
+                title: "TOUS NOS GOODIES",
+              },
+              goodies: response.data.message,
+            });
+            setIsLoadingCollection(false);
+          } else {
+            console.log(response.data.message);
+            setCollection({});
+            setIsLoadingCollection(false);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [params.slug, onAllGoodies]);
 
   useEffect(() => {
     scrollToTop();
   }, []);
+
+  useEffect(() => {
+    if (!onAllGoodies) {
+      myAxios
+        .put("/collection/update/views/" + params.slug)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.message);
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [params.slug, onAllGoodies]);
 
   return (
     <Box paddingX={match1000 ? 0 : 12}>
@@ -106,39 +85,78 @@ const Collection = () => {
       <Box
         className="collection-hero-section-wrapper"
         style={{
-          background: "linear-gradient(90deg, #6DD5ED 0%, #2193B0 100%)",
+          background: `linear-gradient(90deg, ${
+            collection.collection.colors.split("-")[0]
+          } 0%, ${collection.collection.colors.split("-")[1]} 100%)`,
         }}
         padding={10}
       >
-        <Box className="collection-hero-section-container">
-          <Typography
-            className="text"
-            style={{ fontSize: match1000 ? "72px" : "96px" }}
+        {isLoadingCollection ? (
+          <Box
+            height={"100%"}
+            width={"100%"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
-            Nos T-SHIRTS
-          </Typography>
-          <img src={Image} alt="collection hero" />
-        </Box>
+            <Spinner size={100} thickness={10} color={"#220f0055"} />
+          </Box>
+        ) : (
+          <Box className="collection-hero-section-container">
+            <Typography
+              className="text"
+              style={{
+                fontSize: match1000 ? "72px" : "96px",
+                margin: onAllGoodies ? "auto" : "",
+              }}
+            >
+              {collection.collection.title}
+            </Typography>
+            {collection?.collection?.image?.url && (
+              <img
+                src={collection.collection.image.url}
+                alt="collection hero"
+              />
+            )}
+          </Box>
+        )}
       </Box>
       <Box className="goodies-container" marginY={20}>
         <Grid container spacing={5}>
-          {collection.map((goodie, i) => (
-            <Grid
-              key={i + " " + goodie.id}
-              item
-              xs={12}
-              md={6}
-              lg={4}
-              xl={3}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <GoodieCard {...goodie} />
-            </Grid>
-          ))}
+          {isLoadingCollection ? (
+            <>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <GoodieCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <GoodieCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <GoodieCardSkeleton />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4} xl={3}>
+                <GoodieCardSkeleton />
+              </Grid>
+            </>
+          ) : (
+            collection.goodies.map((goodie, i) => (
+              <Grid
+                key={i + " " + goodie._id}
+                item
+                xs={12}
+                md={6}
+                lg={4}
+                xl={3}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <GoodieCard {...goodie} />
+              </Grid>
+            ))
+          )}
         </Grid>
       </Box>
     </Box>

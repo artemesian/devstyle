@@ -8,24 +8,35 @@ import WhatsappWhiteIcon from "../assets/icons/whatsapp-white.png";
 import FacebookWhiteIcon from "../assets/icons/facebook-white.png";
 import TwitterWhiteIcon from "../assets/icons/twitter-white.png";
 import InstaWhiteIcon from "../assets/icons/insta-white.png";
+import TiktokWhiteIcon from "../assets/icons/tiktok-white.png";
 import PhoneIcon from "../assets/icons/phone-white.png";
 import EmailIcon from "../assets/icons/email.png";
 import DevStyleWhite from "../assets/img/devstyle-white-logo.png";
 import SalyFooter from "../assets/img/saly-footer.png";
 
 import "./footer.styles.scss";
-import { PARTNERS_SEEDER } from "../utils/seeders.data";
+// import { PARTNERS_SEEDER } from "../utils/seeders.data";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Footer = () => {
   const [isLoadingPartners, setIsLoadingPartners] = useState(true);
   const [partners, setPartners] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD PARTNERS
-      setPartners(PARTNERS_SEEDER);
-      setIsLoadingPartners(false);
-    }, 3000);
+    myAxios
+      .get("/partner/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setPartners(response.data.message);
+          setIsLoadingPartners(false);
+        } else {
+          console.log(response.data.message);
+          setPartners([]);
+          setIsLoadingPartners(false);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -47,17 +58,17 @@ const Footer = () => {
                 <Link to="/">Accueil</Link>
                 <Link
                   to="/#our-collections-section"
-                  // onClick={() => {
-                  //   try {
-                  //     if (document.querySelector("#our-collections-section")) {
-                  //       document
-                  //         .querySelector("#our-collections-section")
-                  //         .scrollIntoView(true);
-                  //     }
-                  //   } catch (error) {
-                  //     console.log(error);
-                  //   }
-                  // }}
+                  onClick={() => {
+                    try {
+                      if (document.querySelector("#our-collections-section")) {
+                        document
+                          .querySelector("#our-collections-section")
+                          .scrollIntoView(true);
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
                 >
                   Shop
                 </Link>
@@ -78,7 +89,7 @@ const Footer = () => {
                 >
                   {partners.map((partner, index) => (
                     <a
-                      key={index + "-" + partner.id}
+                      key={index + "-" + partner._id}
                       href={partner.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -86,7 +97,7 @@ const Footer = () => {
                     >
                       <Tooltip title={partner.name}>
                         <img
-                          src={partner.logo_white}
+                          src={partner.logoWhite.url}
                           alt={partner.name}
                           style={{ height: "48px" }}
                         />
@@ -102,6 +113,9 @@ const Footer = () => {
                 <Box marginBottom={5}>
                   <a
                     target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("twitter");
+                    }}
                     rel="noopener noreferrer"
                     href="https://twitter.com/_devstyle"
                   >
@@ -110,6 +124,9 @@ const Footer = () => {
                   &nbsp; &nbsp;
                   <a
                     target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("whatsapp");
+                    }}
                     rel="noopener noreferrer"
                     href="https://api.whatsapp.com/send/?phone=237692650993&text=Hello _DevStyle"
                   >
@@ -118,6 +135,9 @@ const Footer = () => {
                   &nbsp; &nbsp;
                   <a
                     target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("facebook");
+                    }}
                     rel="noopener noreferrer"
                     href="https://www.facebook.com/devstyl"
                   >
@@ -126,10 +146,24 @@ const Footer = () => {
                   &nbsp; &nbsp;
                   <a
                     target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("instagram");
+                    }}
                     rel="noopener noreferrer"
                     href="https://www.instagram.com/_devstyle/"
                   >
                     <img src={InstaWhiteIcon} alt="insta icon" />
+                  </a>
+                  &nbsp; &nbsp;
+                  <a
+                    target="_blank"
+                    onClick={() => {
+                      analyticsEventTracker("SOCIAL")("tiktok");
+                    }}
+                    rel="noopener noreferrer"
+                    href="https://www.tiktok.com/@_devstyle"
+                  >
+                    <img src={TiktokWhiteIcon} alt="tiktok icon" />
                   </a>
                 </Box>
                 <Box

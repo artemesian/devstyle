@@ -18,23 +18,30 @@ import {
   ShareOutlined,
   Check,
 } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import OrderModal from "../components/orderModal.component";
 // import Cryptr from "cryptr";
 import WhatsappIcon from "../assets/icons/whatsapp-green.png";
 import "./goodie.styles.scss";
 
-import { GOODIE_SEEDER } from "../utils/seeders.data";
+// import { GOODIE_SEEDER } from "../utils/seeders.data";
 import { calculatePromoPrice, scrollToTop } from "../utils/utils.script";
+import myAxios from "../utils/axios.config";
+import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
+import GoodieCard from "../components/goodieCard.component";
 
 const Goodie = ({ addToCart }) => {
   const match700 = useMediaQuery("(max-width:700px)");
   const match900 = useMediaQuery("(max-width:900px)");
   const location = useLocation();
+  const params = useParams();
 
   const [isLoadingGoodie, setIsLoadingGoodie] = useState(true);
+  const [isLoadingSomeCollectionGoodies, setIsLoadingSomeCollectionGoodies] =
+    useState(true);
+  const [someCollectionGoodies, setSomeCollectionGoodies] = useState([]);
+  const [isLiking, setIsLiking] = useState(false);
   const [goodie, setGoodie] = useState({
-    ...GOODIE_SEEDER,
     quantity: 1,
     selectedColor: null,
     selectedSize: null,
@@ -45,7 +52,7 @@ const Goodie = ({ addToCart }) => {
   // const crypt = new Cryptr("HelloWorld");
 
   const changeMainImage = (image) => {
-    if (image.id) {
+    if (image.url) {
       setGoodie({ ...goodie, mainImage: image });
     }
   };
@@ -57,38 +64,76 @@ const Goodie = ({ addToCart }) => {
   };
 
   const handleSelectedColorChange = (color) => {
-    if (color.id) {
+    if (color) {
       setGoodie({ ...goodie, selectedColor: color });
     }
   };
 
   const handleSelectedSizeChange = (size) => {
-    if (size.id) {
+    if (size) {
       setGoodie({ ...goodie, selectedSize: size });
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      //TODO: LOAD GOODIE
-      setGoodie((goodie) => ({
-        ...goodie,
-        ...GOODIE_SEEDER,
-        selectedColor: GOODIE_SEEDER.availableColors[0],
-        selectedSize: GOODIE_SEEDER.sizes[0],
-        quantity: 1,
-      }));
-      setIsLoadingGoodie(false);
-    }, 3000);
-  }, []);
+    myAxios
+      .get("/goodie/" + params.slug)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data.message);
+          setGoodie({
+            ...response.data.message,
+            quantity: 1,
+            selectedColor: response.data.message.availableColors[0],
+            selectedSize: response.data.message.size[0].size,
+          });
+          setIsLoadingGoodie(false);
+
+          myAxios
+            .get(
+              `/goodies/hot-goodies/collection/${response.data.message.fromCollection._id}/6291983220a1fdf5b8a280cf`
+            )
+            .then((response) => {
+              if (response.status === 200) {
+                console.log(response.data.message);
+                setSomeCollectionGoodies([...response.data.message]);
+                setIsLoadingSomeCollectionGoodies(false);
+              } else {
+                console.log(response.data.message);
+                setSomeCollectionGoodies([]);
+                setIsLoadingSomeCollectionGoodies(false);
+              }
+            })
+            .catch((error) => console.log(error));
+        } else {
+          console.log(response.data.message);
+          setGoodie({});
+          setIsLoadingGoodie(false);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, [params.slug]);
+
+  useEffect(() => {
+    myAxios
+      .put("/goodie/update/views/" + params.slug)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data.message);
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, [params.slug]);
 
   const _devstyle = () => {
     let text = `
-    ID: ${goodie.id}
+    ID: ${goodie._id}
     Name: ${goodie.name}
     Link: https://dev-style.com/goodie/${goodie.slug}
-    Collection: ${goodie.collection.name}
-    MainImage: ${goodie.mainImage.image}
+    Collection: ${goodie.fromCollection.title}
+    MainImage: ${goodie.mainImage.url}
     Color: ${goodie.selectedColor.color}
     Size: ${goodie.selectedSize.size}
     Quantity: ${goodie.quantity}
@@ -105,9 +150,9 @@ const Goodie = ({ addToCart }) => {
   };
 
   const getCartID = () => {
-    let text = ` ${goodie.id}-${goodie.name}-${goodie.collection.name}-${
-      goodie.selectedColor.color
-    }-${goodie.selectedSize.size}-${goodie.price}-${
+    let text = ` ${goodie._id}-${goodie.name}-${goodie.fromCollection.title}-${
+      goodie.selectedColor
+    }-${goodie.selectedSize}-${goodie.price}-${
       goodie.inPromo
         ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
         : "none"
@@ -118,13 +163,27 @@ const Goodie = ({ addToCart }) => {
 
   const addToCartFromSellPage = () => {
     let cartID = getCartID();
-
+    console.log(cartID, goodie);
     addToCart({ ...goodie, cartID });
   };
 
   const share = () => {
     setIsCopied(true);
     navigator.clipboard.writeText("https://dev-style.com" + location.pathname);
+  };
+
+  const like = () => {
+    myAxios
+      .put("/goodie/update/likes/" + params.slug)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data.message);
+          setIsLiking(true);
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -161,21 +220,21 @@ const Goodie = ({ addToCart }) => {
                 ) : (
                   goodie.images.map((image, i) => (
                     <Box
-                      key={"goodie-" + image.i + "-" + i}
+                      key={"goodie-" + image.url + "-" + i}
                       className="goodie-preview-container"
                       style={{
-                        backgroundColor: image.color,
+                        backgroundColor: goodie.backgroundColors[i],
                         marginBottom: 20,
                         border:
-                          image.id === goodie.mainImage.id
+                          image.url === goodie.mainImage.url
                             ? "2px solid #000"
                             : "none",
                         borderRadius:
-                          image.id === goodie.mainImage.id ? "4px" : "none",
+                          image.url === goodie.mainImage.url ? "4px" : "none",
                       }}
                       onClick={() => changeMainImage(image)}
                     >
-                      <img src={image.image} alt="goodie" />
+                      <img src={image.url} alt="goodie" />
                     </Box>
                   ))
                 )}
@@ -191,14 +250,21 @@ const Goodie = ({ addToCart }) => {
               ) : (
                 <Box
                   className="goodie-image-wrapper"
-                  style={{ backgroundColor: goodie.mainImage.color }}
+                  style={{
+                    backgroundColor:
+                      goodie.backgroundColors[
+                        goodie.images.findIndex(
+                          (image) => image.url === goodie.mainImage.url
+                        )
+                      ],
+                  }}
                 >
                   {goodie.inPromo && (
                     <Box className="promotion-box">
                       -{goodie.promoPercentage}%
                     </Box>
                   )}
-                  <img src={goodie.mainImage.image} alt="goodie" />
+                  <img src={goodie.mainImage.url} alt="goodie" />
                 </Box>
               )}
             </Grid>
@@ -240,7 +306,7 @@ const Goodie = ({ addToCart }) => {
                         width={"20%"}
                       />
                     ) : (
-                      goodie.collection.name
+                      goodie.fromCollection.title
                     )}
                   </Typography>
                 </Box>
@@ -281,8 +347,8 @@ const Goodie = ({ addToCart }) => {
                     size="small"
                     type={"number"}
                     style={{
-                      width: "40px",
-                      height: "40px",
+                      width: "48px",
+                      height: "48px",
                       textAlign: "center",
                     }}
                     value={goodie.quantity}
@@ -304,13 +370,13 @@ const Goodie = ({ addToCart }) => {
                     ) : (
                       goodie.availableColors.map((color, i) => (
                         <ButtonBase
-                          key={"color-" + color.id + "-" + i}
+                          key={"color-" + color + "-" + i}
                           className="color"
                           onClick={() => handleSelectedColorChange(color)}
                         >
                           <Box
                             style={{
-                              backgroundColor: color.color,
+                              backgroundColor: color,
                               width: "100%",
                               height: "100%",
                               borderRadius: "50%",
@@ -319,7 +385,7 @@ const Goodie = ({ addToCart }) => {
                               alignItems: "center",
                             }}
                           >
-                            {goodie.selectedColor.id === color.id && (
+                            {goodie.selectedColor === color && (
                               <Check style={{ color: "white" }} />
                             )}
                           </Box>
@@ -341,15 +407,16 @@ const Goodie = ({ addToCart }) => {
                         width={40}
                       />
                     ) : (
-                      goodie.sizes.map((size, i) => (
+                      goodie.size.map((size, i) => (
                         <ButtonBase
                           className="button"
-                          onClick={() => handleSelectedSizeChange(size)}
+                          onClick={() => handleSelectedSizeChange(size.size)}
                         >
+                          {console.log(goodie.selectedSize)}
                           <button
                             key={"size-" + size.id + "-" + i}
                             style={
-                              goodie.selectedSize.id === size.id
+                              goodie.selectedSize === size.size
                                 ? {
                                     color: "#06C270",
                                     borderColor: "#06C270",
@@ -413,7 +480,7 @@ const Goodie = ({ addToCart }) => {
                     {isLoadingGoodie ? (
                       <Skeleton animation="wave" variant="text" />
                     ) : (
-                      goodie.views
+                      goodie.views + 1
                     )}{" "}
                     Vues
                   </Typography>
@@ -425,12 +492,31 @@ const Goodie = ({ addToCart }) => {
                   marginBottom={1}
                   justifyContent={"center"}
                 >
-                  <IconButton style={{ color: "#3E7BFA" }}>
+                  <IconButton
+                    style={{ color: "#3E7BFA" }}
+                    onClick={() => like()}
+                  >
                     <ThumbUpTwoTone style={{ color: "#3E7BFA" }} />
                   </IconButton>
-                  <Typography className="text" style={{ color: "#3E7BFA" }}>
-                    J'aime
-                  </Typography>
+                  <ClickAwayListener onClickAway={() => setIsLiking(false)}>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true,
+                      }}
+                      onClose={() => setIsLiking(false)}
+                      open={isLiking}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="+1 ❤️"
+                      arrow
+                      placement="bottom"
+                    >
+                      <Typography className="text" style={{ color: "#3E7BFA" }}>
+                        J'aime
+                      </Typography>
+                    </Tooltip>
+                  </ClickAwayListener>
                 </Box>
                 <ClickAwayListener onClickAway={() => setIsCopied(false)}>
                   <Tooltip
@@ -463,6 +549,74 @@ const Goodie = ({ addToCart }) => {
               </Grid>
             </Grid>
           </Grid>
+          <Box className="goodies-container">
+            <Box className="title-container">
+              <Typography
+                className="title"
+                style={{ fontSize: "36px" }}
+                component={"span"}
+              >
+                Toujour dans
+              </Typography>
+              &nbsp; &nbsp;
+              <Box position={"relative"}>
+                <Typography
+                  className="title"
+                  style={{ fontSize: "36px" }}
+                  component={"span"}
+                >
+                  {goodie?.fromCollection?.title}
+                </Typography>
+                <hr
+                  style={{
+                    height: "6px",
+                    width: "100%",
+                    borderWidth: "0",
+                    color: "#05A660",
+                    backgroundColor: "#05A660",
+                    borderRadius: "20px",
+                    position: "absolute",
+                  }}
+                />
+              </Box>
+            </Box>
+            <Grid container spacing={5}>
+              {isLoadingSomeCollectionGoodies ? (
+                <>
+                  <Grid item xs={12} md={6} lg={4} xl={3}>
+                    <GoodieCardSkeleton />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4} xl={3}>
+                    <GoodieCardSkeleton />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4} xl={3}>
+                    <GoodieCardSkeleton />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4} xl={3}>
+                    <GoodieCardSkeleton />
+                  </Grid>
+                </>
+              ) : (
+                someCollectionGoodies.map((goodie, i) => (
+                  <Grid
+                    key={i + " " + goodie._id}
+                    item
+                    xs={12}
+                    md={6}
+                    lg={4}
+                    xl={3}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <GoodieCard {...goodie} />
+                  </Grid>
+                ))
+              )}
+            </Grid>
+          </Box>
         </Box>
       </Box>
       <OrderModal

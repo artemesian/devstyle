@@ -22,6 +22,8 @@ import CloseWhite from "../assets/icons/close.png";
 
 import "./nav.styles.scss";
 import { calculatePromoPrice } from "../utils/utils.script";
+import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   const theme = useTheme();
@@ -46,14 +48,17 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   };
 
   useEffect(() => {
-    // TODO: LOAD ANNOUNCEMENT
-    let announcement = {
-      title: "Announcement",
-      text: " La Collection 'Blockchain Era' est maintenant disponible🎉",
-      link: "https",
-      exist: true,
-    };
-    setAnnounce(announcement);
+    myAxios
+      .get("/announcement")
+      .then((response) => {
+        if (response.status === 200) {
+          setAnnounce(response.data.message);
+        } else {
+          console.log(response.data.message);
+          setAnnounce({});
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -126,6 +131,9 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
               className="custom-goodies-buttom"
               onClick={() => {
                 try {
+                  analyticsEventTracker("CUSTOM GOODIE")(
+                    "go to custom goodie section"
+                  );
                   if (document.querySelector("#custom-section")) {
                     document
                       .querySelector("#custom-section")
@@ -149,19 +157,27 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
           </Box>
         </Box>
       </Box>
-      {announce.exist && (
+      {announce._id && (
         <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
-          <Link to={announce.link} style={{ width: "auto" }}>
+          <a
+            href={announce.link}
+            style={{ width: "auto" }}
+            onClick={() => {
+              analyticsEventTracker("ANNOUNCEMENT")("click announcement");
+            }}
+          >
             <Typography className="notif" component={"span"}>
-              {match560 && <Box className="title">{announce.title}</Box>}
+              {match560 && <Box className="title">Announcement</Box>}
               <Typography className="text">{announce.text}</Typography>
-              <Box className="icon">
-                <Icon baseClassName="material-icons-round" color="warning">
-                  chevron_right
-                </Icon>
-              </Box>
+              {announce.link && (
+                <Box className="icon">
+                  <Icon baseClassName="material-icons-round" color="warning">
+                    chevron_right
+                  </Icon>
+                </Box>
+              )}
             </Typography>
-          </Link>
+          </a>
         </Box>
       )}
       <Box
@@ -240,6 +256,9 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
         <Button
           className="custom-goodies-buttom"
           onClick={() => {
+            analyticsEventTracker("CUSTOM GOODIE")(
+              "go to custom goodie section"
+            );
             try {
               if (document.querySelector("#custom-section")) {
                 handleDownNav();
@@ -282,9 +301,11 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
           >
             <Box
               bgcolor={
-                goodie.images.find(
-                  (image) => image.id === goodie.selectedColor.id
-                ).color ?? goodie.mainImage.color
+                goodie.backgroundColors[
+                  goodie.images.findIndex(
+                    (image) => image.url === goodie.mainImage.url
+                  )
+                ] ?? goodie.backgroundColors[0]
               }
               height="64px"
               width="64px"
@@ -294,9 +315,10 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
             >
               <img
                 src={
-                  goodie.images.find(
-                    (image) => image.id === goodie.selectedColor.id
-                  ).image ?? goodie.mainImage.image
+                  // goodie.images.find(
+                  //   (image) => image.id === goodie.selectedColor.id
+                  // ).image ?? goodie.mainImage.image
+                  goodie.mainImage.url
                 }
                 alt="goodie"
                 style={{ height: "75%" }}
@@ -344,7 +366,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
                 <Box
                   style={{
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    background: goodie.selectedColor.color,
+                    background: goodie.selectedColor,
                     height: "24px",
                     width: "24px",
                     borderRadius: "50%",
@@ -365,7 +387,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
                     fontSize: "14px",
                   }}
                 >
-                  <span>{goodie.selectedSize.size}</span>
+                  <span>{goodie.selectedSize}</span>
                 </Box>
                 <Box
                   style={{

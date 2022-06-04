@@ -7,17 +7,17 @@ export const PARTNERS_SEEDER = [
   {
     id: 1,
     name: "NETCODE",
-    logo_color: Netcode,
-    logo_white: Netcode,
-    logo_black: Netcode,
+    logoColor: Netcode,
+    logoWhite: Netcode,
+    logoBlack: Netcode,
     link: "https://twitter.com/netcode_team",
   },
   {
     id: 2,
     name: "GLOM SOFT",
-    logo_color: Glom,
-    logo_white: Glom,
-    logo_black: Glom,
+    logoColor: Glom,
+    logoWhite: Glom,
+    logoBlack: Glom,
     link: "https://www.facebook.com/glomsoft",
   },
 ];
