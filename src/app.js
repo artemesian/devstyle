@@ -134,9 +134,9 @@ const App = () => {
           }
         />
       </Routes>
-      {/* <Customize />
+      <Customize />
       <Newsletter />
-      <Footer /> */}
+      <Footer />
     </Box>
   );
 };
