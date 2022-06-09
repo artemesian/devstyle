@@ -80,7 +80,6 @@ const Goodie = ({ addToCart }) => {
       .get("/goodie/" + params.slug)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data.message);
           setGoodie({
             ...response.data.message,
             quantity: 1,
@@ -95,7 +94,7 @@ const Goodie = ({ addToCart }) => {
             )
             .then((response) => {
               if (response.status === 200) {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 setSomeCollectionGoodies([...response.data.message]);
                 setIsLoadingSomeCollectionGoodies(false);
               } else {
@@ -119,7 +118,7 @@ const Goodie = ({ addToCart }) => {
       .put("/goodie/update/views/" + params.slug)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data.message);
+          // console.log(response.data.message);
         } else {
           console.log(response.data.message);
         }
@@ -128,25 +127,27 @@ const Goodie = ({ addToCart }) => {
   }, [params.slug]);
 
   const _devstyle = () => {
-    let text = `
-    ID: ${goodie._id}
-    Name: ${goodie.name}
-    Link: https://dev-style.com/goodie/${goodie.slug}
-    Collection: ${goodie.fromCollection.title}
-    MainImage: ${goodie.mainImage.url}
-    Color: ${goodie.selectedColor.color}
-    Size: ${goodie.selectedSize.size}
-    Quantity: ${goodie.quantity}
-    Price: ${goodie.price}
-    PromoPrice: ${
+    if (goodie._id) {
+      let text = `
+      *ID:* ${goodie._id} ;    
+      *Name:* ${goodie.name} ;    
+    *Link:* https://dev-style.com/goodie/${goodie.slug} ;    
+    *Collection:* ${goodie.fromCollection.title} ;    
+    *MainImage:* ${goodie.mainImage.url} ;    
+    *Color:* ${goodie.selectedColor} ;    
+    *Size:* ${goodie.selectedSize} ;    
+    *Quantity:* ${goodie.quantity} ;    
+    *Price:* ${goodie.price} ;    
+    *PromoPrice:* ${
       goodie.inPromo
         ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
         : "none"
-    }
-    PromoPercent: ${goodie.inPromo ? goodie.promoPercentage : "none"}
+    } ;    
+    *PromoPercent:* ${goodie.inPromo ? goodie.promoPercentage : "none"} ;    
     `;
 
-    return text;
+      return text;
+    }
   };
 
   const getCartID = () => {
@@ -163,7 +164,6 @@ const Goodie = ({ addToCart }) => {
 
   const addToCartFromSellPage = () => {
     let cartID = getCartID();
-    console.log(cartID, goodie);
     addToCart({ ...goodie, cartID });
   };
 
@@ -412,7 +412,6 @@ const Goodie = ({ addToCart }) => {
                           className="button"
                           onClick={() => handleSelectedSizeChange(size.size)}
                         >
-                          {console.log(goodie.selectedSize)}
                           <button
                             key={"size-" + size.id + "-" + i}
                             style={
