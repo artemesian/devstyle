@@ -13,12 +13,30 @@ const Customize = () => {
 
   const contactForCustomGoodie = () => {
     analyticsEventTracker("CONTACT")("contact for custom goodie");
-    //TODO: Contact on whatsapp for custom goodies
+    window
+      .open(
+        `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#CustomGoodie*📌
+
+        Hello _DevStyle
+
+        `}`,
+        "_blank"
+      )
+      .focus();
   };
 
   const contactForPartnership = () => {
     analyticsEventTracker("CONTACT")("contact for partnership");
-    //TODO: Contact on whatsapp for partnership
+    window
+      .open(
+        `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#Partnership*📌
+
+      Hello _DevStyle
+
+      `}`,
+        "_blank"
+      )
+      .focus();
   };
 
   return (

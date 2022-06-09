@@ -344,6 +344,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
                     fontSize: "13px",
                     fontWeight: "500",
                   }}
+                  onClick={() => handleSideNav()}
                 >
                   {goodie.name}
                 </Link>
@@ -426,6 +427,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
                 color: "white",
                 height: "56px",
               }}
+              onClick={() => handleSideNav()}
             >
               Finaliser ma commande
             </Button>

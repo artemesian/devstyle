@@ -147,26 +147,28 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
   );
 
   const _devstyle = () => {
-    const cartDescription = Object.values(cart).map(
-      (goodie, i) =>
-        `
-          ID: ${goodie.id}
-          Name: ${goodie.name}
-          Link: https://dev-style.com/goodie/${goodie.slug}
-          Collection: ${goodie.collection.name}
-          MainImage: ${goodie.mainImage.image}
-          Color: ${goodie.selectedColor.color}
-          Size: ${goodie.selectedSize.size}
-          Quantity: ${goodie.quantity}
-          Price: ${goodie.price}
-          PromoPrice: ${
-            goodie.inPromo
-              ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
-              : "none"
-          }
-          PromoPercent: ${goodie.inPromo ? goodie.promoPercentage : "none"}
-        `
-    );
+    const cartDescription = Object.values(cart).reduce((acc, goodie, i) => {
+      return (acc += `
+        *ID:* ${goodie._id} ;    
+        *Name:* ${goodie.name} ;    
+        *Link:* https://dev-style.com/goodie/${goodie.slug} ;    
+        *Collection:* ${goodie.fromCollection.title} ;    
+        *MainImage:* ${goodie.mainImage.url} ;    
+        *Color:* ${goodie.selectedColor} ;    
+        *Size:* ${goodie.selectedSize} ;    
+        *Quantity:* ${goodie.quantity} ;    
+        *Price:* ${goodie.price} ;    
+        *PromoPrice:* ${
+          goodie.inPromo
+            ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+            : "none"
+        } ;    
+        *PromoPercent:* ${goodie.inPromo ? goodie.promoPercentage : "none"} ; 
+        
+        ------------------------------------
+        
+        `);
+    }, "");
 
     return cartDescription;
   };

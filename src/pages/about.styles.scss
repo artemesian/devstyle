@@ -38,4 +38,30 @@
       }
     }
   }
+  .abouts-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+    flex-wrap: wrap;
+    .title {
+      font-family: "Roboto Slab";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 48px;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    img {
+      height: 56px;
+    }
+  }
+  a {
+    font-weight: 600;
+  }
 }

@@ -3,7 +3,12 @@ import { Box, Skeleton } from "@mui/material";
 
 const GoodieCardSkeleton = () => {
   return (
-    <Box>
+    <Box
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      flexDirection={"column"}
+    >
       <Skeleton
         variant="retangular"
         animation="wave"

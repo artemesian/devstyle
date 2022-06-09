@@ -1,6 +1,10 @@
 import * as React from "react";
 import { Box, Typography, Modal, Button, Divider } from "@mui/material";
+import { toast } from "react-toastify";
+
 import Spinner from "./spinner.component";
+
+import myAxios from "../utils/axios.config";
 
 import "./orderModal.styles.scss";
 
@@ -17,36 +21,83 @@ const style = {
   p: 4,
 };
 
-const OrderModal = ({ open, handleClose, message }) => {
+const OrderModal = ({ open, handleClose, message = () => "" }) => {
   const [number, setNumber] = React.useState(null);
   const [isSending, setIsSending] = React.useState(false);
 
   const send = () => {
     setIsSending(true);
-    if (!number || number.length < 8) {
-      //TODO:ERROR TOAST
+    if (!number || String(number).length < 9) {
+      toast.error(
+        <div style={{ color: "#fff" }}>
+          {" "}
+          Entrer un numéro valide: 6xxxxxxxx{" "}
+        </div>,
+        {
+          style: { textAlign: "center" },
+        }
+      );
       setIsSending(false);
     } else {
-      //TODO:SEND NUMBER TO CONTACT ON WHATSAPP
-      window.localStorage.setItem(
-        "_devStyle-order-number",
-        String(number)
-          .split("")
-          .reduce(
-            (acc, val, i) => (acc += String.fromCharCode(val.charCodeAt() + 3)),
-            ""
-          )
-      );
-      setTimeout(() => {
-        setNumber(null);
-        setIsSending(false);
-      }, 3000);
+      myAxios
+        .post("/order/create", { number, description: message() })
+        .then((response) => {
+          if (response.status === 200) {
+            window.localStorage.setItem(
+              "_devStyle-order-number",
+              String(number)
+                .split("")
+                .reduce(
+                  (acc, val, i) =>
+                    (acc += String.fromCharCode(val.charCodeAt() + 3)),
+                  ""
+                )
+            );
+            toast.success(
+              <div style={{ color: "#fff" }}>Commande bien reçu</div>,
+              {
+                style: { textAlign: "center" },
+                icon: "🎉",
+              }
+            );
+            // console.log(response.data.message);
+          } else {
+            toast.erreur(
+              <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
+              {
+                style: { textAlign: "center" },
+              }
+            );
+            console.log(response.data.message);
+          }
+        })
+        .catch((error) => {
+          toast.erreur(
+            <div style={{ color: "#fff" }}>
+              Une erreur est survenu, réessayer
+            </div>,
+            {
+              style: { textAlign: "center" },
+              icon: "😕",
+            }
+          );
+          console.log(error);
+        })
+        .finally(() => {
+          setIsSending(false);
+        });
     }
   };
 
   const contact = () => {
-    //TODO: CONTACT ON WHATSAPP
-    console.log(message());
+    window
+      .open(
+        `https://api.whatsapp.com/send/?phone=237692650993&text=${
+          message() ?? ""
+        }`,
+        "_blank"
+      )
+      .focus();
   };
   React.useEffect(() => {
     let localNumber = window.localStorage.getItem("_devStyle-order-number");

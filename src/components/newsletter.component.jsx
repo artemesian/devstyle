@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import { toast } from "react-toastify";
 
 import Spinner from "./spinner.component";
 import EmailEmojiIcon from "../assets/icons/email-emoji.png";
 
 import "./newsletter.styles.scss";
+import myAxios from "../utils/axios.config";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -13,14 +15,55 @@ const Newsletter = () => {
   const subscribe = () => {
     setIsSubscribing(true);
     if (!email) {
-      //TODO:ERROR TOAST
+      toast.error(
+        <div style={{ color: "#fff" }}> Entrer une email valide</div>,
+        {
+          style: { textAlign: "center" },
+        }
+      );
       setIsSubscribing(false);
     } else {
-      //TODO:SUBSCRIBE TO NEWSLETTER
-      setTimeout(() => {
-        setEmail("");
-        setIsSubscribing(false);
-      }, 3000);
+      myAxios
+        .post("/newsletter/save", { email: email })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(
+              <div style={{ color: "#fff" }}>Bienvenue à bord 🎉</div>,
+              {
+                style: { textAlign: "center" },
+              }
+            );
+            console.log(response.data.message);
+          } else {
+            toast.info(
+              <div style={{ color: "#fff" }}>
+                Vous êtes déjà l'un des nôtres 😉
+              </div>,
+              {
+                style: { textAlign: "center" },
+              }
+            );
+            console.log(response.data.message);
+          }
+        })
+        .catch((error) => {
+          if (error.status === 500) {
+            console.log("hello checked");
+          }
+          toast.info(
+            <div style={{ color: "#fff" }}>
+              Vous êtes déjà l'un des nôtres 😉
+            </div>,
+            {
+              style: { textAlign: "center" },
+            }
+          );
+          console.log(error);
+        })
+        .finally(() => {
+          setEmail("");
+          setIsSubscribing(false);
+        });
     }
   };
   return (
