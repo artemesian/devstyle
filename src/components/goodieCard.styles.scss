@@ -38,7 +38,7 @@
         top: 0;
         left: 0;
         padding: 1px 10px;
-        font-size: 12px;
+        font-size: 10px;
       }
     }
     .bottom {
@@ -50,6 +50,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+        font-size: 14px;
 
         @supports (-webkit-line-clamp: 2) {
           overflow: hidden;
@@ -69,13 +70,13 @@
           font-family: Poppins;
           font-style: normal;
           font-weight: bold;
-          font-size: 20px;
+          font-size: 18px;
         }
         .real-price {
           font-family: Poppins;
           font-style: normal;
           font-weight: normal;
-          font-size: 12px;
+          font-size: 10px;
           color: #220f00;
         }
       }

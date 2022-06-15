@@ -3,13 +3,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   .newsletter-container {
     text-align: center;
     .text {
       font-family: Poppins;
       font-style: normal;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 22px;
       margin: 30px 0;
     }
@@ -28,7 +29,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 500;
-        font-size: 18px;
+        font-size: 14px;
         padding: 20px;
       }
     }
@@ -41,7 +42,7 @@
       font-family: Poppins;
       font-style: normal;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
   .title-container {
@@ -52,7 +53,7 @@
       font-family: "Roboto Slab";
       font-style: normal;
       font-weight: 600;
-      font-size: 48px;
+      font-size: 36px;
       line-height: 1.1;
       letter-spacing: 0.02em;
     }

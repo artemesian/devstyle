@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { toast } from "react-toastify";
 
 import Spinner from "./spinner.component";
@@ -11,6 +11,7 @@ import myAxios from "../utils/axios.config";
 const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const match900 = useMediaQuery("(max-width:900px)");
 
   const subscribe = () => {
     setIsSubscribing(true);
@@ -67,14 +68,26 @@ const Newsletter = () => {
     }
   };
   return (
-    <Box className="newsletter-wrapper" padding={5}>
+    <Box
+      className="newsletter-wrapper"
+      paddingY={5}
+      paddingX={match900 ? 3 : 5}
+    >
       <Box className="newsletter-container">
         <Box className="title-container">
-          <Typography className="title" component={"span"}>
+          <Typography
+            className="title"
+            component={"span"}
+            style={{ fontSize: match900 ? "30px" : "36px" }}
+          >
             NE
           </Typography>
           <Box position={"relative"}>
-            <Typography className="title" component={"span"}>
+            <Typography
+              className="title"
+              component={"span"}
+              style={{ fontSize: match900 ? "30px" : "36px" }}
+            >
               WSLETTER
             </Typography>
             <hr

@@ -198,23 +198,37 @@ const Home = () => {
             md={6}
             className="text-side animate__animated animate__backInLeft"
           >
-            <Typography className="green-text" component={"span"}>
+            <Typography
+              className="green-text"
+              component={"span"}
+              style={{ fontSize: match900 ? "12px" : "14px" }}
+            >
               La premiere boutique dedié aux amoureux de la Tech #TT237{" "}
             </Typography>
             <Typography
               className="hero-title"
               component={"h2"}
               variant={"title"}
+              style={{
+                fontSize: match900 ? "40px" : "50px",
+                lineHeight: match900 ? "60px" : "68px",
+              }}
             >
               EXPRIME TA PASSION POUR LA TECH_
             </Typography>
             <Typography
               className="hero-text"
               component={"div"}
-              variant={"body1"}
+              variant={match900 ? "body2" : "body1"}
             >
-              By the same illusion which lifts the horizon of the sea to the
-              level illusion which lifts the horizon of the sea to the level
+              Sois fière de ta passion💙!
+              <br />
+              <i style={{ fontSize: "14px" }}>
+                <b>
+                  #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle
+                  #devAttitude
+                </b>
+              </i>
             </Typography>
             <Button className="hero-button">
               <a
@@ -300,6 +314,10 @@ const Home = () => {
                   alt="devstyle hero"
                   id="hero-image"
                   className="animate__faster"
+                  style={{
+                    margin: match900 ? "auto" : "0 0 0 auto",
+                    width: match900 ? "100%" : "85%",
+                  }}
                 />
                 {heroSection.length > 1 && (
                   <Box className="icons-container">
@@ -337,7 +355,7 @@ const Home = () => {
         <Box className="title-container">
           <Typography
             className="title"
-            style={{ fontSize: "36px" }}
+            style={{ fontSize: match900 ? "30px" : "36px" }}
             component={"span"}
           >
             Nos
@@ -346,7 +364,7 @@ const Home = () => {
           <Box position={"relative"}>
             <Typography
               className="title"
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: match900 ? "30px" : "36px" }}
               component={"span"}
             >
               Collections
@@ -476,7 +494,7 @@ const Home = () => {
           <Box position={"relative"}>
             <Typography
               className="title"
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: match900 ? "30px" : "36px" }}
               component={"span"}
             >
               Nouveaux
@@ -496,7 +514,7 @@ const Home = () => {
           &nbsp; &nbsp;
           <Typography
             className="title"
-            style={{ fontSize: "36px" }}
+            style={{ fontSize: match900 ? "30px" : "36px" }}
             component={"span"}
           >
             et Chauds
@@ -548,7 +566,7 @@ const Home = () => {
         <Box className="title-container" style={{ fontSize: "16px" }}>
           <Typography
             className="title"
-            style={{ fontSize: "36px" }}
+            style={{ fontSize: match900 ? "30px" : "36px" }}
             component={"span"}
           >
             En
@@ -557,7 +575,7 @@ const Home = () => {
           <Box position={"relative"}>
             <Typography
               className="title"
-              style={{ fontSize: "36px" }}
+              style={{ fontSize: match900 ? "30px" : "36px" }}
               component={"span"}
             >
               Tendances

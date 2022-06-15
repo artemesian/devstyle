@@ -6,7 +6,8 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    top: -20px;
+    // top: -20px;
+    height: auto;
     .hero-section {
       width: 100%;
       .text-side {
@@ -16,6 +17,7 @@
         align-items: flex-start;
         min-height: calc(100vh - 120px);
         height: auto;
+        padding: 25px;
         .green-text {
           background: #e3fff1;
           border-radius: 32px;
@@ -38,7 +40,7 @@
         }
         .hero-button {
           font-family: Roboto Slab;
-          font-size: 16px;
+          font-size: 14px;
           color: #ffffff;
           background: #220f00;
           border-radius: 32px;
@@ -51,10 +53,9 @@
           justify-items: flex-start;
           padding-top: 36px;
           position: relative;
-          top: 40px;
           img {
             margin-right: 15px;
-            height: 28px;
+            height: 24px;
           }
         }
       }
@@ -63,13 +64,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding: 100px 0;
+
         > div {
-          width: 75%;
+          width: 100%;
           flex-direction: column;
           display: flex;
           align-self: flex-end;
           img {
-            width: 100%;
+            width: 85%;
+            display: flex;
+            margin: auto;
           }
           .icons-container {
             width: 100%;
@@ -92,6 +97,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     .title {
       font-family: "Roboto Slab";
       font-style: normal;
@@ -174,8 +180,6 @@
     }
   }
   .goodies-listing-section {
-    .goodies-container {
-    }
     .button {
       margin-top: 20px;
       background: #ffffff;

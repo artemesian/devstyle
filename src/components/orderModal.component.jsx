@@ -40,7 +40,10 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
       setIsSending(false);
     } else {
       myAxios
-        .post("/order/create", { number, description: message() })
+        .post("/order/create", {
+          number,
+          description: `%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${message()}%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
+        })
         .then((response) => {
           if (response.status === 200) {
             window.localStorage.setItem(
@@ -92,9 +95,9 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
   const contact = () => {
     window
       .open(
-        `https://api.whatsapp.com/send/?phone=237692650993&text=${
+        `https://api.whatsapp.com/send/?phone=237692650993&text=%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${
           message() ?? ""
-        }`,
+        }%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
         "_blank"
       )
       .focus();
