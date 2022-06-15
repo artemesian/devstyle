@@ -32,7 +32,7 @@ export const analyticsEventTracker = (category = "Unknown") => {
 };
 
 const App = () => {
-  let m_ID = "G-LWCBK761GY";
+  let m_ID = "UA-160012681-1";
   ReactGA.initialize(m_ID);
   const [cart, setCart] = useState({});
 

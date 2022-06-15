@@ -27,29 +27,34 @@ import RocketIcon from "../assets/icons/rocket.png";
 
 import "./home.style.scss";
 // import { COLLECTIONS_SEEDER, GOODIES_SEEDER } from "../utils/seeders.data";
-// import { importAll } from "../utils/utils.script";
+import { importAll } from "../utils/utils.script";
 import { scrollToTop } from "../utils/utils.script";
 import myAxios from "../utils/axios.config";
 import { analyticsEventTracker } from "../app";
 
 const Home = () => {
+  const HeroImages = importAll(
+    require.context("../assets/img/hero/", false, /\.(png|jpe?g)$/)
+  );
+  const hero_images = Object.values(HeroImages).map((image, i) => ({
+    _id: i,
+    image: { url: image },
+  }));
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [collections, setCollections] = useState([]);
   const [trendingGoodies, setTrendingGoodies] = useState([]);
   const [newGoodies, setNewGoodies] = useState([]);
-  const [heroSection, setHeroSection] = useState([]);
   const [isLoadingCollections, setIsLoadingCollections] = useState(true);
+  const [heroSection, setHeroSection] = useState(
+    hero_images.length > 0 ? [...hero_images] : []
+  );
   const [isLoadingTrendingGoodies, setIsLoadingTrendingGoodies] =
     useState(true);
   const [isLoadingNewGoodies, setIsLoadingNewGoodies] = useState(true);
-  const [isLoadingHeroSection, setIsLoadingHeroSection] = useState(true);
+  // const [isLoadingHeroSection, setIsLoadingHeroSection] = useState(true);
 
   const match1000 = useMediaQuery("(max-width:1000px)");
   const match900 = useMediaQuery("(max-width:900px)");
-
-  // const HeroImages = importAll(
-  //   require.context("../assets/img/hero/", false, /\.(png|jpe?g)$/)
-  // );
 
   const handleHeroImageChange = (step) => {
     const element = document.querySelector("#hero-image");
@@ -151,19 +156,22 @@ const Home = () => {
       .get("/hero/all")
       .then((response) => {
         if (response.status === 200) {
-          setHeroSection(response.data.message);
-          setIsLoadingHeroSection(false);
+          setHeroSection((prevState) => [
+            ...prevState,
+            ...response.data.message,
+          ]);
+          // setIsLoadingHeroSection(false);
         } else {
           console.log(response.data.message);
-          setHeroSection([]);
-          setIsLoadingHeroSection(false);
+          setHeroSection((prevState) => [...prevState]);
+          // setIsLoadingHeroSection(false);
         }
       })
       .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    if (heroSection > 1) {
+    if (heroSection.length > 1) {
       let id = setInterval(() => {
         let nextButton = document.querySelector("#next-hero-image");
 
@@ -187,7 +195,7 @@ const Home = () => {
       console.log(error);
     }
   }, []);
-
+  console.log(heroSection);
   return (
     <Box id="home-container">
       <Box paddingX={match1000 ? "10%" : 12} className="hero-section-wrapper">
@@ -221,7 +229,7 @@ const Home = () => {
               component={"div"}
               variant={match900 ? "body2" : "body1"}
             >
-              Sois fière de ta passion💙!
+              Sois fière d'être passionné💙!
               <br />
               <i style={{ fontSize: "14px" }}>
                 <b>
@@ -292,7 +300,7 @@ const Home = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className="image-side">
-            {isLoadingHeroSection ? (
+            {heroSection.length < 1 ? (
               <Box
                 height={"100%"}
                 width={"100%"}
