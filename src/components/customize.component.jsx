@@ -9,17 +9,19 @@ import "./customize.styles.scss";
 import { analyticsEventTracker } from "../app";
 
 const Customize = () => {
-  const match = useMediaQuery("(max-width:900px)");
+  const match900 = useMediaQuery("(max-width:900px)");
 
   const contactForCustomGoodie = () => {
     analyticsEventTracker("CONTACT")("contact for custom goodie");
     window
       .open(
-        `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#CustomGoodie*📌
+        encodeURIComponent(
+          `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#CustomGoodie*📌
 
         Hello _DevStyle
 
-        `}`,
+        `}`
+        ),
         "_blank"
       )
       .focus();
@@ -29,11 +31,13 @@ const Customize = () => {
     analyticsEventTracker("CONTACT")("contact for partnership");
     window
       .open(
-        `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#Partnership*📌
+        encodeURIComponent(
+          `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#Partnership*📌
 
       Hello _DevStyle
 
-      `}`,
+      `}`
+        ),
         "_blank"
       )
       .focus();
@@ -45,7 +49,8 @@ const Customize = () => {
         item
         xs={12}
         md={6}
-        padding={8}
+        paddingY={8}
+        paddingX={match900 ? 4 : 8}
         className="info-box"
         bgcolor={"#FFC1BD"}
         alignItems={"flex-start"}
@@ -65,19 +70,20 @@ const Customize = () => {
           Contactez-Nous{" "}
         </Button>
       </Grid>
-      {!match && <img src={Saly} alt="saly illustration" className="saly" />}
+      {!match900 && <img src={Saly} alt="saly illustration" className="saly" />}
       <Grid
         item
         xs={12}
         md={6}
-        padding={8}
+        paddingY={8}
+        paddingX={match900 ? 4 : 8}
         className="info-box"
         bgcolor={"#8FC8FF"}
         alignItems={"flex-end"}
         overflow={"hidden"}
         height={"500px"}
       >
-        {match && (
+        {match900 && (
           <img
             src={Saly}
             alt="saly illustration"

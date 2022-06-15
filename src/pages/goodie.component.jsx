@@ -129,24 +129,24 @@ const Goodie = ({ addToCart }) => {
   const _devstyle = () => {
     if (goodie._id) {
       let text = `
-      *ID:* ${goodie._id} ;    
-      *Name:* ${goodie.name} ;    
-    *Link:* https://dev-style.com/goodie/${goodie.slug} ;    
-    *Collection:* ${goodie.fromCollection.title} ;    
-    *MainImage:* ${goodie.mainImage.url} ;    
-    *Color:* ${goodie.selectedColor} ;    
-    *Size:* ${goodie.selectedSize} ;    
-    *Quantity:* ${goodie.quantity} ;    
-    *Price:* ${goodie.price} ;    
-    *PromoPrice:* ${
-      goodie.inPromo
-        ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
-        : "none"
-    } ;    
-    *PromoPercent:* ${goodie.inPromo ? goodie.promoPercentage : "none"} ;    
-    `;
+*ID:* ${goodie._id} ;
+*Name:* ${goodie.name} ;
+*Link:* https://dev-style.com/goodie/${goodie.slug} ;
+*Collection:* ${goodie.fromCollection.title} ;
+*MainImage:* ${goodie.mainImage.url} ;
+*Color:* ${goodie.selectedColor} ;
+*Size:* ${goodie.selectedSize} ;
+*Quantity:* ${goodie.quantity} ;
+*Price:* ${goodie.price} ;
+*PromoPrice:* ${
+        goodie.inPromo
+          ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+          : "none"
+      } ;
+*PromoPercent:* ${goodie.inPromo ? goodie.promoPercentage : "none"} ;    
+`;
 
-      return text;
+      return encodeURIComponent(text);
     }
   };
 
@@ -297,7 +297,10 @@ const Goodie = ({ addToCart }) => {
                       goodie.name
                     )}
                   </Typography>
-                  <Typography className="collection">
+                  <a
+                    href={"/collection/" + goodie?.fromCollection?.slug}
+                    className="collection"
+                  >
                     {isLoadingGoodie ? (
                       <Skeleton
                         animation="wave"
@@ -308,7 +311,7 @@ const Goodie = ({ addToCart }) => {
                     ) : (
                       goodie.fromCollection.title
                     )}
-                  </Typography>
+                  </a>
                 </Box>
                 <Box className="price">
                   <Typography className="price">
@@ -561,7 +564,7 @@ const Goodie = ({ addToCart }) => {
               <Box position={"relative"}>
                 <Typography
                   className="title"
-                  style={{ fontSize: "36px" }}
+                  style={{ fontSize: "30px" }}
                   component={"span"}
                 >
                   {goodie?.fromCollection?.title}

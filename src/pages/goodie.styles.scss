@@ -30,7 +30,7 @@
 
     img {
       max-width: 500px;
-      width: 80%;
+      width: 85%;
     }
     .promotion-box {
       height: 25px;
@@ -43,7 +43,7 @@
       font-family: Poppins;
       font-style: normal;
       font-weight: normal;
-      font-size: 15px;
+      font-size: 12px;
       line-height: 0px;
       letter-spacing: 0.02em;
       color: white;
@@ -57,7 +57,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: normal;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 30px;
         letter-spacing: 0.02em;
         color: #8f90a6;
@@ -74,8 +74,8 @@
           font-family: Poppins;
           font-style: normal;
           font-weight: 600;
-          font-size: 30px;
-          line-height: 30px;
+          font-size: 28px;
+          line-height: 36px;
           letter-spacing: 0.02em;
           color: #220f00;
         }
@@ -87,6 +87,7 @@
           line-height: 30px;
           letter-spacing: 0.02em;
           color: #8f90a6;
+          text-decoration: none;
         }
       }
       .label {
@@ -109,7 +110,7 @@
           font-family: Poppins;
           font-style: normal;
           font-weight: bold;
-          font-size: 40px;
+          font-size: 36px;
           line-height: 30px;
           letter-spacing: 0.02em;
           color: #220f00;
@@ -118,7 +119,7 @@
           font-family: Poppins;
           font-style: normal;
           font-weight: normal;
-          font-size: 15px;
+          font-size: 12px;
           line-height: 0px;
           letter-spacing: 0.02em;
           color: #1c1c28;
@@ -186,7 +187,7 @@
           font-family: Roboto Slab;
           font-style: normal;
           font-weight: 500;
-          font-size: 18px;
+          font-size: 15px;
           line-height: 32px;
           text-transform: initial;
           margin: 5px 0;
@@ -200,11 +201,12 @@
     align-items: center;
     padding-top: 100px;
     padding-bottom: 70px;
+    flex-wrap: wrap;
     .title {
       font-family: "Roboto Slab";
       font-style: normal;
       font-weight: 600;
-      font-size: 48px;
+      font-size: 30px;
       line-height: 1.1;
       letter-spacing: 0.02em;
     }

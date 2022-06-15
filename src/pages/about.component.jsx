@@ -98,7 +98,7 @@ const About = () => {
               />
             </Box>
           </Box>
-          <Box>
+          <Box style={{ fontSize: "15px" }}>
             De façon littérale DevStyle est composé de deux mots Dev et Style,
             Dev qui désigne les professionnels, passionnés et fans de
             Technologies ( <b>Techx</b> ) et Style qui désigne un mode de vie et

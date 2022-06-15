@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Tooltip, Typography } from "@mui/material";
+import { Box, Grid, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import Spinner from "./spinner.component";
@@ -23,6 +23,8 @@ const Footer = () => {
   const [isLoadingPartners, setIsLoadingPartners] = useState(true);
   const [partners, setPartners] = useState([]);
 
+  const match900 = useMediaQuery("(max-width:900px)");
+
   useEffect(() => {
     myAxios
       .get("/partner/all")
@@ -41,17 +43,17 @@ const Footer = () => {
 
   return (
     <Box className="footer-wrapper" position={"relative"}>
-      <Box paddingX={10} paddingY={5}>
+      <Box paddingX={match900 ? 5 : 10} paddingY={5}>
         <Grid container className="footer-container">
           <Grid item xs={12} lg={4}>
             <img
               src={DevStyleWhite}
-              style={{ marginBottom: 20 }}
+              style={{ marginBottom: 40 }}
               alt="devstyle netcode logo"
               className="devstyle-netcode-logo"
             />
           </Grid>
-          <Grid container item xs={12} lg={8} spacing={10}>
+          <Grid container item xs={12} lg={8}>
             <Grid item xs={12} lg={4}>
               <Typography className="footer-title">Nos pages</Typography>
               <Box className="footer-links-wrapper">
