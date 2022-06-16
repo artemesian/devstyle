@@ -7,6 +7,7 @@ import EmailEmojiIcon from "../assets/icons/email-emoji.png";
 
 import "./newsletter.styles.scss";
 import myAxios from "../utils/axios.config";
+import { analyticsEventTracker } from "../app";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const Newsletter = () => {
       );
       setIsSubscribing(false);
     } else {
+      analyticsEventTracker("CONTACT")("Newsletter");
       myAxios
         .post("/newsletter/save", { email: email })
         .then((response) => {

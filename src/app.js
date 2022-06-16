@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ReactGA from "react-ga";
 import { toast } from "react-toastify";
 
@@ -18,7 +18,6 @@ import Nav from "./components/nav.component.jsx";
 import Customize from "./components/customize.component";
 import Newsletter from "./components/newsletter.component";
 import Footer from "./components/footer.component";
-
 import "./app.styles.scss";
 
 import { calculatePromoPrice } from "./utils/utils.script.js";
@@ -32,9 +31,9 @@ export const analyticsEventTracker = (category = "Unknown") => {
 };
 
 const App = () => {
-  let m_ID = "UA-160012681-1";
-  ReactGA.initialize(m_ID);
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
   const [cart, setCart] = useState({});
+  const location = useLocation();
 
   const handleCart = (newCart) => {
     localStorage.setItem("devStyle_cart", JSON.stringify(newCart));
@@ -100,8 +99,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
+    ReactGA.pageview(location.pathname + location.hash);
+  }, [location]);
 
   return (
     <Box>
