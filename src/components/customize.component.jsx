@@ -15,13 +15,11 @@ const Customize = () => {
     analyticsEventTracker("CONTACT")("contact for custom goodie");
     window
       .open(
-        encodeURIComponent(
-          `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#CustomGoodie*📌
+        `https://api.whatsapp.com/send/?phone=237692650993&text=${encodeURIComponent(`*#CustomGoodie*📌
 
         Hello _DevStyle
 
-        `}`
-        ),
+        `)}`,
         "_blank"
       )
       .focus();
@@ -31,13 +29,11 @@ const Customize = () => {
     analyticsEventTracker("CONTACT")("contact for partnership");
     window
       .open(
-        encodeURIComponent(
-          `https://api.whatsapp.com/send/?phone=237692650993&text=${`*#Partnership*📌
+        `https://api.whatsapp.com/send/?phone=237692650993&text=${encodeURIComponent(`*#Partnership*📌
 
       Hello _DevStyle
 
-      `}`
-        ),
+      `)}`,
         "_blank"
       )
       .focus();

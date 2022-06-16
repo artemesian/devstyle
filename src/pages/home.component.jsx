@@ -324,7 +324,7 @@ const Home = () => {
                   className="animate__faster"
                   style={{
                     margin: match900 ? "auto" : "0 0 0 auto",
-                    width: match900 ? "100%" : "85%",
+                    width: match900 ? "100%" : "65%",
                   }}
                 />
                 {heroSection.length > 1 && (

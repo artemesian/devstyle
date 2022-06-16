@@ -176,8 +176,23 @@ const Footer = () => {
                 >
                   <img src={PhoneIcon} alt="phone icon" /> &nbsp;&nbsp;
                   <Box>
-                    <a href="tel:+237692650993">(+237) 692 650 993</a>
-                    <a href="tel:+237654456264"> / 654 456 264</a>
+                    <a
+                      href="tel:+237692650993"
+                      onClick={() => {
+                        analyticsEventTracker("CONTACT")("Orange Number");
+                      }}
+                    >
+                      (+237) 692 650 993
+                    </a>
+                    <a
+                      href="tel:+237654456264"
+                      onClick={() => {
+                        analyticsEventTracker("CONTACT")("Mtn Number");
+                      }}
+                    >
+                      {" "}
+                      / 654 456 264
+                    </a>
                   </Box>
                 </Box>
                 <Box
@@ -187,7 +202,12 @@ const Footer = () => {
                   marginTop={1}
                 >
                   <img src={EmailIcon} alt="email icon" /> &nbsp;&nbsp;
-                  <a href="mailto:contact.devstyle@gmail.com">
+                  <a
+                    href="mailto:contact.devstyle@gmail.com"
+                    onClick={() => {
+                      analyticsEventTracker("CONTACT")("Email");
+                    }}
+                  >
                     contact.devstyle@gmail.com
                   </a>
                 </Box>
