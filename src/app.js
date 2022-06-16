@@ -112,7 +112,7 @@ const App = () => {
         getCartCount={getCartCount}
       /> */}
       <Routes>
-        <Route path="/" element={<ComingSoon />} />
+        <Route path="*" element={<ComingSoon />} />
         {/* <Route path="/" element={<Home />} />
         <Route path="/collection/:slug" element={<Collection />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
