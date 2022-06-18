@@ -12,6 +12,7 @@ import {
   Tooltip,
   ClickAwayListener,
 } from "@mui/material";
+import Helmet from "react-helmet";
 import {
   ThumbUpTwoTone,
   RemoveRedEyeOutlined,
@@ -192,6 +193,23 @@ const Goodie = ({ addToCart }) => {
 
   return (
     <React.Fragment>
+      <Helmet pr>
+        <title> Goodie {isLoadingGoodie ? "" : "- " + goodie.name}</title>
+        <meta
+          name="description"
+          content={
+            isLoadingGoodie
+              ? "Un Goodie de chez _DevStyle, que pour des Techies"
+              : `Un Goodie de chez _DevStyle | Collection: ${
+                  goodie.fromCollection.title
+                } Prix promo: ${
+                  goodie.inPromo
+                    ? calculatePromoPrice(goodie.price, goodie.promoPercentage)
+                    : goodie.price
+                } FCFA`
+          }
+        />
+      </Helmet>
       <Box className="goodie-wrapper">
         <Box
           paddingX={match700 ? 3 : 12}

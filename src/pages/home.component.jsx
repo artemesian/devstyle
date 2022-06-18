@@ -9,6 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import Helmet from "react-helmet";
 
 import GoodieCard from "../components/goodieCard.component";
 import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
@@ -198,6 +199,16 @@ const Home = () => {
   console.log(heroSection);
   return (
     <Box id="home-container">
+      <Helmet>
+        <title>
+          {" "}
+          La premiere boutique dedié aux amoureux de la Tech, Developpeur #TT237
+        </title>
+        <meta
+          name="description"
+          content="Optez pour des vêtements tels que des T-shirts, des Hoodies, des Sweat-shirts ou encore des articles plus uniques tels que des Pochettes, des Casquettes, des Mugs, des Posters et des Stickers et bien plus qui reflètent et expriment pleinement votre passion pour la technologie💙. #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle #devAttitude"
+        />
+      </Helmet>
       <Box paddingX={match1000 ? "10%" : 12} className="hero-section-wrapper">
         <Grid container className="hero-section">
           <Grid
