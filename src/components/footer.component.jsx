@@ -216,7 +216,9 @@ const Footer = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box className="footer-copyright-text">Tous droits réservés © 2022</Box>
+      <Box className="footer-copyright-text">
+        Tous droits réservés © {new Date().getFullYear()}
+      </Box>
       <img
         src={SalyFooter}
         alt="saly footer"

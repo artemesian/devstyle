@@ -34,7 +34,7 @@ const About = () => {
               <Typography
                 className="text animate__animated animate__flipInX "
                 style={{
-                  fontSize: match1000 ? "48px" : "64px",
+                  fontSize: match1000 ? "45px" : "64px",
                   lineHeight: match1000 ? "72px" : "100px",
                 }}
               >
