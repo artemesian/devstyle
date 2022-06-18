@@ -12,6 +12,7 @@ import { scrollToTop } from "../utils/utils.script";
 import { analyticsEventTracker } from "../app";
 
 const About = () => {
+  const match900 = useMediaQuery("(max-width:900px)");
   const match1000 = useMediaQuery("(max-width:1000px)");
   useEffect(() => {
     scrollToTop();
@@ -55,7 +56,7 @@ const About = () => {
         marginTop={2}
       >
         <Box
-          padding={10}
+          padding={match900 ? 3 : 10}
           style={{
             height: "100%",
             fontFamily: "Poppins",
@@ -98,7 +99,12 @@ const About = () => {
               />
             </Box>
           </Box>
-          <Box style={{ fontSize: "15px" }}>
+          <Box
+            style={{
+              fontSize: "15px",
+              textAlign: match900 ? "justify" : "center",
+            }}
+          >
             De façon littérale DevStyle est composé de deux mots Dev et Style,
             Dev qui désigne les professionnels, passionnés et fans de
             Technologies ( <b>Techx</b> ) et Style qui désigne un mode de vie et
