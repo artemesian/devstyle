@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import {
   ArrowBackIos,
@@ -27,6 +28,8 @@ import OrderModal from "../components/orderModal.component";
 
 const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const match900 = useMediaQuery("(max-width:900px)");
+
   const createData = (
     image,
     name,
@@ -179,8 +182,13 @@ const Checkout = ({ cart, deleteFromCart, getTotalPrice, updateCart }) => {
 
   return (
     <Fragment>
-      <Box className="checkout-wrapper" paddingX={12}>
-        <Typography className="title">{"< Panier />"}</Typography>
+      <Box className="checkout-wrapper" paddingX={match900 ? 2 : 12}>
+        <Typography
+          className="title"
+          style={{ fontSize: match900 ? "30px" : "40px" }}
+        >
+          {"< Panier />"}
+        </Typography>
         <Box className="checkout-container">
           <TableContainer>
             <Table sx={{ minWidth: 850 }} aria-label="simple table">

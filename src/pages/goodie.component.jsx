@@ -194,7 +194,7 @@ const Goodie = ({ addToCart }) => {
     <React.Fragment>
       <Box className="goodie-wrapper">
         <Box
-          paddingX={match700 ? 5 : 12}
+          paddingX={match700 ? 3 : 12}
           paddingY={5}
           style={{ width: "100%", height: "100%" }}
         >
@@ -207,9 +207,17 @@ const Goodie = ({ addToCart }) => {
                 display: "flex",
                 height: "100%",
                 justifyContent: "center",
+                flexDirection: match700 ? "column-reverse" : "row",
               }}
             >
-              <Box className="goodie-preview-wrapper">
+              <Box
+                className="goodie-preview-wrapper"
+                style={
+                  match700
+                    ? { display: "flex", marginTop: 25, flexWrap: "wrap" }
+                    : {}
+                }
+              >
                 {isLoadingGoodie ? (
                   <Skeleton
                     animation="wave"
@@ -224,7 +232,8 @@ const Goodie = ({ addToCart }) => {
                       className="goodie-preview-container"
                       style={{
                         backgroundColor: goodie.backgroundColors[i],
-                        marginBottom: 20,
+                        marginBottom: match700 ? 5 : 20,
+                        marginRight: match700 ? 20 : 0,
                         border:
                           image.url === goodie.mainImage.url
                             ? "2px solid #000"
@@ -244,20 +253,33 @@ const Goodie = ({ addToCart }) => {
                   animation="wave"
                   variant="rectangular"
                   height={600}
-                  width={500}
-                  style={{ margin: "0 25px" }}
+                  width={match700 ? "100%" : 500}
+                  style={{ margin: match700 ? "0" : "0 25px" }}
                 />
               ) : (
                 <Box
                   className="goodie-image-wrapper"
-                  style={{
-                    backgroundColor:
-                      goodie.backgroundColors[
-                        goodie.images.findIndex(
-                          (image) => image.url === goodie.mainImage.url
-                        )
-                      ],
-                  }}
+                  style={
+                    match700
+                      ? {
+                          backgroundColor:
+                            goodie.backgroundColors[
+                              goodie.images.findIndex(
+                                (image) => image.url === goodie.mainImage.url
+                              )
+                            ],
+                          width: "100%",
+                          margin: "0",
+                        }
+                      : {
+                          backgroundColor:
+                            goodie.backgroundColors[
+                              goodie.images.findIndex(
+                                (image) => image.url === goodie.mainImage.url
+                              )
+                            ],
+                        }
+                  }
                 >
                   {goodie.inPromo && (
                     <Box className="promotion-box">
@@ -552,10 +574,17 @@ const Goodie = ({ addToCart }) => {
             </Grid>
           </Grid>
           <Box className="goodies-container">
-            <Box className="title-container">
+            <Box
+              className="title-container"
+              style={
+                match700
+                  ? { paddingTop: "75px", justifyContent: "center" }
+                  : { paddingTop: "100px" }
+              }
+            >
               <Typography
                 className="title"
-                style={{ fontSize: "36px" }}
+                style={{ fontSize: match900 ? "30px" : "36px" }}
                 component={"span"}
               >
                 Toujour dans

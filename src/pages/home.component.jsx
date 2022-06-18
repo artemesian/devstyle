@@ -231,10 +231,22 @@ const Home = () => {
             >
               Sois fière d'être passionné💙!
               <br />
-              <i style={{ fontSize: "14px" }}>
-                <b>
-                  #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle
-                  #devAttitude
+              <i>
+                <b
+                  style={{
+                    fontSize: "14px",
+                  }}
+                >
+                  {match900 ? (
+                    <span>
+                      #Etre Developpeur Plus Qu'un Metier C'est Un Style De Vie
+                    </span>
+                  ) : (
+                    <span>
+                      #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie
+                    </span>
+                  )}{" "}
+                  #devStyle #devAttitude
                 </b>
               </i>
             </Typography>
