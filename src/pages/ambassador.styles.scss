@@ -17,7 +17,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 900;
-        font-size: 84px;
+        font-size: 75px;
         line-height: 125px;
         text-align: center;
         display: flex;
@@ -33,7 +33,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: normal;
-        font-size: 20px;
+        font-size: 16px;
         line-height: 30px;
 
         text-align: center;
@@ -41,6 +41,9 @@
         color: #e4e4eb;
         z-index: 5;
         position: relative;
+        * {
+          color: #fff;
+        }
       }
       img {
         position: absolute;

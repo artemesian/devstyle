@@ -59,7 +59,7 @@ const Ambassador = () => {
               NOS AMBASSADEURS
             </Typography>
             <Typography className="subtext animate__animated animate__fadeInUp animate_delay-5s animate__slower">
-              Ils représentent avec enthousiasme notre Brand
+              Ils représentent avec enthousiasme notre <b>Brand🏆</b>
             </Typography>
           </Box>
           <img
