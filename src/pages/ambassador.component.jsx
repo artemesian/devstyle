@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Button, useMediaQuery } from "@mui/material";
+import Helmet from "react-helmet";
 
 import AmbassadorCardSkeleton from "../components/ambassadorCardSkeleton.component";
 
@@ -38,6 +39,17 @@ const Ambassador = () => {
 
   return (
     <Box paddingX={match1000 ? 0 : 12} className="ambassador-wrapper">
+      <Helmet>
+        <title>
+          {" "}
+          Nos Ambassadeurs | Ils représentent avec Enthousiasme et Fierté notre
+          Brand
+        </title>
+        <meta
+          name="description"
+          content="Tout comme des flambeaux, ils illuminent notre vision avec enthousiasme et passion | Deviens un Brand Ambassador et on se retrouve de l'autre côté 😉"
+        />
+      </Helmet>
       <Box
         className="ambassador-hero-section-wrapper"
         style={{

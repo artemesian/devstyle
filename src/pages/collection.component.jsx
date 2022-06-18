@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
+import Helmet from "react-helmet";
 
 import GoodieCard from "../components/goodieCard.component";
 import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
@@ -81,6 +82,16 @@ const Collection = () => {
 
   return (
     <Box paddingX={match1000 ? 0 : 12}>
+      <Helmet>
+        <title>
+          {" "}
+          Collection {isLoadingCollection ? "" : collection.collection.title}
+        </title>
+        <meta
+          name="description"
+          content="Nous espérons vivement que lorsque votre ou vos articles favoris arriveront de la boutique, vous ressentirez le même esprit d'originalité et d'euphorie que nous🤗. #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle #devAttitude"
+        />
+      </Helmet>
       <Outlet />
       <Box
         className="collection-hero-section-wrapper"

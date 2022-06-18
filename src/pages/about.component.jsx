@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Helmet from "react-helmet";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import AboutHeroImage from "../assets/img/about-hero.png";
@@ -20,6 +21,17 @@ const About = () => {
 
   return (
     <Box className="about-wrapper">
+      <Helmet>
+        <title>
+          {" "}
+          À Propos de _DevStyle | Rejoignez Une Communauté de Techies,
+          Developpeurs passionnés de Tech #TT237
+        </title>
+        <meta
+          name="description"
+          content="_DevStyle vise à construire une communauté Techx solidaire, dynamique et fun partageant la même passion pour la technologie que vous, et par-dessus tout, nous visons à établir un écosystème dynamique pour les Techx, en mettant en œuvre les objectifs suivants:  Meets & Talks Events fréquentes,  ..."
+        />
+      </Helmet>
       <Box paddingX={match1000 ? 0 : 12}>
         <Box
           className="about-hero-section-wrapper"
@@ -132,8 +144,8 @@ const About = () => {
             <br />
             📌 Ensuite, DevStyle vise à construire{" "}
             <b>
-              une communauté Techx solidaire, dynamique et amusante partageant
-              la même passion pour la technologie que vous, et par-dessus tout,
+              une communauté Techx solidaire, dynamique et fun partageant la
+              même passion pour la technologie que vous, et par-dessus tout,
               nous visons à établir un écosystème dynamique pour les Techx
             </b>
             , en mettant en œuvre les objectifs suivants:

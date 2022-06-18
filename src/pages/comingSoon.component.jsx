@@ -1,4 +1,5 @@
 import React from "react";
+import Helmet from "react-helmet";
 import ComingSoonVideo from "../assets/video/_DevStyle Coming Soon.mp4";
 import TwitterIcon from "../assets/icons/twitter.png";
 import FacebookIcon from "../assets/icons/facebook.png";
@@ -19,6 +20,13 @@ function ComingSoon() {
         position: "relative",
       }}
     >
+      <Helmet>
+        <title> Coming Soon | Wait For It</title>
+        <meta
+          name="description"
+          content="Une communauté de Techies pas comme les autres | LOADING..."
+        />
+      </Helmet>
       <video autoPlay controls loop width={"90%"}>
         <source src={ComingSoonVideo} type="video/mp4" />
       </video>

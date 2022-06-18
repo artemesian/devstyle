@@ -21,6 +21,7 @@ import Footer from "./components/footer.component";
 import "./app.styles.scss";
 
 import { calculatePromoPrice } from "./utils/utils.script.js";
+import Helmet from "react-helmet";
 // import myAxios from "./utils/axios.config.js";
 
 export const analyticsEventTracker = (category = "Unknown") => {
@@ -154,6 +155,10 @@ const theme = createTheme({
 const AppConfig = () => {
   return (
     <ThemeProvider theme={theme}>
+      <Helmet
+        defaultTitle={"_DevStyle"}
+        titleTemplate={"_DevStyle | %s"}
+      ></Helmet>
       <App />
     </ThemeProvider>
   );
