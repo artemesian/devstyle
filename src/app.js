@@ -101,7 +101,6 @@ const App = () => {
   useEffect(() => {
     ReactGA.pageview(location.pathname + location.hash);
   }, [location]);
-  console.log(process.env.REACT_APP_GA_TRACKING_ID);
   return (
     <Box>
       <Nav
