@@ -88,7 +88,6 @@
     bottom: -13px;
     margin: 0 5px;
     z-index: 1;
-    box-shadow: 0px 10px 15px -16px rgba(0, 0, 0, 0.1);
     .notif {
       background: #220f00;
       border-radius: 32px;
@@ -97,6 +96,7 @@
       display: flex;
       align-items: center;
       padding: 5px 5px;
+      box-shadow: 0px 10px 15px -16px rgba(0, 0, 0, 0.1);
 
       .title {
         text-transform: uppercase;
