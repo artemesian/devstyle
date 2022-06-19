@@ -5,4 +5,27 @@ require("babel-register")({
 const router = require("./sitemap.routes").default;
 const Sitemap = require("react-router-sitemap").default;
 
-new Sitemap(router).build("https://dev-style.com").save("./public/sitemap.xml");
+const paramsConfig = {
+  "/collection/:slug": [
+    {
+      slug: [
+        "t-shirts",
+        "sweatshirts",
+        "hoodies",
+        "polos",
+        "stickers",
+        "phone-cases",
+        "masks",
+        "posters",
+        "bracelets",
+        "hats",
+        "mugs",
+      ],
+    },
+  ],
+};
+
+new Sitemap(router)
+  .applyParams(paramsConfig)
+  .build("https://dev-style.com")
+  .save("./public/sitemap.xml");
