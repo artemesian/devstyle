@@ -155,10 +155,9 @@ const theme = createTheme({
 const AppConfig = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Helmet
-        defaultTitle={"_DevStyle"}
-        titleTemplate={"_DevStyle | %s"}
-      ></Helmet>
+      <Helmet defaultTitle={"_DevStyle"} titleTemplate={"_DevStyle | %s"}>
+        <meta name="robots" content="index, follow" />
+      </Helmet>
       <App />
     </ThemeProvider>
   );

@@ -196,7 +196,6 @@ const Home = () => {
       console.log(error);
     }
   }, []);
-  console.log(heroSection);
   return (
     <Box id="home-container">
       <Helmet>
@@ -207,9 +206,13 @@ const Home = () => {
         <meta
           name="description"
           content="Optez pour des vêtements tels que des T-shirts, des Hoodies, des Sweat-shirts ou encore des articles plus uniques tels que des Pochettes, des Casquettes, des Mugs, des Posters et des Stickers et bien plus qui reflètent et expriment pleinement votre passion pour la technologie💙. #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle #devAttitude"
+        />{" "}
+        <meta
+          name="Devstyle"
+          content="Devstyle platforme de vente des Tshirts, Goodies pour developpeur #TT237 "
         />
       </Helmet>
-      <Box paddingX={match1000 ? "10%" : 12} className="hero-section-wrapper">
+      <Box paddingX={match1000 ? "5%" : 12} className="hero-section-wrapper">
         <Grid container className="hero-section">
           <Grid
             item

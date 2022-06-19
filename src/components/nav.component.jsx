@@ -29,7 +29,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   const theme = useTheme();
   const matches = useMediaQuery("(max-width:1365px)");
   const match = useMediaQuery("(max-width:1000px)");
-  const match560 = useMediaQuery("(min-width:560px)");
+  const match400 = useMediaQuery("(min-width:400px)");
 
   const [announce, setAnnounce] = useState({});
 
@@ -167,7 +167,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
             }}
           >
             <Typography className="notif" component={"span"}>
-              {match560 && <Box className="title">Announcement</Box>}
+              {match400 && <Box className="title">Annonce</Box>}
               <Typography className="text">{announce.text}</Typography>
               {announce.link && (
                 <Box className="icon">
