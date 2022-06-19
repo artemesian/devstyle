@@ -4,7 +4,17 @@
 <url> <loc>https://dev-style.com/</loc> </url>
 <url> <loc>https://dev-style.com/about-us</loc> </url>
 <url> <loc>https://dev-style.com/our-ambassadors</loc> </url>
-<url> <loc>https://dev-style.com/collection/:slug</loc> </url>
+<url> <loc>https://dev-style.com/collection/t-shirts</loc> </url>
+<url> <loc>https://dev-style.com/collection/sweatshirts</loc> </url>
+<url> <loc>https://dev-style.com/collection/hoodies</loc> </url>
+<url> <loc>https://dev-style.com/collection/polos</loc> </url>
+<url> <loc>https://dev-style.com/collection/stickers</loc> </url>
+<url> <loc>https://dev-style.com/collection/phone-cases</loc> </url>
+<url> <loc>https://dev-style.com/collection/masks</loc> </url>
+<url> <loc>https://dev-style.com/collection/posters</loc> </url>
+<url> <loc>https://dev-style.com/collection/bracelets</loc> </url>
+<url> <loc>https://dev-style.com/collection/hats</loc> </url>
+<url> <loc>https://dev-style.com/collection/mugs</loc> </url>
 <url> <loc>https://dev-style.com/goodie/:slug</loc> </url>
 <url> <loc>https://dev-style.com/checkout</loc> </url>
 </urlset>
