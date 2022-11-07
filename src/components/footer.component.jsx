@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Spinner from "./spinner.component";
 
@@ -15,7 +16,6 @@ import DevStyleWhite from "../assets/img/devstyle-white-logo.png";
 import SalyFooter from "../assets/img/saly-footer.png";
 
 import "./footer.styles.scss";
-// import { PARTNERS_SEEDER } from "../utils/seeders.data";
 import myAxios from "../utils/axios.config";
 import { analyticsEventTracker } from "../app";
 
@@ -31,14 +31,19 @@ const Footer = () => {
       .then((response) => {
         if (response.status === 200) {
           setPartners(response.data.message);
-          setIsLoadingPartners(false);
         } else {
           console.log(response.data.message);
           setPartners([]);
-          setIsLoadingPartners(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+          icon: "🌐",
+          style: { textAlign: "center" },
+        });
+        console.log(error);
+      })
+      .finally(() => setIsLoadingPartners(false));
   }, []);
 
   return (

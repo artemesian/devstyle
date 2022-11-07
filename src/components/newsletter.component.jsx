@@ -53,14 +53,9 @@ const Newsletter = () => {
           if (error.status === 500) {
             console.log("hello checked");
           }
-          toast.info(
-            <div style={{ color: "#fff" }}>
-              Vous êtes déjà l'un des nôtres 😉
-            </div>,
-            {
-              style: { textAlign: "center" },
-            }
-          );
+          toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+            style: { textAlign: "center" },
+          });
           console.log(error);
         })
         .finally(() => {

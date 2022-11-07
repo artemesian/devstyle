@@ -4,6 +4,29 @@
 
   .goodie-preview-wrapper {
     height: 100%;
+    max-height: 600px;
+    overflow: auto;
+    max-width: 74px;
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      background-color: #f5f5f555;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 0px;
+      background-color: #f5f5f555;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+      background-color: #220f0077;
+    }
     .goodie-preview-container {
       height: 72px;
       width: 72px;
@@ -11,6 +34,7 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      overflow: hidden;
 
       img {
         height: 85%;
@@ -27,6 +51,15 @@
     margin: 0 25px;
     padding: 25px;
     overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+
+      img {
+        transform: scale(1.6);
+        transition: transform 0.5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+      }
+    }
 
     img {
       max-width: 500px;
@@ -49,6 +82,7 @@
       color: white;
       top: 0;
       left: 0;
+      z-index: 1;
     }
   }
   .goodie-description {
@@ -146,7 +180,6 @@
           .color {
             width: 40px;
             height: 40px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             border-radius: 50%;
             display: flex;
             justify-content: center;

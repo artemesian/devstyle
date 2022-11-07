@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
+import { toast } from "react-toastify";
 import Helmet from "react-helmet";
 
 import GoodieCard from "../components/goodieCard.component";
@@ -37,7 +38,13 @@ const Collection = () => {
             setIsLoadingCollection(false);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+            icon: "🌐",
+            style: { textAlign: "center" },
+          });
+          console.log(error);
+        });
     } else {
       myAxios
         .get("/goodie/all")
@@ -45,8 +52,8 @@ const Collection = () => {
           if (response.status === 200) {
             setCollection({
               collection: {
-                colors: "#220f00-#220f00",
-                title: "TOUS NOS GOODIES",
+                colors: "#220f00df-#220f00",
+                title: "TOUS NOS GOODIES🛍️",
               },
               goodies: response.data.message,
             });
@@ -57,7 +64,13 @@ const Collection = () => {
             setIsLoadingCollection(false);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+            icon: "🌐",
+            style: { textAlign: "center" },
+          });
+          console.log(error);
+        });
     }
   }, [params.slug, onAllGoodies]);
 

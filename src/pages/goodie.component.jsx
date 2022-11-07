@@ -20,12 +20,11 @@ import {
   Check,
 } from "@mui/icons-material";
 import { useLocation, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import OrderModal from "../components/orderModal.component";
-// import Cryptr from "cryptr";
 import WhatsappIcon from "../assets/icons/whatsapp-green.png";
 import "./goodie.styles.scss";
 
-// import { GOODIE_SEEDER } from "../utils/seeders.data";
 import { calculatePromoPrice, scrollToTop } from "../utils/utils.script";
 import myAxios from "../utils/axios.config";
 import GoodieCardSkeleton from "../components/goodieCardSkeleton.component";
@@ -85,7 +84,7 @@ const Goodie = ({ addToCart }) => {
             ...response.data.message,
             quantity: 1,
             selectedColor: response.data.message.availableColors[0],
-            selectedSize: response.data.message.size[0].size,
+            selectedSize: response.data.message.size[0]?.size,
           });
           setIsLoadingGoodie(false);
 
@@ -99,7 +98,7 @@ const Goodie = ({ addToCart }) => {
                 setSomeCollectionGoodies([...response.data.message]);
                 setIsLoadingSomeCollectionGoodies(false);
               } else {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 setSomeCollectionGoodies([]);
                 setIsLoadingSomeCollectionGoodies(false);
               }
@@ -111,7 +110,13 @@ const Goodie = ({ addToCart }) => {
           setIsLoadingGoodie(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+          icon: "🌐",
+          style: { textAlign: "center" },
+        });
+        console.log(error);
+      });
   }, [params.slug]);
 
   useEffect(() => {
@@ -121,7 +126,7 @@ const Goodie = ({ addToCart }) => {
         if (response.status === 200) {
           // console.log(response.data.message);
         } else {
-          console.log(response.data.message);
+          // console.log(response.data.message);
         }
       })
       .catch((error) => console.log(error));
@@ -178,13 +183,19 @@ const Goodie = ({ addToCart }) => {
       .put("/goodie/update/likes/" + params.slug)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data.message);
+          // console.log(response.data.message);
           setIsLiking(true);
         } else {
-          console.log(response.data.message);
+          // console.log(response.data.message);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+          icon: "🌐",
+          style: { textAlign: "center" },
+        });
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -415,6 +426,12 @@ const Goodie = ({ addToCart }) => {
                         <ButtonBase
                           key={"color-" + color + "-" + i}
                           className="color"
+                          style={{
+                            boxShadow:
+                              goodie.selectedColor === color
+                                ? "0px 4px 10px #06C27033"
+                                : "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                          }}
                           onClick={() => handleSelectedColorChange(color)}
                         >
                           <Box
@@ -426,10 +443,14 @@ const Goodie = ({ addToCart }) => {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
+                              border:
+                                goodie.selectedColor === color
+                                  ? "2px solid #06C27033"
+                                  : "",
                             }}
                           >
                             {goodie.selectedColor === color && (
-                              <Check style={{ color: "white" }} />
+                              <Check color="success" />
                             )}
                           </Box>
                         </ButtonBase>
@@ -437,43 +458,52 @@ const Goodie = ({ addToCart }) => {
                     )}
                   </Box>
                 </Box>
-                <Box className="size">
-                  <Typography className="label">
-                    Selectionner votre taille
-                  </Typography>
-                  <Box className="size-wrapper">
-                    {isLoadingGoodie ? (
+                {isLoadingGoodie ? (
+                  <Box className="size">
+                    <Typography className="label">
+                      Selectionner votre taille
+                    </Typography>
+                    <Box className="size-wrapper">
                       <Skeleton
                         animation="wave"
                         variant="rectangular"
                         height={40}
                         width={40}
                       />
-                    ) : (
-                      goodie.size.map((size, i) => (
-                        <ButtonBase
-                          className="button"
-                          onClick={() => handleSelectedSizeChange(size.size)}
-                        >
-                          <button
-                            key={"size-" + size.id + "-" + i}
-                            style={
-                              goodie.selectedSize === size.size
-                                ? {
-                                    color: "#06C270",
-                                    borderColor: "#06C270",
-                                  }
-                                : {}
-                            }
-                            className="button"
-                          >
-                            {size.size}
-                          </button>
-                        </ButtonBase>
-                      ))
-                    )}
+                    </Box>
                   </Box>
-                </Box>
+                ) : (
+                  goodie.size.length > 0 && (
+                    <Box className="size">
+                      <Typography className="label">
+                        Selectionner votre taille
+                      </Typography>
+                      <Box className="size-wrapper">
+                        {goodie.size.map((size, i) => (
+                          <ButtonBase
+                            className="button"
+                            onClick={() => handleSelectedSizeChange(size.size)}
+                          >
+                            <button
+                              key={"size-" + size.id + "-" + i}
+                              style={
+                                goodie.selectedSize === size.size
+                                  ? {
+                                      color: "#06C270",
+                                      borderColor: "#06C270",
+                                    }
+                                  : {}
+                              }
+                              className="button"
+                            >
+                              {size.size}
+                            </button>
+                          </ButtonBase>
+                        ))}
+                      </Box>
+                    </Box>
+                  )
+                )}
                 <Grid container spacing={match900 ? 0 : 1} className="buttons">
                   <Grid item xs={12} md={6} style={{ width: "100%" }}>
                     <Button
@@ -646,23 +676,25 @@ const Goodie = ({ addToCart }) => {
                   </Grid>
                 </>
               ) : (
-                someCollectionGoodies.map((goodie, i) => (
-                  <Grid
-                    key={i + " " + goodie._id}
-                    item
-                    xs={12}
-                    md={6}
-                    lg={4}
-                    xl={3}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <GoodieCard {...goodie} />
-                  </Grid>
-                ))
+                someCollectionGoodies
+                  .filter((_goodie) => _goodie._id !== goodie._id)
+                  .map((goodie, i) => (
+                    <Grid
+                      key={i + " " + goodie._id}
+                      item
+                      xs={12}
+                      md={6}
+                      lg={4}
+                      xl={3}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <GoodieCard {...goodie} />
+                    </Grid>
+                  ))
               )}
             </Grid>
           </Box>

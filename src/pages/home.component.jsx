@@ -27,7 +27,6 @@ import HotIcon from "../assets/icons/hot.png";
 import RocketIcon from "../assets/icons/rocket.png";
 
 import "./home.style.scss";
-// import { COLLECTIONS_SEEDER, GOODIES_SEEDER } from "../utils/seeders.data";
 import { importAll } from "../utils/utils.script";
 import { scrollToTop } from "../utils/utils.script";
 import myAxios from "../utils/axios.config";
@@ -110,14 +109,13 @@ const Home = () => {
       .then((response) => {
         if (response.status === 200) {
           setCollections(response.data.message);
-          setIsLoadingCollections(false);
         } else {
           console.log(response.data.message);
           setCollections([]);
-          setIsLoadingCollections(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingCollections(false));
   }, []);
 
   useEffect(() => {
@@ -126,14 +124,13 @@ const Home = () => {
       .then((response) => {
         if (response.status === 200) {
           setTrendingGoodies(response.data.message);
-          setIsLoadingTrendingGoodies(false);
         } else {
           console.log(response.data.message);
           setTrendingGoodies([]);
-          setIsLoadingTrendingGoodies(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingTrendingGoodies(false));
   }, []);
 
   useEffect(() => {
@@ -142,14 +139,13 @@ const Home = () => {
       .then((response) => {
         if (response.status === 200) {
           setNewGoodies(response.data.message);
-          setIsLoadingNewGoodies(false);
         } else {
           console.log(response.data.message);
           setNewGoodies([]);
-          setIsLoadingNewGoodies(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingNewGoodies(false));
   }, []);
 
   useEffect(() => {
@@ -161,14 +157,13 @@ const Home = () => {
             ...prevState,
             ...response.data.message,
           ]);
-          // setIsLoadingHeroSection(false);
         } else {
           console.log(response.data.message);
           setHeroSection((prevState) => [...prevState]);
-          // setIsLoadingHeroSection(false);
         }
       })
       .catch((error) => console.log(error));
+    // .finally(() => setIsLoadingHeroSection(false));
   }, []);
 
   useEffect(() => {
@@ -196,6 +191,7 @@ const Home = () => {
       console.log(error);
     }
   }, []);
+
   return (
     <Box id="home-container">
       <Helmet>
@@ -442,6 +438,19 @@ const Home = () => {
                   />
                 </Grid>
               </>
+            ) : collections.length <= 0 ? (
+              <Typography
+                style={{
+                  fontStyle: "italic",
+                  width: "100%",
+                  textAlign: "center",
+                  margin: "25px 0px",
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                }}
+              >
+                Vide
+              </Typography>
             ) : (
               collections.map((collection, i) => (
                 <Grid
@@ -573,6 +582,19 @@ const Home = () => {
                   <GoodieCardSkeleton />
                 </Grid>
               </>
+            ) : newGoodies.length <= 0 ? (
+              <Typography
+                style={{
+                  fontStyle: "italic",
+                  width: "100%",
+                  textAlign: "center",
+                  margin: "25px 0px",
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                }}
+              >
+                Vide
+              </Typography>
             ) : (
               newGoodies.map((goodie, i) => (
                 <Grid
@@ -645,6 +667,19 @@ const Home = () => {
                   <GoodieCardSkeleton />
                 </Grid>
               </>
+            ) : trendingGoodies.length <= 0 ? (
+              <Typography
+                style={{
+                  fontStyle: "italic",
+                  width: "100%",
+                  textAlign: "center",
+                  margin: "25px 0px",
+                  fontSize: "22px",
+                  fontWeight: "bold",
+                }}
+              >
+                Vide
+              </Typography>
             ) : (
               trendingGoodies.map((goodie, i) => (
                 <Grid

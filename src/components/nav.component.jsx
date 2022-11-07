@@ -148,7 +148,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
             </Button>
           ) : (
             <IconButton onClick={() => handleDownNav()}>
-              <HorizontalSplitOutlined fontSize="large" />
+              <HorizontalSplitOutlined fontSize="large" color="primary" />
             </IconButton>
           )}
           <Box className="cart-button" onClick={() => handleSideNav()}>
@@ -161,7 +161,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
         <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
           <a
             href={announce.link}
-            style={{ width: "auto" }}
+            style={{ width: "auto", textDecoration: "none" }}
             onClick={() => {
               analyticsEventTracker("ANNOUNCEMENT")("click announcement");
             }}

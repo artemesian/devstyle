@@ -300,8 +300,9 @@ const About = () => {
           <br />
           Rejoignez notre communauté{" "}
           <a
-            href="/"
-            // target="_blank"
+            href="https://discord.gg/anBNJBsP"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => {
               analyticsEventTracker("SOCIAL")("discord");
             }}
