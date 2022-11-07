@@ -1,6 +1,7 @@
 <!--rehype:ignore:start-->
 
-<p style="text-align: center;">
+<p align="center">
+<p align="center">
   <a href="https://dev-style.com">
     <img alt="devstyle logo" src="./src/assets/img/devstyle-white-logo.png">
   </a>
@@ -10,12 +11,13 @@
   🛍️👨🏽‍💻🚀🌐
   </p>
 </p>
+</p>
 
 <!--rehype:ignore:end-->
 
 ## Vision💙
 
-\_DevStyle aims to build a supportive, dynamic and fun Techx (fans of technology) community sharing the same passion for technology as you, and above all, we aim to establish a vibrant ecosystem for Techx in Cameroon, by implementing the following objectives : Frequent Meets & Talks Events, Hackathons & Competitions and much more to come...⌛
+\_DevStyle aims to build a supportive, dynamic and fun Techx (fans of technology) community sharing the same passion for technology as you, and above all, we aim to establish a vibrant ecosystem for Techx in Cameroon 🇨🇲, by implementing the following objectives : Frequent Meets & Talks Events, Hackathons & Competitions and much more to come...⌛
 
 _TL;DR_
 
