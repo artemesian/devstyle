@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const devURL = "http://localhost:5000";
-const prodURL = "https://devstyle.herokuapp.com/";
+const prodURL = "https://devstyle-app.herokuapp.com/";
 
 // Set config defaults when creating the instance
 const myAxios = axios.create({
