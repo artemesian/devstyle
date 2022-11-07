@@ -8,7 +8,6 @@ import Image from "../assets/img/ambassador.png";
 
 import "./ambassador.styles.scss";
 import { scrollToTop } from "../utils/utils.script";
-// import { AMBASSADORS_SEEDER } from "../utils/seeders.data";
 import myAxios from "../utils/axios.config";
 import { analyticsEventTracker } from "../app";
 
@@ -23,14 +22,13 @@ const Ambassador = () => {
       .then((response) => {
         if (response.status === 200) {
           setAmbassadors(response.data.message);
-          setIsLoadingAmbassadors(false);
         } else {
           console.log(response.data.message);
           setAmbassadors([]);
-          setIsLoadingAmbassadors(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingAmbassadors(false));
   }, []);
 
   useEffect(() => {
@@ -98,6 +96,19 @@ const Ambassador = () => {
                 <AmbassadorCardSkeleton />
               </Grid>
             </>
+          ) : ambassadors.length <= 0 ? (
+            <Typography
+              style={{
+                fontStyle: "italic",
+                width: "100%",
+                textAlign: "center",
+                margin: "25px 0px",
+                fontSize: "22px",
+                fontWeight: "bold",
+              }}
+            >
+              Vide
+            </Typography>
           ) : (
             ambassadors.map((ambassador, i) => (
               <Grid

@@ -11,8 +11,8 @@
     cursor: pointer;
 
     .image {
-      transform: scale(1.2);
-      transition: transform 0.45s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+      transform: scale(1.4);
+      transition: transform 0.55s cubic-bezier(0.25, 0.45, 0.45, 0.95);
     }
   }
 
@@ -39,6 +39,7 @@
         left: 0;
         padding: 1px 10px;
         font-size: 10px;
+        z-index: 1;
       }
     }
     .bottom {
