@@ -115,6 +115,17 @@ npm start
 
 [http://localhost:3000](http://localhost:3000)
 
+### **Some Screenshots**
+
+<p align="center">
+<img width="49%" src="./src/assets/img/screenshots/hero section.png" />
+<img width="49%" src="./src/assets/img/screenshots/collection.png" />
+<img width="49%" src="./src/assets/img/screenshots/goodies.png" />
+<img width="49%" src="./src/assets/img/screenshots/goodie.png" />
+<img width="49%" src="./src/assets/img/screenshots/order.png" />
+<img width="49%" src="./src/assets/img/screenshots/custom.png" />
+</p>
+
 ## How to contribute
 
 Just follow these steps :
