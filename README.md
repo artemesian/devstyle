@@ -7,7 +7,7 @@
   </a>
   <br/>
   <span>#Being a Developer, More Than a Job, It's a Lifestyle.</span>
-  <p style="text-align: center;font-size: 20px;">
+  <p align="center" style="text-align: center;font-size: 20px;">
   🛍️👨🏽‍💻🚀🌐
   </p>
 </p>
