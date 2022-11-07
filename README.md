@@ -115,17 +115,7 @@ npm start
 
 [http://localhost:3000](http://localhost:3000)
 
-## How to contribute
-
-Just follow these steps :
-
-- Create an issue with your fix/feature/improvement (Optionnal but recommended).
-- Fork the project.
-- Create a branch for your feature/update/fix(Make sure to have the latest master-branch updates).
-- Create a Pull Request to develop branch.
-- After a check, it will be merged to the project.
-
-## Some Screenshots
+### **Some Screenshots**
 
 <p align="center">
 <img width="49%" src="./src/assets/img/screenshots/hero section.png" />
@@ -135,6 +125,16 @@ Just follow these steps :
 <img width="49%" src="./src/assets/img/screenshots/order.png" />
 <img width="49%" src="./src/assets/img/screenshots/custom.png" />
 </p>
+
+## How to contribute
+
+Just follow these steps :
+
+- Create an issue with your fix/feature/improvement (Optionnal but recommended).
+- Fork the project.
+- Create a branch for your feature/update/fix(Make sure to have the latest master-branch updates).
+- Create a Pull Request to develop branch.
+- After a check, it will be merged to the project.
 
 ## Author
 
