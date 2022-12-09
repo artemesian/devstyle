@@ -300,7 +300,7 @@ const About = () => {
           <br />
           Rejoignez notre communauté{" "}
           <a
-            href="https://discord.gg/anBNJBsP"
+            href="https://discord.gg/Hgq6UZH5"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
