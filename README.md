@@ -148,7 +148,7 @@ Just follow these steps :
   </a>
   &nbsp;
   &nbsp;
-  <a href="https://discord.gg/anBNJBsP">
+  <a href="https://discord.gg/Hgq6UZH5">
     <img height="20" src="./src/assets/icons/discord-white.png" />
   </a>
   &nbsp;
