@@ -99,15 +99,14 @@ const Ambassador = () => {
           ) : ambassadors.length <= 0 ? (
             <Typography
               style={{
-                fontStyle: "italic",
                 width: "100%",
                 textAlign: "center",
                 margin: "25px 0px",
-                fontSize: "22px",
+                fontSize: "40px",
                 fontWeight: "bold",
               }}
             >
-              Vide
+              Coming SOON !💜⌛
             </Typography>
           ) : (
             ambassadors.map((ambassador, i) => (
