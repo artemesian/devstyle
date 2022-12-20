@@ -144,7 +144,7 @@ const About = () => {
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://web.whatsapp.com/send/?phone=675863040&text&type=phone_number&app_absent=0   "
+                    href="https://wa.me/675863040"
                   >
                     Gabriel Wandja
                   </a>{" "}
