@@ -128,17 +128,17 @@ const About = () => {
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://www.linkedin.com/in/ngniawo-mopi-gaetan-daryl-74ab37195/"
+                    href="https://www.linkedin.com/in/diepe-angelo/"
                   >
-                    Gaetan Ngniawo
+                    Ange Noubissie
                   </a>
                   ,{" "}
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://www.linkedin.com/in/diepe-angelo/"
+                    href="https://www.linkedin.com/in/ngniawo-mopi-gaetan-daryl-74ab37195/"
                   >
-                    Ange Noubissie
+                    Gaetan Ngniawo
                   </a>
                   ,{" "}
                   <a
