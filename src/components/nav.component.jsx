@@ -64,7 +64,8 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
   return (
     <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       {/* Christmas effect */}
-      <ul class="lightrope">
+      {/* Christmas Design 🎄🎅🏾*/}
+      {/* <ul class="lightrope">
         <li></li>
         <li></li>
         <li></li>
@@ -107,7 +108,7 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
         <li></li>
         <li></li>
         <li></li>
-      </ul>
+      </ul> */}
       <Box
         className="nav-container"
         style={

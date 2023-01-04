@@ -90,7 +90,7 @@ const Goodie = ({ addToCart }) => {
 
           myAxios
             .get(
-              `/goodies/hot-goodies/collection/${response.data.message.fromCollection._id}/6291983220a1fdf5b8a280cf`
+              `/goodies/hot-goodies/collection/${response.data.message.fromCollection._id}/${response.data.message._id}`
             )
             .then((response) => {
               if (response.status === 200) {
@@ -409,55 +409,57 @@ const Goodie = ({ addToCart }) => {
                     onChange={(e) => handleQuantityChange(e.target.value)}
                   />
                 </Box>
-                <Box className="colors">
-                  <Typography className="label">
-                    Disponible en couleur
-                  </Typography>
-                  <Box className="colors-wrapper">
-                    {isLoadingGoodie ? (
-                      <Skeleton
-                        animation="wave"
-                        variant="circular"
-                        height={40}
-                        width={40}
-                      />
-                    ) : (
-                      goodie.availableColors.map((color, i) => (
-                        <ButtonBase
-                          key={"color-" + color + "-" + i}
-                          className="color"
-                          style={{
-                            boxShadow:
-                              goodie.selectedColor === color
-                                ? "0px 4px 10px #06C27033"
-                                : "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                          }}
-                          onClick={() => handleSelectedColorChange(color)}
-                        >
-                          <Box
+                {(isLoadingGoodie || goodie.availableColors.length > 0) && (
+                  <Box className="colors">
+                    <Typography className="label">
+                      Disponible en couleur
+                    </Typography>
+                    <Box className="colors-wrapper">
+                      {isLoadingGoodie ? (
+                        <Skeleton
+                          animation="wave"
+                          variant="circular"
+                          height={40}
+                          width={40}
+                        />
+                      ) : (
+                        goodie.availableColors.map((color, i) => (
+                          <ButtonBase
+                            key={"color-" + color + "-" + i}
+                            className="color"
                             style={{
-                              backgroundColor: color,
-                              width: "100%",
-                              height: "100%",
-                              borderRadius: "50%",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              border:
+                              boxShadow:
                                 goodie.selectedColor === color
-                                  ? "2px solid #06C27033"
-                                  : "",
+                                  ? "0px 4px 10px #06C27033"
+                                  : "0px 4px 10px rgba(0, 0, 0, 0.15)",
                             }}
+                            onClick={() => handleSelectedColorChange(color)}
                           >
-                            {goodie.selectedColor === color && (
-                              <Check color="success" />
-                            )}
-                          </Box>
-                        </ButtonBase>
-                      ))
-                    )}
+                            <Box
+                              style={{
+                                backgroundColor: color,
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "50%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                border:
+                                  goodie.selectedColor === color
+                                    ? "2px solid #06C27033"
+                                    : "",
+                              }}
+                            >
+                              {goodie.selectedColor === color && (
+                                <Check color="success" />
+                              )}
+                            </Box>
+                          </ButtonBase>
+                        ))
+                      )}
+                    </Box>
                   </Box>
-                </Box>
+                )}
                 {isLoadingGoodie ? (
                   <Box className="size">
                     <Typography className="label">
