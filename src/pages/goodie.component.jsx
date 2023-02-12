@@ -93,6 +93,7 @@ const Goodie = ({ addToCart }) => {
               `/goodies/hot-goodies/collection/${response.data.message.fromCollection._id}/${response.data.message._id}`
             )
             .then((response) => {
+              console.log("response", response);
               if (response.status === 200) {
                 // console.log(response.data.message);
                 setSomeCollectionGoodies([...response.data.message]);
