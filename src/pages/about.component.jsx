@@ -3,7 +3,7 @@ import Helmet from "react-helmet";
 import { Box, Typography, Grid, useMediaQuery } from "@mui/material";
 
 import AboutHeroImage from "../assets/img/about-hero.png";
-import TeamImage from "../assets/img/team.jpg";
+import TeamImage from "../assets/img/team1.jpg";
 import AccountIcon from "../assets/icons/account.png";
 import GlobeIcon from "../assets/icons/globe.png";
 import ModuleIcon from "../assets/icons/module.png";
@@ -147,6 +147,14 @@ const About = () => {
                     href="https://wa.me/675863040"
                   >
                     Gabriel Wandja
+                  </a>
+                  ,{" "}
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.linkedin.com/in/patricia-toko-3b4a84b6"
+                  >
+                    Patricia Toko
                   </a>{" "}
                   &{" "}
                   <a
