@@ -409,33 +409,41 @@ const Nav = ({ cart, getCartCount, getTotalPrice, deleteFromCart }) => {
                 paddingY={0.5}
                 width={"100%"}
               >
-                <Typography style={{ fontSize: "12px" }}>color</Typography>
-                <Box
-                  style={{
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    background: goodie.selectedColor,
-                    height: "24px",
-                    width: "24px",
-                    borderRadius: "50%",
-                    margin: " 0 5px",
-                  }}
-                ></Box>{" "}
+                {goodie.selectedSize && (
+                  <>
+                    <Typography style={{ fontSize: "12px" }}>color</Typography>
+                    <Box
+                      style={{
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                        background: goodie.selectedColor,
+                        height: "24px",
+                        width: "24px",
+                        borderRadius: "50%",
+                        margin: " 0 5px",
+                      }}
+                    ></Box>
+                  </>
+                )}{" "}
                 &nbsp;
-                <Typography style={{ fontSize: "12px" }}>size</Typography>
-                <Box
-                  style={{
-                    height: "24px",
-                    width: "24px",
-                    margin: "0 5px",
-                    border: "1px solid #000000",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: "14px",
-                  }}
-                >
-                  <span>{goodie.selectedSize}</span>
-                </Box>
+                {goodie.selectedSize && (
+                  <>
+                    <Typography style={{ fontSize: "12px" }}>size</Typography>
+                    <Box
+                      style={{
+                        height: "24px",
+                        width: "24px",
+                        margin: "0 5px",
+                        border: "1px solid #000000",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "14px",
+                      }}
+                    >
+                      <span>{goodie.selectedSize}</span>
+                    </Box>
+                  </>
+                )}
                 <Box
                   style={{
                     marginLeft: "auto",
