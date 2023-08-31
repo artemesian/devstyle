@@ -36,6 +36,7 @@ const Goodie = ({ addToCart }) => {
   const location = useLocation();
   const params = useParams();
 
+
   const [isLoadingGoodie, setIsLoadingGoodie] = useState(true);
   const [isLoadingSomeCollectionGoodies, setIsLoadingSomeCollectionGoodies] =
     useState(true);
@@ -48,6 +49,12 @@ const Goodie = ({ addToCart }) => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+
+
+  
+  const affiliateCode = params.affiliateCode;
+  console.log(affiliateCode);
+
 
   // const crypt = new Cryptr("HelloWorld");
 
@@ -74,6 +81,21 @@ const Goodie = ({ addToCart }) => {
       setGoodie({ ...goodie, selectedSize: size });
     }
   };
+
+
+
+  useEffect(() => {
+    myAxios
+      .put(`/affiliation/${affiliateCode}`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("It's work");
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     myAxios

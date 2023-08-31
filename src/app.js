@@ -99,6 +99,18 @@ const App = () => {
     }
   }, []);
 
+  useEffect(()=>{
+
+    const affiliateCode = JSON.parse(localStorage.getItem("affiliateCode"))
+
+    if(affiliateCode){
+      
+    }
+
+
+
+  },[])
+
   useEffect(() => {
     ReactGA.pageview(location.pathname + location.hash);
   }, [location]);
@@ -113,11 +125,16 @@ const App = () => {
       <Routes>
         {/* <Route path="/" element={<ComingSoon />} /> */}
         <Route path="/" element={<Home />} />
-        <Route path="/collection/:slug" element={<Collection />} />
+        <Route path="/collection/:slug/:affiliateCode?" element={<Collection />} />
+        <Route path="/affiliation/:affiliateCode" element={<Home />} />
         <Route path="/our-ambassadors" element={<Ambassador />} />
         <Route path="/about-us" element={<About />} />
         <Route
           path="/goodie/:slug"
+          element={<Goodie addToCart={addToCart} />}
+        />
+        <Route
+          path="/goodie/:slug/:affiliateCode?"
           element={<Goodie addToCart={addToCart} />}
         />
         <Route
