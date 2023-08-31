@@ -18,6 +18,10 @@ import myAxios from "../utils/axios.config";
 const Collection = () => {
   const match1000 = useMediaQuery("(max-width:1000px)");
   const params = useParams();
+
+  const affiliateCode = params.affiliateCode;
+  console.log(affiliateCode);
+
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [collection, setCollection] = useState({
     collection: { colors: "#FFFFFF-#FFFFFF" },
@@ -92,6 +96,19 @@ const Collection = () => {
         .catch((error) => console.log(error));
     }
   }, [params.slug, onAllGoodies]);
+
+  useEffect(() => {
+    myAxios
+      .put(`/affiliation/${affiliateCode}`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("It's work");
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <Box paddingX={match1000 ? 0 : 12}>

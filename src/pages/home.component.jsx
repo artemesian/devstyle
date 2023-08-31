@@ -8,7 +8,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Helmet from "react-helmet";
 
 import GoodieCard from "../components/goodieCard.component";
@@ -55,6 +55,19 @@ const Home = () => {
 
   const match1000 = useMediaQuery("(max-width:1000px)");
   const match900 = useMediaQuery("(max-width:900px)");
+
+  const params = useParams();
+
+  const affiliateCode = params.affiliateCode;
+  console.log(affiliateCode);
+
+  const currentDate = new Date();
+  const expirationDate = new Date(currentDate.getTime() + 86400000);
+
+  const datatoStore = {
+    affiliateCode: affiliateCode,
+    expirationDate: expirationDate.getTime(),
+  };
 
   const handleHeroImageChange = (step) => {
     const element = document.querySelector("#hero-image");
@@ -116,6 +129,53 @@ const Home = () => {
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoadingCollections(false));
+  }, []);
+
+  useEffect(() => {
+    const affiliationData = JSON.parse(localStorage.getItem("affiliationData"));
+
+    if (affiliationData && affiliationData.affiliateCode === affiliateCode) {
+      console.log("affiliation data" , affiliationData)
+      if (new Date().getTime() < affiliationData.expirationDate) {
+        console.log("Affiliation data pas encore expirer");
+      } else {
+        console.log("affiliation data deja expire")
+        myAxios
+          .put(`/affiliation/${affiliateCode}`)
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("It's work");
+
+              localStorage.setItem(
+                "affiliationData",
+                JSON.stringify(datatoStore)
+              );
+            } else {
+              console.log(response.data.message);
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    } else {
+      console.log("l'affiliation data n'existe pas ")
+      myAxios
+        .put(`/affiliation/${affiliateCode}`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("It's work");
+
+            localStorage.setItem(
+              "affiliationData",
+              JSON.stringify(datatoStore)
+            );
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+
+    // console.log("affiliate code in local storage :",affiliationData)
   }, []);
 
   useEffect(() => {
